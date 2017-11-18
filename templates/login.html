@@ -1,0 +1,73 @@
+{% extends "includes/layout.html" %}
+
+{% block content %}
+
+
+<div class="ui container basic segment">
+    <div class="ui huge header">Login informations</div>
+    <p class="ui medium header">In order to make operations, please login into your account</p>
+
+    <div class="ui grid">
+        <div class="ui column row"></div>
+        <div class="ui column row">
+            <div class="ui three wide computer column computer only"></div>
+            <div class="ui ten wide computer eight wide tablet column">
+                <div class="ui segment stretched">
+
+                    <form method="POST" class="ui form" action="">
+                        <div class="field">
+                            <label>Email</label>
+                            <input type="text" name="email" placeholder="Email address">
+                        </div>
+                        <div class="field">
+                            <label>Password</label>
+                            <input type="password" name="password" placeholder="">
+                        </div>
+
+                        <input type="submit" class="ui animated large button primary primary fluid" value="Login"></input>
+                    </form>
+
+                </div>
+            </div>
+            <div class="ui three wide column computer only"></div>
+        </div>
+    </div>
+</div>
+
+<div class="ui horizontal divider">Or</div>
+
+<div class="ui container basic segment">
+    <div class="ui grid">
+        <div class="ui column row"></div>
+        <div class="ui column row">
+            <div class="ui three wide computer column computer only"></div>
+            <div class="ui ten wide computer eight wide tablet column">
+                <div class="ui segment stretched">
+                    <p class="ui small header">Please sign up if you don't have an account</p>
+
+                    <button type="submit" href="/signup/" class="ui animated large button green fluid" value="">Sign up</button>
+
+                </div>
+            </div>
+            <div class="ui three wide column computer only"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    $('#toggle').click(function(){
+        $('.ui.sidebar').sidebar('toggle');
+    });
+</script>
+
+{% endblock %}

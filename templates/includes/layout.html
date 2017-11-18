@@ -1,0 +1,68 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ STATICS['site_name'] }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+    <script src="{{ url_for('static', filename='App.js') }}"></script>
+    <script src="../../static/App.js"></script>
+
+    <style>
+        .pusher{
+            padding-top: 80px
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <div class="ui left vertical sidebar menu">
+        <a href="/" class="item"><i class="home compact icon"></i> Home</a>
+        <a href="#" class="item">Contact</a>
+        {% if session['logged'] %}
+        <a href="/signout/" class="item">Sign out</a>
+        {% else %}
+        <a href="/login/" class="item">Login</a>
+        <a href="/signup/" class="item">Sign up</a>
+        {% endif %}
+    </div>
+
+    <div class="ui basic labeled icon top fixed menu">
+        <div class="item" id="toggle">
+            <i class="sidebar icon"></i>Menu
+        </div>
+        <a href="/" class="center item">
+            {% include "includes/_messages.html" %}
+        </a>
+        {% if session['logged'] %}
+        <a href="/signout/" class="right item"><i class="sign out icon"></i>Sign out</a>
+        {% else %}
+        <a href="/login/" class="right item"><i class="sign in icon"></i>Login</a>
+        <a href="/signup/" class="item"><i class="add user icon"></i>Sign up</a>
+        {% endif %}
+    </div>
+
+
+
+
+
+<!-- CONTENT -->
+
+<div class="pusher">
+
+            {% include "includes/_messages.html" %}
+
+
+            {% block content %}
+
+            <!-- BODY COMES HERE  -->
+
+            {% endblock %}
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+
+{% extends "includes/layout.html" %}
+
+{% block content %}
+
+{% for post in enterprisesDB %}
+
+
+<div class="ui container segment stacked green">
+
+    <a href="/ent/{{ post['id'] }}" class="ui header">{{ post['entr_name'] }}</a>
+
+    <div class="ui segment">
+
+      <!-- Table -->
+
+        <table class="table" style="width:100%">
+                    <tr>
+                <th width="50%">ID of the entreprise</th>
+                <th width="50%">{{ post['id'].rjust(6, '0') }}</th>
+              </tr>
+              <tr>
+                <td>Nom de l'entreprise</td>
+                <td>{{ post['entr_name'] }}</td>
+              </tr>
+              <tr>
+                <td>NEQ</td>
+                <td>{{ post['neq'] }}</td>
+              </tr>
+
+        </table>
+    </div>
+
+
+</div>
+
+
+
+
+
+{% endfor %}
+
+
+<script>
+    $('#toggle').click(function(){
+        $('.ui.sidebar').sidebar('toggle');
+    });
+</script>
+
+
+{% endblock %}
+
