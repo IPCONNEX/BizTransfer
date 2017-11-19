@@ -1,0 +1,362 @@
+
+{% extends "includes/layout.html" %}
+
+{% block content %}
+
+
+<div class="ui container basic segment">
+    <div class="ui huge header">Enter information for your business</div>
+    <p class="ui medium header">BizTransfer is website that offers matching business owners who want to sell their businesses with potential investors</p>
+
+    <div class="ui grid">
+        <div class="ui column row">
+            <form method="POST" class="ui form" action="">
+                <div class="ui three wide computer column computer only"></div>
+                <div class="ui container segment stacked green">
+                    <div class="ui eleven wide computer sixteen wide tablet column">
+                        <p class="ui header">General information</p>
+                        <div class="ui segment stretched">
+                                <div class="field">
+                                    <label>ID of the announcement</label>
+                                    <input type="text" name="id" readonly="" placeholder="{{ newId }}">
+                                </div>
+                                <div class="field">
+                                    <label>Title of the announcement</label>
+                                    <input type="text" name="business_title" placeholder="Business activity">
+                                </div>
+                                <div class="field">
+                                    <label>Description</label>
+                                    <textarea type="text" rows="3" name="neq" placeholder="Description of your business"></textarea>
+                                </div>
+                                <div class="field">
+                                    <label>Location</label>
+                                    <input type="text" name="contact_name" placeholder="Region of your business activity">
+                                </div>
+                                <div class="field">
+                                    <label>Asking price</label>
+                                    <div class="ui right labeled input">
+                                        <label for="amount" class="ui label">$</label>
+                                        <input name="asking_price" type="text" placeholder="Price in CA$" id="amount">
+                                        <div class="ui basic label">.00</div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                <label>Revenu</label>
+                                <div class="ui right labeled input">
+                                    <label for="amount" class="ui label">$</label>
+                                    <input type="text" placeholder="Annual revenu in CA$" id="amount">
+                                    <div class="ui basic label">.00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui container segment stacked blue">
+                    <div class="ui eleven wide computer sixteen wide tablet column">
+                        <p class="ui header">Enterprise profile</p>
+                        <div class="ui segment stretched">
+                            <div class="field">
+                                <label>Is your business a Franchise?</label>
+                                <select name="franchise" class="ui fluid dropdown">
+                                    <option value=""></option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Foundation year</label>
+                                <select name="foundation_year" class="ui fluid dropdown">
+                                    <option value=""></option>
+                                    {% for year in range(2017,1900,-1) %}
+                                        <option value="{{ year }}">{{ year }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Gross profit for the latest fiscal year</label>
+                                <div class="ui right labeled input">
+                                    <label for="amount" class="ui label">CA$</label>
+                                    <input type="text" name="gross_profit" placeholder="Gross profit in CA$" id="amount">
+                                    <div class="ui basic label">.00</div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>EBIDTA</label>
+                                <div class="ui right labeled input">
+                                    <label for="amount" class="ui label">CA$</label>
+                                    <input type="text" name="ebitda" placeholder="EBIDTA in CA$" id="amount">
+                                    <div class="ui basic label">.00</div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Total inventory value</label>
+                                <div class="ui right labeled input">
+                                    <label for="amount" class="ui label">CA$</label>
+                                    <input type="text" name="inventory" placeholder="Inventory in CA$" id="amount">
+                                    <div class="ui basic label">.00</div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Office furniture</label>
+                                <div class="ui right labeled input">
+                                    <label for="amount" class="ui label">CA$</label>
+                                    <input type="text" name="office_furniture" placeholder="Office furniture in CA$" id="amount">
+                                    <div class="ui basic label">.00</div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Seller is open to fiance the buyer?</label>
+                                <select name="franchise" class="ui fluid dropdown">
+                                    <option value=""></option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                    <option value="later">To be discussed</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui container segment stacked yellow">
+                    <div class="ui eleven wide computer sixteen wide tablet column">
+                        <p class="ui header">Operations information</p>
+                        <div class="ui segment stretched">
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>Number of full-time employees</label>
+                                    <select name="fulltime" class="ui fluid dropdown">
+                                        <option value=""></option>
+                                        {% for emp in range(51) %}
+                                            <option value="{{ emp }}">{{ emp }}</option>
+                                        {% endfor %}
+                                        <option value="50">50 to 100</option>
+                                        <option value="100">100 to 500</option>
+                                        <option value="500">500 to 1000</option>
+                                        <option value="1000">Over 1000</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <label>Number of part-time employees</label>
+                                    <select name="parttime" class="ui fluid dropdown">
+                                        <option value=""></option>
+                                        {% for emp in range(51) %}
+                                            <option value="{{ emp }}">{{ emp }}</option>
+                                        {% endfor %}
+                                        <option value="50">Over 50</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Seller will be available after the sales?</label>
+                                <select name="sell_involve" class="ui fluid dropdown">
+                                    <option value=""></option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                    <option value="later">To be discussed</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Development stage of the enterprise</label>
+                                <select name="sell_involve" class="ui fluid dropdown">
+                                    <option value=""></option>
+                                    <option value="startup">Startup</option>
+                                    <option value="expanding">Expanding</option>
+                                    <option value="established">Established</option>
+                                    <option value="bankrupt">Bankrupt</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Customers target</label>
+                                <div class="three fields">
+                                    <div class="field">
+                                        <div class="ui checkbox">
+                                            <input type="checkbox" name="market_business" tabindex="0" class="hidden">
+                                            <label>Business</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui checkbox">
+                                            <input type="checkbox" name="market_individuals" tabindex="0" class="hidden">
+                                            <label>Individuals</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui checkbox">
+                                            <input type="checkbox" name="market_online" tabindex="0" class="hidden">
+                                            <label>Online</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Patent/License</label>
+                                <select name="patent" class="ui fluid dropdown">
+                                    <option value=""></option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui container segment stacked red">
+                    <div class="ui eleven wide computer sixteen wide tablet column">
+                        <p class="ui header">Premium information</p>
+                        <div class="ui segment stretched">
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>SCIAN code 1</label>
+                                    <input type="text" name="scian1" placeholder="">
+                                </div>
+                                <div class="field">
+                                    <label>SCIAN code 2</label>
+                                    <input type="text" name="scian2" placeholder="">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Tax balance</label>
+                                <div class="ui right labeled input">
+                                    <label for="amount" class="ui label">CA$</label>
+                                    <input type="text" name="tax" placeholder="Amount of taxes due but not paid" id="amount">
+                                    <div class="ui basic label">.00</div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Raison for the sale</label>
+                                <textarea type="text" rows="3" name="sale_reason" placeholder="If you are willing to share the reason for selling the business"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui column row"></div>
+                <input type="submit" class="ui animated large button primary green fluid" value="Next"></input>
+            </form>
+        </div>
+    </div>
+</div>
+
+            <div class="ui two wide column computer only"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    $('#toggle').click(function(){
+        $('.ui.sidebar').sidebar('toggle');
+    });
+</script>
+<script>
+    $('select.dropdown')
+    .dropdown();
+</script>
+<script>
+    $('.ui.checkbox')
+    .checkbox();
+</script>
+
+<!-- Fields test ends
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading"><h4>Enter data for an enterprise listing</h4></div>
+
+<table class="table" style="width:100%" height="51px">
+<form action="/add-biz" method="POST">
+<tr>
+<th width="50%">ID of the entreprise</th>
+<th width="50%">{{ newId }}</th>
+</tr>
+<tr>
+<td>Nom de l'entreprise</td>
+<td><div class="input-group">
+    <span class="input-group-addon" id="basic-addon1"> </span>
+    <input type="text" class="form-control" name="entreprise" placeholder="Enterprise name" aria-describedby="basic-addon1">
+  </div>
+</td>
+</tr>
+<tr>
+<td>NEQ</td>
+<td>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1"> </span>
+        <input type="text" class="form-control" placeholder="NEQ" aria-describedby="basic-addon1">
+  </div>
+</td>
+</tr>
+<tr>
+<td>Contact name</td>
+<td>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1"> </span>
+        <input type="text" class="form-control" placeholder="First name and Last name" aria-describedby="basic-addon1">
+  </div>
+</td>
+</tr>
+<tr>
+<td>Phone number</td>
+<td>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1"> </span>
+        <input type="text" class="form-control" placeholder="000" aria-describedby="basic-addon1">
+        <span class="input-group-addon" id="basic-addon1"> </span>
+        <input type="text" class="form-control" placeholder="000" aria-describedby="basic-addon1">
+        <span class="input-group-addon" id="basic-addon1"> </span>
+        <input type="text" class="form-control" placeholder="0000" aria-describedby="basic-addon1">
+    </div>
+</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon2">
+      <span class="input-group-addon" id="basic-addon2">@</span>
+      <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon2">
+    </div>
+</td>
+</tr>
+<tr>
+<td>EBITDA</td>
+<td>
+    <div class="input-group">
+      <span class="input-group-addon">$</span>
+      <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+      <span class="input-group-addon">.00</span>
+    </div>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+    <div class="input-group">
+        <input type="submit" class="btn btn-primary">
+    </div>
+</td>
+</tr>
+</form>
+</table>
+</div>
+
+
+
+-->
+
+
+
+
+
+
+
+
+{% endblock %}
