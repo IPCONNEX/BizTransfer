@@ -16,23 +16,6 @@ enterprisesDB = DB.GetEnterprisesDB()
 STATICS = DB.GetLanguageStatics('english')
 
 
-class EnterpriseForm(Form):
-    ent_name = StringField('', [validators.length(min=5, max= 50)])
-    neq = DecimalField('NEQ')
-    contact = StringField('Contact name', [validators.length(min=5, max= 50)])
-    email = StringField('Email', [validators.length(min=6, max= 50)])
-    phone = DecimalField('Phone')
-    ebitda = DecimalField('EBITDA')
-
-
-class UserForm(Form):
-    username = StringField('Username')
-    name = StringField('Full name')
-    email = StringField('Email')
-    phone = StringField('Phone')
-    password = StringField('Password')
-
-
 # THE APP
 
 app = Flask(__name__)
@@ -41,16 +24,21 @@ app = Flask(__name__)
 def is_logged_in(f):
     @wraps(f)
     def wrap(*args, **kwargs):
+        #  TODO include the cookies checking, if present and session is saved, load session variables
+        origine_url = request.environ['werkzeug.request'].path
+        print(origine_url)
+        session['origin_url'] = origine_url
         if 'logged' in session:
             return f(*args, **kwargs)
         else:
-            flash ("You are not authorized, Please login", 'error')
+            flash("You are not authorized, Please login", 'error')
             return redirect(url_for('login'))
     return wrap
 
 
 @app.route("/", methods=["GET"])
 def index():
+    #  TODO track the request.header(language) and assign value into the session
     enterprisesDB.find()
     #  session['lang'] = mongo.db.statics.find_one({"language": "english"})
     #  print((session['lang']))
@@ -85,28 +73,34 @@ def newpost():
             flash("This company already exists", "error")
             return render_template('newpost.html', newId=newId, STATICS=STATICS)
         enterprisesDB.insert({'id':newId, 'entr_name': request.form['business_name'], 'neq': request.form['neq'],
-            'contact': request.form['contact_name'], 'email': request.form['contact_email'], 'phone': request.form['contact_phone'],
-            'ask_price': request.form['ask_price'], 'valide': False, 'created':time.time(), 'owner':session['email']})
+                                'contact': request.form['contact_name'], 'email': request.form['contact_email'],
+                              'phone': request.form['contact_phone'],'ask_price': request.form['ask_price'],
+                              'valide': False, 'created':time.time(), 'owner':session['email']})
         flash("You successfully entered your enterprise", "success")
         return redirect(url_for('index', id=newId))
 
-    return render_template('newpost.html', newID=newId, STATICS=STATICS)
+    return render_template('newpost.html', newId=newId, STATICS=STATICS)
 
 
 @app.route("/login/", methods=['POST', 'GET'])
 def login():
-    #TODO  find language using: request.environ
+    #  TODO  find language using: request.environ
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        hashPass = usersDB.find_one({'email':email})['password']
+        hashPass = usersDB.find_one({'email': email})['password']
         if usersDB.find_one({'email': email}):
             if sha256_crypt.verify(password, hashPass):
                 session['logged'] = True
                 session['username'] = usersDB.find_one({'email': email})['name']
                 session['email'] = email
                 flash("Login successful", "success")
-                return redirect(url_for('index'))
+                try:
+                    origin_url = session['origin_url']
+                    del session['origin_url']
+                    return redirect(origin_url)
+                except:
+                    return redirect(url_for('index'))
         else:
             flash("Wrong combination username/password", "error")
 
@@ -134,6 +128,8 @@ def logout():
     session.clear()
     flash('Successfully logged out of your session', "info")
     return redirect(url_for('index'))
+
+app.secret_key = "secr3tkey"
+
 if __name__ == '__main__':
-    app.secret_key = "secr3tkey"
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

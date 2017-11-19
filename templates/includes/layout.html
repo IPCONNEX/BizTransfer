@@ -18,8 +18,8 @@
 
 
 <body>
-    <div class="ui left vertical sidebar menu">
-        <a href="/" class="item"><i class="home compact icon"></i> Home</a>
+    <div class="ui inverted labeled icon left inline vertical sidebar menu uncover ">
+        <a href="/" class="item"><i class="home icon"></i> Home</a>
         <a href="#" class="item">Contact</a>
         {% if session['logged'] %}
         <a href="/signout/" class="item">Sign out</a>
@@ -29,13 +29,11 @@
         {% endif %}
     </div>
 
-    <div class="ui basic labeled icon top fixed menu">
+    <div class="ui basic labeled top fixed demo menu">
         <div class="item" id="toggle">
             <i class="sidebar icon"></i>Menu
         </div>
-        <a href="/" class="center item">
-            {% include "includes/_messages.html" %}
-        </a>
+
         {% if session['logged'] %}
         <a href="/signout/" class="right item"><i class="sign out icon"></i>Sign out</a>
         {% else %}
@@ -44,25 +42,76 @@
         {% endif %}
     </div>
 
-
-
-
-
 <!-- CONTENT -->
 
 <div class="pusher">
 
-            {% include "includes/_messages.html" %}
+    <div class="ui grid">
+        <div class="ui column row">
+            <div class="ui three wide computer column computer only"></div>
+            <div class="ui ten wide computer sixteen wide tablet column">
 
+                 {% include "includes/_messages.html" %}
 
-            {% block content %}
+                {% block content %}
 
-            <!-- BODY COMES HERE  -->
+                <!-- BODY COMES HERE  -->
 
-            {% endblock %}
+                {% endblock %}
+
+            </div>
+            <div class="ui three wide column computer only"></div>
+        </div>
+    </div>
 
 </div>
 
+<!-- FOOTER -->
+
+<div class="ui inverted vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui stackable inverted divided grid">
+            <div class="three wide column">
+                <h4 class="ui inverted header">For Sellers</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Link One</a>
+                    <a href="#" class="item">Link Two</a>
+                    <a href="#" class="item">Link Two</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">For Buyers</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Link One</a>
+                    <a href="#" class="item">Link Two</a>
+                    <a href="#" class="item">Link Two</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">For Pros</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Link One</a>
+                    <a href="#" class="item">Link Two</a>
+                    <a href="#" class="item">Link Two</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header">BizTrasnfer.ca</h4>
+                <p>BizTrasnfer is a web application that build links between business owners
+                    who want to sell their businesses and investors.</p>
+                <a href="#" class="ui">Show me how this works</a>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <img src="static/img/logo.png" class="ui centered mini image">
+        <div class="ui horizontal inverted small divided link list">
+            <a class="item" href="#">Site Map</a>
+            <a class="item" href="#">Contact Us</a>
+            <a class="item" href="#">Terms and Conditions</a>
+            <a class="item" href="#">Privacy Policy</a>
+      </div>
+    </div>
+</div>
 
 </body>
 </html>
