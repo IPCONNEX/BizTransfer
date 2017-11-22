@@ -3,11 +3,12 @@
 
 from flask import render_template, request, Flask, flash, redirect, url_for, session, logging
 from random import randint
-from wtforms import Form, StringField, TextAreaField, PasswordField, DecimalField, validators
+#  from wtforms import Form, StringField, TextAreaField, PasswordField, DecimalField, validators
 from functools import wraps
 from passlib.hash import sha256_crypt
 from lib.AppDB import AppDB
 import time
+import json
 
 
 DB = AppDB()
@@ -16,8 +17,7 @@ enterprisesDB = DB.GetEnterprisesDB()
 #  TODO load all languages initially, send the right language based on the session
 #  TODO change the language to en <> english to be pushed in pages
 #  TODO can be used to show dates flask_moment
-STATICS = DB.GetLanguageStatics('english')
-
+#  STATICS = DB.GetLanguageStatics('en')
 
 # THE APP
 
@@ -29,9 +29,8 @@ def is_logged_in(f):
     def wrap(*args, **kwargs):
         #  TODO include the cookies checking, if present and session is saved, load session variables
         origine_url = request.environ['werkzeug.request'].path
-        print(origine_url)
         session['origin_url'] = origine_url
-        if 'logged' in session:
+        if session.get('logged'):
             return f(*args, **kwargs)
         else:
             flash("You are not authorized, Please login", 'error')
@@ -39,18 +38,29 @@ def is_logged_in(f):
     return wrap
 
 
+def defineLanguage(private_request):
+    language = private_request.environ.get('werkzeug.request').accept_languages[0][0][:2]
+    return DB.GetLanguageStatics(language)
+
+
+@app.route("/lang/<string:lang>/", methods=['GET'])
+def language(lang):
+    if lang[:2] == 'fr':
+        session['statics'] = DB.GetLanguageStatics('fr')
+    elif lang[:2] == 'en':
+        session['statics'] = DB.GetLanguageStatics('en')
+    return redirect(url_for('dashboard'))
+
+
 @app.route("/", methods=["GET"])
 def index():
-    #  TODO track the request.header(language) and assign value into the session
-    enterprisesDB.find()
-    #  session['lang'] = mongo.db.statics.find_one({"language": "english"})
-    #  print((session['lang']))
-    return render_template('index.html', enterprisesDB=enterprisesDB.find(), STATICS=STATICS)
+    defineLanguage(request)
+    return render_template('index.html')
 
 
 @app.route("/listings/", methods=["GET"])
 def listings():
-    return render_template('listings.html', enterprisesDB=enterprisesDB.find({'valide':True}),STATICS=STATICS)
+    return render_template('listings.html', enterprisesDB=enterprisesDB.find({'valide':True}))
 
 
 @app.route("/ent/<string:id>/", methods=["GET"])
@@ -59,7 +69,7 @@ def ent(id):
     profile = enterprisesDB.find_one({"id":id})
     enterprisesDB.update_one({'id':id}, {'$inc':{'visits': 1}})
     #  TODO include flask_moment to track the time when the post created and updated from Flask Web Dev ch3 UTC based
-    return render_template('profile.html', profile=profile, STATICS=STATICS)
+    return render_template('profile.html', profile=profile)
 
 
 @app.route("/newpost/", methods=["GET", "POST"])
@@ -69,7 +79,6 @@ def ent(id):
 #  TODO use session.get('key') to avoid raising an exception !!!
 @is_logged_in
 def newpost():
-
     #  get a random non-existing ID for the entry
     while True:
         newId = str(randint(1, 999999)).rjust(6, '0')
@@ -79,7 +88,7 @@ def newpost():
     if request.method == 'POST':
         if enterprisesDB.find({'neq' : request.form['neq']}).count() > 0:
             flash("This company already exists", "error")
-            return render_template('newpost.html', newId=newId, STATICS=STATICS)
+            return render_template('newpost.html', newId=newId)
         enterprisesDB.insert({'id':newId, 'entr_name': request.form['business_name'], 'neq': request.form['neq'],
                                 'contact': request.form['contact_name'], 'email': request.form['contact_email'],
                               'phone': request.form['contact_phone'],'ask_price': request.form['ask_price'],
@@ -87,7 +96,13 @@ def newpost():
         flash("You successfully entered your enterprise", "success")
         return redirect(url_for('index', id=newId))
 
-    return render_template('newpost.html', newId=newId, STATICS=STATICS)
+    return render_template('newpost.html', newId=newId)
+
+
+@app.route("/dashboard/", methods=['GET'])
+@is_logged_in
+def dashboard():
+    return render_template('dashboard.html')
 
 
 @app.route("/login/", methods=['POST', 'GET'])
@@ -108,11 +123,11 @@ def login():
                     del session['origin_url']
                     return redirect(origin_url)
                 except:
-                    return redirect(url_for('index'))
+                    return redirect(url_for('dashboard'))
         else:
             flash("Wrong combination username/password", "error")
 
-    return render_template('login.html', STATICS=STATICS)
+    return render_template('login.html')
 
 
 @app.route("/signup/", methods=['POST', 'GET'])
@@ -120,7 +135,7 @@ def signup():
     if request.method == 'POST':
         if usersDB.find({'email': request.form['email']}).count() > 0:
             flash("Email already used by another account", "error")
-            return render_template('signup.html', STATICS=STATICS)
+            return render_template('signup.html')
 
         hashPassword = sha256_crypt.encrypt(request.form['password']).encode()
         usersDB.insert({'name': request.form['name'], 'email': request.form['email'], 'phone': request.form['phone'],
@@ -128,12 +143,12 @@ def signup():
         flash("Your account has been created successfully", "success")
         return redirect(url_for('login'))
 
-    return render_template('signup.html', STATICS=STATICS)
+    return render_template('signup.html')
 
 
 @app.route("/signout/", methods=['GET'])
 def logout():
-    session.clear()
+    session['logged'] = False
     flash('Successfully logged out of your session', "info")
     return redirect(url_for('index'))
 

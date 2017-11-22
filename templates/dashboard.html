@@ -1,0 +1,61 @@
+
+{% extends "includes/layout.html" %}
+
+{% block title %} - Dashboard{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+<!-- Content of the page -->
+<div class="ui container basic segment grid">  <!-- TODO can move this to layout if works fine -->
+    <div class="ui column row">
+        <div class="ui four wide computer column computer three wide tablet only">
+            <div class="ui segments">
+                <div class="ui segment header medium">
+                    {{ session['username'] }}
+                </div>
+                <div class="ui segment">
+                    <p>Offer new business for sale</p>
+                    <p>para 2</p>
+                </div>
+                <div class="ui segment">
+                    <p>My favorites</p>
+                    <p>My profile</p>
+                </div>
+            </div>
+        </div>
+        <div class="ui twelve wide computer eight wide tablet sixteen wide phone column">
+            <div class="ui segments">
+                <div class="ui segment header medium blue inverted">
+                    Your enterprises listed for sale
+                </div>
+                <div class="ui segment">
+                    <p>First enterprise</p>
+                    <p>modify + delete + preview + ++</p>
+                </div>
+            </div>
+            <div class="ui segments">
+                <div class="ui segment header medium inverted">
+                    Your favorite enterprises OR Interesting on our site
+                </div>
+                <div class="ui segment">
+                    <p>First enterprise</p>
+                    <p>modify + delete + preview + ++</p>
+                </div>
+                <div class="ui segment">
+                    <p>Second interesting</p>
+                    <p>modify + delete + preview + ++</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

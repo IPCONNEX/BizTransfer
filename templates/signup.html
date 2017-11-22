@@ -1,7 +1,7 @@
 
 {% extends "includes/layout.html" %}
 
-{% block content %}
+{% block body %}
 
 
 
@@ -30,13 +30,19 @@
                             <label>Email</label>
                             <input type="text" name="email" placeholder="Email address">
                         </div>
-                        <div class="field">
-                            <label>Full Name</label>
-                            <input type="text" name="name" placeholder="Your full name">
+                        <div class="two fields">
+                            <div class="field">
+                                <label>First Name</label>
+                                <input type="text" name="firstname" placeholder="">
+                            </div>
+                            <div class="field">
+                                <label>Last Name</label>
+                                <input type="text" name="lastname" placeholder="">
+                            </div>
                         </div>
                         <div class="field">
                             <label>Phone number</label>
-                            <input type="text" name="phone" placeholder="(xxx) xxx-xxxx">
+                            <input type="text" name="phone" placeholder="All digits phone number">
                         </div>
                         <div class="field">
                             <label>Password</label>
@@ -58,16 +64,58 @@
 </div>
 
 
+<!-- Form validation -->
+<script>
+    $( ".ui.form" ).form({
+        fields: {
+            email: {
+                identifier: 'email',
+                rules: [{
+                    type: 'email',
+                    prompt: 'Please enter a valid email'
+                }]
+            },
+            firstname: {
+                identifier: 'firstname',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'Please enter your first name'
+                }]
+            },
+            lastname: {
+                identifier: 'lastname',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'Please enter your last name'
+                }]
+            },
+            phone: {
+                identifier: 'phone',
+                rules: [{
+                    type: 'decimal',
+                    prompt: 'Please enter only digits'
+                }]
+            },
+            password: {
+                identifier: 'password',
+                rules: [{
+                    type: 'length[6]',
+                    prompt: 'Please enter your password'
+                }]
+            },
+            password2: {
+                identifier: 'password2',
+                rules: [{
+                    type: 'match[password]',
+                    prompt: 'Your have to match your password'
+                }]
+            }
+        },
+        inline: true,
+    });
+</script>
 
-
-
-
-
-
-
-
-
-
+<!-- Side bar menu -->
 <script>
     $('#toggle').click(function(){
         $('.ui.sidebar').sidebar('toggle');
