@@ -1,0 +1,40 @@
+
+<form method="POST" class="ui form" action="">
+    <div class="ui container segment stretched">
+        <div class="ui field">
+            <p>You are now ready to send your offer, we will review every offer to ensure we offer the best service to
+            both buyers and sellers by putting all the information in the right format</p>
+            <p>In case any changes are needed, we will contact you with more information, otherwise, we will notify you
+            when your offer is approved and published online</p>
+        </div>
+        <div class="ui divider"></div>
+        <div class="field">
+            <label>User agreement - <a href="#" class="ui">Review user agreement</a></label>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="user_agreement" tabindex="0" class="hidden" value="{% if current_profile.get('user_agreement') %}{{ current_profile.get('user-agreement') }}{% endif %}">
+                    <label>I agree to the terms and conditions of BizTransfer</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="submit" class="ui button large green right floated" value="Next"></input>
+</form>
+
+
+<!-- Form validation -->
+<script>
+    $( ".ui.form" ).form({
+        fields: {
+            user_agreement: {
+                identifier: 'user_agreement',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'You must agree to the terms and conditions'
+                }]
+            },
+        },
+        inline: true,
+    });
+</script>

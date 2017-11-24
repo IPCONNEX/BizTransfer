@@ -7,9 +7,9 @@ from random import randint
 from functools import wraps
 from passlib.hash import sha256_crypt
 from lib.AppDB import AppDB
-import time
+from datetime import datetime
+from lib.ToolBox import int_all
 import json
-
 
 DB = AppDB()
 usersDB = DB.GetUsersDB()
@@ -35,6 +35,7 @@ def is_logged_in(f):
         else:
             flash("You are not authorized, Please login", 'error')
             return redirect(url_for('login'))
+
     return wrap
 
 
@@ -45,11 +46,12 @@ def defineLanguage(private_request):
 
 @app.route("/lang/<string:lang>/", methods=['GET'])
 def language(lang):
+    origin_url = request.environ['werkzeug.request'].referrer
     if lang[:2] == 'fr':
         session['statics'] = DB.GetLanguageStatics('fr')
     elif lang[:2] == 'en':
         session['statics'] = DB.GetLanguageStatics('en')
-    return redirect(url_for('dashboard'))
+    return redirect(origin_url)
 
 
 @app.route("/", methods=["GET"])
@@ -60,49 +62,106 @@ def index():
 
 @app.route("/listings/", methods=["GET"])
 def listings():
-    return render_template('listings.html', enterprisesDB=enterprisesDB.find({'valide':True}))
+    return render_template('listings.html', enterprisesDB=enterprisesDB.find({'valide': True}))
 
 
 @app.route("/ent/<string:id>/", methods=["GET"])
 @is_logged_in
 def ent(id):
-    profile = enterprisesDB.find_one({"id":id})
-    enterprisesDB.update_one({'id':id}, {'$inc':{'visits': 1}})
+    profile = enterprisesDB.find_one({"id": id})
+    enterprisesDB.update_one({'id': id}, {'$inc': {'visits': 1}})
     #  TODO include flask_moment to track the time when the post created and updated from Flask Web Dev ch3 UTC based
     return render_template('profile.html', profile=profile)
 
 
-@app.route("/newpost/", methods=["GET", "POST"])
+@app.route("/newpost/<string:newId>/<int:step>/", methods=["GET", "POST"])
 #  TODO inspect the option for url_for(newpost, id=, page= ...) /newpost/3424?page=2...
-#  TODO test the WTform with Semantic UI
 #  TODO store element of enterprisePost per page on the session
-#  TODO use session.get('key') to avoid raising an exception !!!
 @is_logged_in
-def newpost():
+def newpost(newId='0', step=1):
+    current_profile = {}
     #  get a random non-existing ID for the entry
-    while True:
-        newId = str(randint(1, 999999)).rjust(6, '0')
-        if not enterprisesDB.find({"id":newId}).count():
-            break
+    if newId == '0':
+        #  The case of new posting
+        while True:
+            newId = str(randint(1, 999999)).rjust(6, '0')
+            if not enterprisesDB.find({"id": newId}).count():
+                current_profile['id'] = newId
+                break
+    else:
+        current_profile = enterprisesDB.find_one({'id': newId}, {'_id': False})
+        pass
 
     if request.method == 'POST':
-        if enterprisesDB.find({'neq' : request.form['neq']}).count() > 0:
-            flash("This company already exists", "error")
-            return render_template('newpost.html', newId=newId)
-        enterprisesDB.insert({'id':newId, 'entr_name': request.form['business_name'], 'neq': request.form['neq'],
-                                'contact': request.form['contact_name'], 'email': request.form['contact_email'],
-                              'phone': request.form['contact_phone'],'ask_price': request.form['ask_price'],
-                              'valide': False, 'created':time.time(), 'owner':session['email']})
-        flash("You successfully entered your enterprise", "success")
-        return redirect(url_for('index', id=newId))
+        #  if enterprisesDB.find({'neq': request.form['neq']}).count() > 0:
+        #  flash("This company already exists", "error")
+        #  return render_template('newpost.html', newId=newId)
+        if step == 1:
+            #  modify and insert new if there is no entry (upsert=True)
+            enterprisesDB.update_one({'id': newId}, {"$set": {'id': newId,
+                                                              'title': request.form['business_title'],
+                                                              'description': request.form['description'],
+                                                              'region': request.form['region'],
+                                                              'ask_price': int_all(request.form['ask_price']),
+                                                              'revenue': int_all(request.form['revenue']),
+                                                              'valide': False,
+                                                              'modified': datetime.utcnow(),
+                                                              'visites': 0, 'reason': request.form['reason'],
+                                                              'owner': session['email']}}, upsert=True)
+            return redirect(url_for('newpost', newId=newId, step=2))
+        elif step == 2:
+            #  TODO correct the fields form the HTML
+            enterprisesDB.update_one({'id': newId}, {"$set": {'franchise': request.form['franchise'],
+                                                              'foundation_year': int_all(
+                                                                  request.form['foundation_year']),
+                                                              'gross_profit': int_all(request.form['gross_profit']),
+                                                              'ebitda': int_all(request.form['ebitda']),
+                                                              'inventory': int_all(request.form['inventory']),
+                                                              'office_furniture': int_all(
+                                                                  request.form['office_furniture']),
+                                                              'dev_stage':request.form['dev_stage'],
+                                                              'finance': request.form['finance']}}, upsert=True)
+            return redirect(url_for('newpost', newId=newId, step=3))
+        elif step == 3:
+            enterprisesDB.update_one({'id': newId}, {"$set": {'gross_revenue': int_all(request.form['gross_revenue']),
+                                                              'gross_profit': int_all(request.form['gross_profit']),
+                                                              'ebitda': int_all(request.form['ebitda']),
+                                                              'inventory': int_all(request.form['inventory']),
+                                                              'office_furniture': int_all(
+                                                                  request.form['office_furniture']),
+                                                              'dept': int_all(request.form['dept']),
+                                                              'tax': int_all(request.form.get('tax'))}}, upsert=True)
+            return redirect(url_for('newpost', newId=newId, step=4))
+        elif step == 4:
+            enterprisesDB.update_one({'id': newId}, {"$set": {'scian1': request.form['scian1'],
+                                                              'scian2': request.form['scian2'],
+                                                              'fulltime': int_all(request.form['fulltime']),
+                                                              'parttime': int_all(request.form['parttime']),
+                                                              'sell_involve': (request.form['sell_involve']),
+                                                              'patent': request.form['patent'],
+                                                              'market_business': request.form.get('market_business'),
+                                                              'market_individuals': request.form.get('market_individuals'),
+                                                              'market_online': request.form.get('market_online')}},
+                                     upsert=True)
+            return redirect(url_for('newpost', newId=newId, step=5))
+        elif step == 5:
+            enterprisesDB.update_one({'id': newId}, {"$set": {'user_agreement': request.form['user_agreement'],
+                                                              'submit_date': datetime.utcnow(),
+                                                              'submitted':True,
+                                                              'market_online': request.form.get('market_online')}},
+                                     upsert=True)
+            flash("You successfully sent your enterprise for review", "success")
+            return redirect(url_for('dashboard', id=newId))
 
-    return render_template('newpost.html', newId=newId)
+    if request.method == 'GET':
+        return render_template('newpost.html', step=step, current_profile=current_profile)
 
 
 @app.route("/dashboard/", methods=['GET'])
 @is_logged_in
 def dashboard():
-    return render_template('dashboard.html')
+    enterprises = enterprisesDB.find({'owner': session['email']}, {'_id': False})
+    return render_template('dashboard.html', enterprises=enterprises)
 
 
 @app.route("/login/", methods=['POST', 'GET'])
@@ -156,7 +215,7 @@ def logout():
 @app.errorhandler(404)
 def page_not_found(e):
     #  TODO setup an personalized page for 404 error return page+message error
-    return "<h1 style='text-align: center'>PAGE NOT FOUND</h1>"
+    return "<h1 style='text-align: center'>PAGE NOT FOUND</h1><p>e</p>"
 
 
 @app.errorhandler(500)

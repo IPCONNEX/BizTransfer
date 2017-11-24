@@ -1,0 +1,138 @@
+<form method="POST" class="ui form" action="">
+
+    <div class="ui container segment stretched">
+        <div class="field">
+            <label>Is your business a Franchise?</label>
+            <select id="franchise" name="franchise" class="ui fluid dropdown">
+                <option value="{% if current_profile.get('franchise') %}{{ current_profile.get('franchise') }}{% endif %}"></option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Foundation year</label>
+            <select name="foundation_year" class="ui fluid dropdown">
+                <option value="{% if current_profile.get('foundation_year') %}{{ current_profile.get('foundation_year') }}{% endif %}"></option>
+                {% for year in range(2017,1900,-1) %}
+                    <option value="{{ year }}">{{ year }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="field">
+            <label>Gross profit for the latest fiscal year</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="gross_profit" value="{% if current_profile.get('gross_profit') %}{{ current_profile.get('gross_profit') }}{% endif %}" id="amount">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>EBITDA</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="ebitda" value="{% if current_profile.get('ebitda') %}{{ current_profile.get('ebitda') }}{% endif %}" id="amount">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Total inventory value</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="inventory" value="{% if current_profile.get('inventory') %}{{ current_profile.get('inventory') }}{% endif %}" id="amount">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Office furniture</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="office_furniture" value="{% if current_profile.get('office_furniture') %}{{ current_profile.get('office_furniture') }}{% endif %}" id="amount">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Development stage of the enterprise</label>
+            <select name="dev_stage" class="ui fluid dropdown" id="dev_stage">
+                <option value="{% if current_profile.get('dev_stage') %}{{ current_profile.get('dev_stage') }}{% endif %}"></option>
+                <option value="startup">Startup</option>
+                <option value="expanding">Expanding</option>
+                <option value="established">Established</option>
+                <option value="bankrupt">Decline</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Seller is open to finance the buyer?</label>
+            <select name="finance" class="ui fluid dropdown">
+                <option value="{% if current_profile.get('finance') %}{{ current_profile.get('finance') }}{% endif %}"></option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+                <option value="later">To be discussed</option>
+            </select>
+        </div>
+    </div>
+
+    <input type="submit" class="ui button large primary green right floated" value="Next"></input>
+</form>
+
+
+<!-- Form validation -->
+<script>
+    $( ".ui.form" ).form({
+        fields: {
+            franchise: {
+                identifier: 'franchise',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'This is a required field'
+                }]
+            },
+            foundation_year: {
+                identifier: 'foundation_year',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Enter a valid year'
+                    // TODO use better validator for a year
+                },{
+                    type:'empty',
+                    prompt: 'This field is required'
+                }]
+            },
+            gross_profit: {
+                identifier: 'gross_profit',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Only numbers are allowed'
+                }]
+            },
+            dev_stage: {
+                identifier: 'dev_stage',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'You have to indicate the development stage of the business'
+                }]
+            },
+            ebitda: {
+                identifier: 'ebitda',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Only numbers are allowed'
+                }]
+            },
+            inventory: {
+                identifier: 'inventory',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Only numbers are allowed'
+                }]
+            },
+            office_furniture: {
+                identifier: 'office_furniture',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Only numbers are allowed'
+                }]
+            }
+        },
+        inline: true,
+    });
+</script>

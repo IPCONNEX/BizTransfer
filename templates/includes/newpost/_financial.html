@@ -1,0 +1,122 @@
+<form method="POST" class="ui form" action="">
+
+    <div class="ui container segment stretched">
+        <div class="field">
+            <label>Gross Annual Revenue</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="gross_revenue" value="{% if current_profile.get('gross_revenue') %}{{ current_profile.get('gross_revenue') }}{% endif %}" id="amount">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Gross Annual Profit</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="gross_profit" value="{% if current_profile.get('gross_profit') %}{{ current_profile.get('gross_profit') }}{% endif %}" id="amount">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>EBITDA</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="ebitda" value="{% if current_profile.get('ebitda') %}{{ current_profile.get('ebitda') }}{% endif %}" id="amount">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Total inventory value</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="inventory" value="{% if current_profile.get('inventory') %}{{ current_profile.get('inventory') }}{% endif %}" id="amount">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Office furniture</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="office_furniture" value="{% if current_profile.get('office_furniture') %}{{ current_profile.get('office_furniture') }}{% endif %}" id="amount">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Long term dept</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="dept" value="{% if current_profile.get('dept') %}{{ current_profile.get('dept') }}{% endif %}" id="amount">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Tax balance</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="tax" id="tax" value="{% if current_profile.get('tax') %}{{ current_profile.get('tax') }}{% endif %}">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+    </div>
+
+    <input type="submit" class="ui button large primary green right floated" value="Next"></input>
+</form>
+
+
+<!-- Form validation -->
+<script>
+    $( ".ui.form" ).form({
+        fields: {
+            gross_revenue: {
+                identifier: 'gross_revenue',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Enter a valid number'
+                }]
+            },
+            gross_profit: {
+                identifier: 'gross_profit',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Enter a valid number'
+                }]
+            },
+            ebitda: {
+                identifier: 'ebitda',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Enter a valid number'
+                }]
+            },
+            tax: {
+                identifier: 'tax',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Enter a valid number'
+                }]
+            },
+            inventory: {
+                identifier: 'inventory',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Enter a valid number'
+                }]
+            },
+            office_furniture: {
+                identifier: 'office_furniture',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Enter a valid number'
+                }]
+            },
+            dept: {
+                identifier: 'dept',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Enter a valid number'
+                }]
+            }
+        },
+        inline: true,
+    });
+</script>

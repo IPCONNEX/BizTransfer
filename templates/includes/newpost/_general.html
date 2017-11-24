@@ -1,0 +1,96 @@
+<form method="POST" class="ui form" action="">
+
+    <div class="ui container segment stretched">
+        <div class="field">
+            <label>ID of the announcement</label>
+            <input type="text" name="id" readonly="" value="{{ current_profile.get('id') }}" placeholder="{{ current_profile.get('id') }}">
+        </div>
+        <div class="field">
+            <label>Title of the announcement</label>
+            <input type="text" name="business_title" id="business_title" value="{% if current_profile.get('title') %}{{ current_profile.get('title') }}{% endif %}">
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <textarea type="text" id="description" rows="3" name="description">{% if current_profile.get('description') %}{{ current_profile.get('description') }}{% endif %}</textarea>
+        </div>
+        <div class="field">
+            <label>Location</label>
+            <input type="text" id="region" name="region" value="{% if current_profile.get('region') %}{{ current_profile.get('region') }}{% endif %}">
+        </div>
+        <div class="field">
+            <label>Asking price</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">$</label>
+                <input name="ask_price" id="ask_price" type="text" value="{% if current_profile.get('ask_price') %}{{ current_profile.get('ask_price') }}{% endif %}" id="amount">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Reason for the sale</label>
+            <textarea type="text" rows="3" name="reason" id="reason">{% if current_profile.get('reason') %}{{ current_profile.get('reason') }}{% endif %}</textarea>
+        </div>
+        <div class="field">
+            <label>Revenue</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">$</label>
+                <input name="revenue" id="revenue" type="text" value="{% if current_profile.get('revenue') %}{{ current_profile.get('revenue') }}{% endif %}" id="amount">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+    </div>
+
+    <input type="submit" class="ui button large primary green right floated" value="Next"></input>
+</form>
+
+
+
+
+<!-- Form validation -->
+<script>
+    $( ".ui.form" ).form({
+        fields: {
+            title: {
+                identifier: 'business_title',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'You have to enter a title for your announcement'
+                }]
+            },
+            description: {
+                identifier: 'description',
+                rules: [{
+                    type: 'minLength[100]',
+                    prompt: 'Please describe your business with at least 100 characters'
+                }]
+            },
+            region: {
+                identifier: 'region',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'You have to enter a region where your business is located'
+                }]
+            },
+            ask_price: {
+                identifier: 'ask_price',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Only numbers are allowed'
+                },{
+                    type:'empty',
+                    prompt: 'This field is required'
+                }]
+            },
+            revenue: {
+                identifier: 'revenue',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Only numbers are allowed'
+                },{
+                    type:'empty',
+                    prompt: 'This field is required'
+                }]
+            }
+        },
+        inline: true,
+    });
+</script>

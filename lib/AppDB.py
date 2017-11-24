@@ -23,7 +23,8 @@ class AppDB():
 
 
 #  TODO complete full profile data fields
-class EnterprisePost():
-    summary = {'post_id': '', 'business_title': ''}
+class Profile():
+    def __init__(self):
+        self.summary = {'post_id': '', 'business_title': ''}
+        self.ask_price = ''
 
-    profile = {}

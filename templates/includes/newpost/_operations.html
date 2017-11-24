@@ -1,0 +1,108 @@
+<form method="POST" class="ui form" action="">
+
+    <div class="ui container segment stretched">
+        <div class="two fields">
+            <div class="field">
+                <label>SCIAN code 1</label>
+                <input type="text" name="scian1" value="{% if current_profile.get('scian1') %}{{ current_profile.get('scian1') }}{% endif %}" id="scian1">
+            </div>
+            <div class="field">
+                <label>SCIAN code 2</label>
+                <input type="text" name="scian2" value="{% if current_profile.get('scian2') %}{{ current_profile.get('scian2') }}{% endif %}" id="scian2">
+            </div>
+        </div>
+        <div class="two fields">
+            <div class="field">
+                <label>Number of full-time employees</label>
+                <select name="fulltime" class="ui fluid dropdown">
+                    <option value="{% if current_profile.get('fulltime') %}{{ current_profile.get('fulltime') }}{% endif %}"></option>
+                    {% for emp in range(50) %}
+                        <option value="{{ emp }}">{{ emp }}</option>
+                    {% endfor %}
+                    <option value="50">50 to 100</option>
+                    <option value="100">100 to 500</option>
+                    <option value="500">500 to 1000</option>
+                    <option value="1000">Over 1000</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Number of part-time employees</label>
+                <select name="parttime" class="ui fluid dropdown">
+                    <option value="{% if current_profile.get('parttime') %}{{ current_profile.get('parttime') }}{% endif %}"></option>
+                    {% for emp in range(51) %}
+                        <option value="{{ emp }}">{{ emp }}</option>
+                    {% endfor %}
+                    <option value="51">Over 50</option>
+                </select>
+            </div>
+        </div>
+        <div class="field">
+            <label>Seller will be available after the sales?</label>
+            <select name="sell_involve" class="ui fluid dropdown">
+                <option value="{% if current_profile.get('sell_involve') %}{{ current_profile.get('sell_involve') }}{% endif %}"></option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+                <option value="later">To be discussed</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Customers target</label>
+            <div class="three fields">
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="market_business" tabindex="0" class="hidden" {% if current_profile.get('market_business') == 'on' %}checked{% endif %}>
+                        <label>Business</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="market_individuals" tabindex="0" class="hidden"  {% if current_profile.get('market_individuals') == 'on' %}checked{% endif %}>
+                        <label>Individuals</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="market_online" tabindex="0" class="hidden"  {% if current_profile.get('market_online') == 'on' %}checked{% endif %}>
+                        <label>Online</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Patent/License</label>
+            <select name="patent" class="ui fluid dropdown">
+                <option value="{% if current_profile.get('patent') %}{{ current_profile.get('patent') }}{% endif %}"></option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+
+    <button class="ui button red large" action="/dashboard">Cancel</button>
+    <input type="submit" class="ui button large green right floated" value="Next"></input>
+    <button class="ui button primary right floated large " action="/newpost/{{ newId }}/3">Previous</button>
+</form>
+
+
+<!-- Form validation -->
+<script>
+    $( ".ui.form" ).form({
+        fields: {
+            scian1: {
+                identifier: 'scian1',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Enter a valid number'
+                }]
+            },
+            scian2: {
+                identifier: 'scian2',
+                rules: [{
+                    type: 'number',
+                    prompt: 'Enter a valid number'
+                }]
+            }
+        },
+        inline: true,
+    });
+</script>

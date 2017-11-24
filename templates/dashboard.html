@@ -16,7 +16,7 @@
 <!-- Content of the page -->
 <div class="ui container basic segment grid">  <!-- TODO can move this to layout if works fine -->
     <div class="ui column row">
-        <div class="ui four wide computer column computer three wide tablet only">
+        <div class="ui four wide computer column computer four wide tablet only">
             <div class="ui segments">
                 <div class="ui segment header medium">
                     {{ session['username'] }}
@@ -31,15 +31,47 @@
                 </div>
             </div>
         </div>
-        <div class="ui twelve wide computer eight wide tablet sixteen wide phone column">
+        <div class="ui twelve wide computer twelve wide tablet sixteen wide phone column">
             <div class="ui segments">
-                <div class="ui segment header medium blue inverted">
+                <div class="ui segment header medium inverted">
                     Your enterprises listed for sale
                 </div>
-                <div class="ui segment">
-                    <p>First enterprise</p>
-                    <p>modify + delete + preview + ++</p>
-                </div>
+                <!-- Posts of the user -->
+                {% for enterprise in enterprises %}
+                    <div class="ui segment">
+                    <div class="ui grid">
+                        <div class="ui row">
+                            <div class="ui ten wide column">
+                                <div class="ui header small">{{ enterprise.get('title') }}
+                                    {% if enterprise.valid == True %}
+                                        <div class="ui circular label green">Online</div>
+                                    {% elif enterprise.submitted != Null %}
+                                        <div class="ui circular label blue">Under review</div>
+                                    {% else %}
+                                        <div class="ui circular label orange">Not submitted</div>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                            <div class="ui six wide column">
+                                <a href="/newpost/{{ enterprise['id'] }}/1/"><button class="ui button tiny green right floated">Modify</button></a>
+                                <button class="ui button tiny red right floated">Delete</button>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <p>Asking price: CA$ {{ enterprise['ask_price'] }}</p>
+                            </div>
+                            <div class="ui six wide column">
+                                <p>Revenue: CA$ {{ enterprise['revenue'] }}</p>
+                            </div>
+                            <div class="ui four wide colum">
+                                <p>Total views: {{ enterprise['visits'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                {% endfor %}
             </div>
             <div class="ui segments">
                 <div class="ui segment header medium inverted">
