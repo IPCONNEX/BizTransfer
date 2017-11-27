@@ -3,7 +3,6 @@
 
 from flask import render_template, request, Flask, flash, redirect, url_for, session, logging
 from random import randint
-#  from wtforms import Form, StringField, TextAreaField, PasswordField, DecimalField, validators
 from functools import wraps
 from passlib.hash import sha256_crypt
 from lib.AppDB import AppDB
@@ -17,7 +16,6 @@ enterprisesDB = DB.GetEnterprisesDB()
 #  TODO load all languages initially, send the right language based on the session
 #  TODO change the language to en <> english to be pushed in pages
 #  TODO can be used to show dates flask_moment
-#  STATICS = DB.GetLanguageStatics('en')
 
 # THE APP
 
@@ -35,13 +33,15 @@ def is_logged_in(f):
         else:
             flash("You are not authorized, Please login", 'error')
             return redirect(url_for('login'))
-
     return wrap
 
 
-def defineLanguage(private_request):
-    language = private_request.environ.get('werkzeug.request').accept_languages[0][0][:2]
-    return DB.GetLanguageStatics(language)
+def define_language(private_request):
+    if session['statics']:
+        return session['statics']
+    else:
+        language = private_request.environ.get('werkzeug.request').accept_languages[0][0][:2]
+        return DB.GetLanguageStatics(language)
 
 
 @app.route("/lang/<string:lang>/", methods=['GET'])
@@ -51,12 +51,15 @@ def language(lang):
         session['statics'] = DB.GetLanguageStatics('fr')
     elif lang[:2] == 'en':
         session['statics'] = DB.GetLanguageStatics('en')
+    if not origin_url:
+        origin_url = '/'
     return redirect(origin_url)
 
 
 @app.route("/", methods=["GET"])
 def index():
-    defineLanguage(request)
+    if not session['statics']:
+        session['statics'] = define_language(request)
     return render_template('index.html')
 
 
@@ -104,7 +107,7 @@ def newpost(newId='0', step=1):
                                                               'region': request.form['region'],
                                                               'ask_price': int_all(request.form['ask_price']),
                                                               'revenue': int_all(request.form['revenue']),
-                                                              'valide': False,
+                                                              'valid': False,
                                                               'modified': datetime.utcnow(),
                                                               'visites': 0, 'reason': request.form['reason'],
                                                               'owner': session['email']}}, upsert=True)
@@ -120,6 +123,7 @@ def newpost(newId='0', step=1):
                                                               'office_furniture': int_all(
                                                                   request.form['office_furniture']),
                                                               'dev_stage':request.form['dev_stage'],
+                                                              'valid': False,
                                                               'finance': request.form['finance']}}, upsert=True)
             return redirect(url_for('newpost', newId=newId, step=3))
         elif step == 3:
@@ -130,6 +134,7 @@ def newpost(newId='0', step=1):
                                                               'office_furniture': int_all(
                                                                   request.form['office_furniture']),
                                                               'dept': int_all(request.form['dept']),
+                                                              'valid': False,
                                                               'tax': int_all(request.form.get('tax'))}}, upsert=True)
             return redirect(url_for('newpost', newId=newId, step=4))
         elif step == 4:
@@ -139,6 +144,7 @@ def newpost(newId='0', step=1):
                                                               'parttime': int_all(request.form['parttime']),
                                                               'sell_involve': (request.form['sell_involve']),
                                                               'patent': request.form['patent'],
+                                                              'valid': False,
                                                               'market_business': request.form.get('market_business'),
                                                               'market_individuals': request.form.get('market_individuals'),
                                                               'market_online': request.form.get('market_online')}},
@@ -147,7 +153,7 @@ def newpost(newId='0', step=1):
         elif step == 5:
             enterprisesDB.update_one({'id': newId}, {"$set": {'user_agreement': request.form['user_agreement'],
                                                               'submit_date': datetime.utcnow(),
-                                                              'submitted':True,
+                                                              'submitted': True, 'valid': False,
                                                               'market_online': request.form.get('market_online')}},
                                      upsert=True)
             flash("You successfully sent your enterprise for review", "success")
@@ -174,7 +180,7 @@ def login():
             hashPass = usersDB.find_one({'email': email})['password']
             if sha256_crypt.verify(password, hashPass):
                 session['logged'] = True
-                session['username'] = usersDB.find_one({'email': email})['name']
+                session['username'] = usersDB.find_one({'email': email})['firstname']
                 session['email'] = email
                 flash("Login successful", "success")
                 try:
