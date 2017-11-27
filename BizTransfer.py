@@ -1,16 +1,39 @@
 #! Python
 #  BizTransfer Web Application for Business exchanges
 
+from config import config
 from flask import render_template, request, Flask, flash, redirect, url_for, session, logging
+from flask_moment import Moment
+from flask_mail import Mail
 from random import randint
-#  from wtforms import Form, StringField, TextAreaField, PasswordField, DecimalField, validators
 from functools import wraps
 from passlib.hash import sha256_crypt
-from lib.AppDB import AppDB
+#  from lib.AppDB import
 from datetime import datetime
 from lib.ToolBox import int_all
 import json
 
+from app.models import AppDB
+import os
+from app import create_app
+#  from app.models
+#  from flask_migrate import Migrate
+
+
+DB = AppDB()
+usersDB = DB.GetUsersDB()
+enterprisesDB = DB.GetEnterprisesDB()
+
+
+app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+#  migrate = Migrate(app, db)
+
+
+@app.shell_context_processor
+def make_shell_context():
+    return dict(usersDB=usersDB, enterprisesDB=enterprisesDB)
+
+"""
 DB = AppDB()
 usersDB = DB.GetUsersDB()
 enterprisesDB = DB.GetEnterprisesDB()
@@ -18,10 +41,6 @@ enterprisesDB = DB.GetEnterprisesDB()
 #  TODO change the language to en <> english to be pushed in pages
 #  TODO can be used to show dates flask_moment
 #  STATICS = DB.GetLanguageStatics('en')
-
-# THE APP
-
-app = Flask(__name__)
 
 
 def is_logged_in(f):
@@ -40,8 +59,9 @@ def is_logged_in(f):
 
 
 def defineLanguage(private_request):
-    language = private_request.environ.get('werkzeug.request').accept_languages[0][0][:2]
-    return DB.GetLanguageStatics(language)
+    acc_language = private_request.environ.get('werkzeug.request').accept_languages[0][0][:2]
+    language(acc_language)
+    return DB.GetLanguageStatics(acc_language)
 
 
 @app.route("/lang/<string:lang>/", methods=['GET'])
@@ -54,10 +74,7 @@ def language(lang):
     return redirect(origin_url)
 
 
-@app.route("/", methods=["GET"])
-def index():
-    defineLanguage(request)
-    return render_template('index.html')
+
 
 
 @app.route("/listings/", methods=["GET"])
@@ -75,8 +92,6 @@ def ent(id):
 
 
 @app.route("/newpost/<string:newId>/<int:step>/", methods=["GET", "POST"])
-#  TODO inspect the option for url_for(newpost, id=, page= ...) /newpost/3424?page=2...
-#  TODO store element of enterprisePost per page on the session
 @is_logged_in
 def newpost(newId='0', step=1):
     current_profile = {}
@@ -104,9 +119,9 @@ def newpost(newId='0', step=1):
                                                               'region': request.form['region'],
                                                               'ask_price': int_all(request.form['ask_price']),
                                                               'revenue': int_all(request.form['revenue']),
-                                                              'valide': False,
-                                                              'modified': datetime.utcnow(),
-                                                              'visites': 0, 'reason': request.form['reason'],
+                                                              'valid': False,
+                                                              'update_date': datetime.utcnow(),
+                                                              'visits': 0, 'reason': request.form['reason'],
                                                               'owner': session['email']}}, upsert=True)
             return redirect(url_for('newpost', newId=newId, step=2))
         elif step == 2:
@@ -120,6 +135,7 @@ def newpost(newId='0', step=1):
                                                               'office_furniture': int_all(
                                                                   request.form['office_furniture']),
                                                               'dev_stage':request.form['dev_stage'],
+                                                              'update_date': datetime.utcnow(),
                                                               'finance': request.form['finance']}}, upsert=True)
             return redirect(url_for('newpost', newId=newId, step=3))
         elif step == 3:
@@ -130,6 +146,7 @@ def newpost(newId='0', step=1):
                                                               'office_furniture': int_all(
                                                                   request.form['office_furniture']),
                                                               'dept': int_all(request.form['dept']),
+                                                              'update_date': datetime.utcnow(),
                                                               'tax': int_all(request.form.get('tax'))}}, upsert=True)
             return redirect(url_for('newpost', newId=newId, step=4))
         elif step == 4:
@@ -139,6 +156,7 @@ def newpost(newId='0', step=1):
                                                               'parttime': int_all(request.form['parttime']),
                                                               'sell_involve': (request.form['sell_involve']),
                                                               'patent': request.form['patent'],
+                                                              'update_date': datetime.utcnow(),
                                                               'market_business': request.form.get('market_business'),
                                                               'market_individuals': request.form.get('market_individuals'),
                                                               'market_online': request.form.get('market_online')}},
@@ -147,6 +165,7 @@ def newpost(newId='0', step=1):
         elif step == 5:
             enterprisesDB.update_one({'id': newId}, {"$set": {'user_agreement': request.form['user_agreement'],
                                                               'submit_date': datetime.utcnow(),
+                                                              'update_date': datetime.utcnow(),
                                                               'submitted':True,
                                                               'market_online': request.form.get('market_online')}},
                                      upsert=True)
@@ -160,11 +179,14 @@ def newpost(newId='0', step=1):
 @app.route("/dashboard/", methods=['GET'])
 @is_logged_in
 def dashboard():
+    #  TODO add a button to post enterprise if empty (or not)
     enterprises = enterprisesDB.find({'owner': session['email']}, {'_id': False})
     return render_template('dashboard.html', enterprises=enterprises)
 
 
 @app.route("/login/", methods=['POST', 'GET'])
+#  TODO link to forget my password
+#  TODO add social media login/validation
 def login():
     #  TODO  find language using: request.environ
     if request.method == 'POST':
@@ -173,8 +195,9 @@ def login():
         if usersDB.find_one({'email': email}):
             hashPass = usersDB.find_one({'email': email})['password']
             if sha256_crypt.verify(password, hashPass):
+                usersDB.update_one({'email': email}, {"$set": {'account.last_login': datetime.utcnow()}}, upsert=True)
                 session['logged'] = True
-                session['username'] = usersDB.find_one({'email': email})['name']
+                session['username'] = usersDB.find_one({'email': email})['firstname']
                 session['email'] = email
                 flash("Login successful", "success")
                 try:
@@ -190,6 +213,7 @@ def login():
 
 
 @app.route("/signup/", methods=['POST', 'GET'])
+#  TODO send confirmation email after signup
 def signup():
     if request.method == 'POST':
         if usersDB.find({'email': request.form['email']}).count() > 0:
@@ -197,8 +221,9 @@ def signup():
             return render_template('signup.html')
 
         hashPassword = sha256_crypt.encrypt(request.form['password']).encode()
-        usersDB.insert({'name': request.form['name'], 'email': request.form['email'], 'phone': request.form['phone'],
-                        'password': hashPassword})
+        usersDB.insert({'firstname': request.form['firstname'], 'lastname': request.form['lastname'],
+                        'email': request.form['email'], 'phone': request.form['phone'], 'password': hashPassword,
+                        'account.created': datetime.utcnow()})
         flash("Your account has been created successfully", "success")
         return redirect(url_for('login'))
 
@@ -207,21 +232,13 @@ def signup():
 
 @app.route("/signout/", methods=['GET'])
 def logout():
+    usersDB.update_one({'email': session.get('email')}, {"$set": {'account.last_logout': datetime.utcnow()}}, upsert=True)
     session['logged'] = False
     flash('Successfully logged out of your session', "info")
     return redirect(url_for('index'))
 
 
-@app.errorhandler(404)
-def page_not_found(e):
-    #  TODO setup an personalized page for 404 error return page+message error
-    return "<h1 style='text-align: center'>PAGE NOT FOUND</h1><p>e</p>"
 
-
-@app.errorhandler(500)
-def page_not_found(e):
-    #  TODO setup an personalized page for 500 error
-    return "<h1 style='text-align: center'>APPLICATION ERROR</h1>"
 
 
 #  TODO attach the key and the BD key into a local environment file instead of hardcoded
@@ -229,3 +246,4 @@ app.secret_key = "secr3tkey"
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
+"""
