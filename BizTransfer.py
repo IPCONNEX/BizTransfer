@@ -1,25 +1,33 @@
 #! Python
 #  BizTransfer Web Application for Business exchanges
 
-from flask import render_template, request, Flask, flash, redirect, url_for, session, logging
+from flask import render_template, request, Flask, flash, redirect, url_for, session, logging, jsonify
+from flask_moment import Moment
+from itsdangerous import URLSafeTimedSerializer, BadTimeSignature
+from flask_mail import Message, Mail
 from random import randint
 from functools import wraps
 from passlib.hash import sha256_crypt
 from lib.AppDB import AppDB
 from datetime import datetime
 from lib.ToolBox import int_all
-import json
+import os
 
 DB = AppDB()
 usersDB = DB.GetUsersDB()
 enterprisesDB = DB.GetEnterprisesDB()
+serializer = URLSafeTimedSerializer('Sec3ret_key!')
 #  TODO load all languages initially, send the right language based on the session
 #  TODO change the language to en <> english to be pushed in pages
 #  TODO can be used to show dates flask_moment
 
 # THE APP
-
 app = Flask(__name__)
+
+app.config.from_object(os.environ['APP_SETTINGS'])
+
+moment = Moment(app)
+mail = Mail(app)
 
 
 def is_logged_in(f):
@@ -58,21 +66,22 @@ def language(lang):
 
 @app.route("/", methods=["GET"])
 def index():
-    if not session['statics']:
+    # print("MAIL_SERVER = " + os.environ.get('MAIL_SERVER'))
+    if session.get('statics') is not None:
         session['statics'] = define_language(request)
     return render_template('index.html')
 
 
 @app.route("/listings/", methods=["GET"])
 def listings():
-    return render_template('listings.html', enterprisesDB=enterprisesDB.find({'valide': True}))
+    return render_template('listings.html', enterprisesDB=enterprisesDB.find({'valid': True}))
 
 
 @app.route("/ent/<string:id>/", methods=["GET"])
 @is_logged_in
 def ent(id):
-    profile = enterprisesDB.find_one({"id": id})
-    enterprisesDB.update_one({'id': id}, {'$inc': {'visits': 1}})
+    profile = enterprisesDB.find_one({"id": id}, {'_id': False})
+    enterprisesDB.update_one({'id': id}, {'$inc': {'visits': 1}}, upsert=True)
     #  TODO include flask_moment to track the time when the post created and updated from Flask Web Dev ch3 UTC based
     return render_template('profile.html', profile=profile)
 
@@ -157,7 +166,7 @@ def newpost(newId='0', step=1):
                                                               'market_online': request.form.get('market_online')}},
                                      upsert=True)
             flash("You successfully sent your enterprise for review", "success")
-            return redirect(url_for('dashboard', id=newId))
+            return redirect(url_for('dashboard'))
 
     if request.method == 'GET':
         return render_template('newpost.html', step=step, current_profile=current_profile)
@@ -177,11 +186,13 @@ def login():
         email = request.form['email']
         password = request.form['password']
         if usersDB.find_one({'email': email}):
+            #  TODO verify that the account is verified
             hashPass = usersDB.find_one({'email': email})['password']
             if sha256_crypt.verify(password, hashPass):
                 session['logged'] = True
                 session['username'] = usersDB.find_one({'email': email})['firstname']
                 session['email'] = email
+                #  TODO update last login data on the DB
                 flash("Login successful", "success")
                 try:
                     origin_url = session['origin_url']
@@ -203,17 +214,35 @@ def signup():
             return render_template('signup.html')
 
         hashPassword = sha256_crypt.encrypt(request.form['password']).encode()
-        usersDB.insert({'name': request.form['name'], 'email': request.form['email'], 'phone': request.form['phone'],
-                        'password': hashPassword})
-        flash("Your account has been created successfully", "success")
+        usersDB.insert({'firstname': request.form['firstname'], 'lastname': request.form['lastname'],
+                        'email': request.form['email'],'phone': request.form['phone'], 'password': hashPassword})
+        token = serializer.dumps(request.form['email'], salt='confirm-email')
+        msg = Message('Confirm email', sender='oelmohri@gmail.com', recipients=[request.form['email']])
+        link = url_for('confirm_email', token=token, _external=True)
+        msg.body = '<h3>Your confirmation link is: ' + link
+        mail.send(msg)
+        flash("Your account has been created, Please check your email to validate your account", "warning")
         return redirect(url_for('login'))
 
     return render_template('signup.html')
 
 
+@app.route("/signup/confirm_email/<token>")
+def confirm_email(token):
+    try:
+        email = serializer.loads(token, salt='confirm-email')
+        usersDB.update_one({'email': email}, {"$set": {'account.email_confirmed': True}}, upsert=True)
+        #  TODO update the account creation date
+        flash("Your email is successfully validated, you can login now", "success")
+    except BadTimeSignature:
+        flash("A wrong confirmation link has been provided, please click again on the confirmation link", "error")
+    return redirect(url_for('login'))
+
+
 @app.route("/signout/", methods=['GET'])
 def logout():
     session['logged'] = False
+    #  TODO update the last signout date
     flash('Successfully logged out of your session', "info")
     return redirect(url_for('index'))
 
@@ -221,7 +250,7 @@ def logout():
 @app.errorhandler(404)
 def page_not_found(e):
     #  TODO setup an personalized page for 404 error return page+message error
-    return "<h1 style='text-align: center'>PAGE NOT FOUND</h1><p>e</p>"
+    return "<h1 style='text-align: center'>PAGE NOT FOUND</h1>"
 
 
 @app.errorhandler(500)
@@ -231,7 +260,7 @@ def page_not_found(e):
 
 
 #  TODO attach the key and the BD key into a local environment file instead of hardcoded
-app.secret_key = "secr3tkey"
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5001)

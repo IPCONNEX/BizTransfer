@@ -1,34 +1,50 @@
 
 {% extends "includes/layout.html" %}
 
+{% block title %} - Dashboard{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+    <style>
+
+    </style>
+
+{% endblock %}
+
 {% block body %}
 
 {% for post in enterprisesDB %}
 
 
-<div class="ui container segment stacked green">
+<div class="ui container segment stacked">
 
-    <a href="/ent/{{ post['id'] }}" class="ui header">{{ post['entr_name'] }}</a>
+    <a href="/ent/{{ post['id'] }}" class="ui header">{{ post['title'] }}</a>
 
-    <div class="ui segment">
+    <div class="ui segment grid">
+        <div class="ui column row">
+            <div class="ui four wide column">
+                Description
+            </div>
+            <div class="ui twelve wide column">
+                {{ post.get('description') }}
+            </div>
+        </div>
+        <div class="ui column row">
+            <div class="ui four wide column">
+                Visits: {{ post.get('visits') }}
+            </div>
+            <div class="ui four wide column">
+                Last modified: {{ moment(post.get('modified')).fromNow(refresh=True) }}
+            </div>
+            <div class="ui four wide column">
+                Asking price: CA$ {{ post.get('ask_price') }}
+            </div>
+            <div class="ui four wide column">
+                ABITDA: CA$ {{ post.get('ebitda') }}
+            </div>
+        </div>
 
-      <!-- Table -->
-
-        <table class="table" style="width:100%">
-                    <tr>
-                <th width="50%">ID of the entreprise</th>
-                <th width="50%">{{ post['id'].rjust(6, '0') }}</th>
-              </tr>
-              <tr>
-                <td>Nom de l'entreprise</td>
-                <td>{{ post['entr_name'] }}</td>
-              </tr>
-              <tr>
-                <td>NEQ</td>
-                <td>{{ post['neq'] }}</td>
-              </tr>
-
-        </table>
     </div>
 
 

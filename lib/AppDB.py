@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-
+import os
 
 class AppDB:
     def __init__(self):
@@ -28,3 +28,8 @@ class Profile:
         self.summary = {'post_id': '', 'business_title': ''}
         self.ask_price = ''
 
+class EmailAccount:
+    server = os.environ.get('EMAIL_SERVER')
+
+
+#  TODO class enterprise to structure DB data

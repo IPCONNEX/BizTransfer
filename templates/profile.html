@@ -1,35 +1,51 @@
-
 {% extends "includes/layout.html" %}
+
+{% block title %} - {{ profile.get('title') }}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+{% endblock %}
 
 {% block body %}
 
 
+<div class="ui container segment stacked">
 
+    <p class="ui huge header">{{ profile.get('title') }}</p>
 
-<div class="ui container segment stacked green">
-
-    <a class="ui header">{{ profile['entr_name'] }}</a>
-
-    <div class="ui segment">
-
-      <!-- Table -->
-
-        <table class="table" style="width:100%">
-                    <tr>
-                <th width="50%">ID of the entreprise</th>
-                <th width="50%">{{ profile['id'].rjust(6, '0') }}</th>
-              </tr>
-              <tr>
-                <td>Nom de l'entreprise</td>
-                <td>{{ profile['entr_name'] }}</td>
-              </tr>
-              <tr>
-                <td>NEQ</td>
-                <td>{{ profile['neq'] }}</td>
-              </tr>
-
-        </table>
+    <div class="ui grid">
+        <div class="ui column row">
+            <div class="ui five wide computer tablet sixteen wide phone column">
+                <div class="ui segment">
+                    <p>Enterprise posted: {{ moment(profile.get('submit_date')).fromNow(refresh=True)  }}</p>
+                    <p>Last modified: {{ moment(profile.get('modified')).fromNow(refresh=True) }}</p>
+                </div>
+            </div>
+            <div class="ui eleven wide computer tablet sixteen wide phone  column">
+                <div class="ui segment">
+                    <div class="ui grid column row">
+                        <div class="ui six wide column header tiny">Description</div>
+                        <div class="ui ten wide column">{{ profile.get('description') }}</div>
+                    </div>
+                </div>
+                <div class="ui segment grid">
+                    <div class="ui column row">
+                        <div class="ui column header">Financial information</div>
+                    </div>
+                    <div class="ui column row">
+                        <div class="ui eight wide column header tiny">Asking price</div>
+                        <div class="ui eight wide column">CA$ {{ profile.get('ask_price') }}</div>
+                    </div>
+                    <div class="ui column row">
+                        <div class="ui eight wide column header tiny">Region</div>
+                        <div class="ui eight wide column">{{ profile.get('region') }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 
 
 </div>

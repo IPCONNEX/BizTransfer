@@ -22,7 +22,7 @@
                     {{ session['username'] }}
                 </div>
                 <div class="ui segment">
-                    <p>Offer new business for sale</p>
+                    <p><a href="/newpost/0/1">Add new enterprise for sell</a></p>
                     <p>para 2</p>
                 </div>
                 <div class="ui segment">
@@ -47,6 +47,7 @@
                                         <div class="ui circular label green">Online</div>
                                     {% elif enterprise.submitted != Null %}
                                         <div class="ui circular label blue">Under review</div>
+                                        <!-- TODO validate the publish will change the value submitted -->
                                     {% else %}
                                         <div class="ui circular label orange">Not submitted</div>
                                     {% endif %}
@@ -55,6 +56,7 @@
                             </div>
                             <div class="ui six wide column">
                                 <a href="/newpost/{{ enterprise['id'] }}/1/"><button class="ui button tiny green right floated">Modify</button></a>
+                                <a href="/ent/{{  enterprise['id'] }}"><button class="ui button tiny primary right floated">Preview</button></a>
                                 <button class="ui button tiny red right floated">Delete</button>
                             </div>
                         </div>
