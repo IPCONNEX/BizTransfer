@@ -1,6 +1,6 @@
 
-<form method="POST" class="ui form" action="">
-    <div class="ui container segment stretched">
+
+    <div class="ui container segment stretched blue">
         <div class="ui field">
             <p>You are now ready to send your offer, we will review every offer to ensure we offer the best service to
             both buyers and sellers by putting all the information in the right format</p>
@@ -9,8 +9,8 @@
         </div>
         <div class="ui divider"></div>
         <div class="field">
-            <label>User agreement - <a href="#" class="ui">Review user agreement</a></label>
-            <div class="field">
+            <label>User agreement - <a href="#" class="ui agreement" name="agreement">Review user agreement</a></label>
+            <div class="field inline">
                 <div class="ui checkbox">
                     <input type="checkbox" name="user_agreement" tabindex="0" class="hidden" value="{% if current_profile.get('user_agreement') %}{{ current_profile.get('user-agreement') }}{% endif %}">
                     <label>I agree to the terms and conditions of BizTransfer</label>
@@ -19,8 +19,170 @@
         </div>
     </div>
 
-    <input type="submit" class="ui button large green right floated" value="Next"></input>
-</form>
+    <div class="ui modal">
+      <div class="header">
+        Users terms and conditions
+      </div>
+      <div class="image content">
+        <div class="description">
+            <div class="ui vertical segment">
+                <p>
+                    TERMS OF USE FOR ACQUIZITION.BIZ® FAMILY OF WEB SITES
+                </p>
+            </div>
+            <div class="ui vertical segment">
+                <p>
+                    BY VISITING OR USING ANY OF THE ACQUIZITION.BIZ® FAMILY OF WEB SITES OR ANY PAGE OF THE ACQUIZITION.
+                    BIZ ® FAMILY OF WEB SITES, EXCEPT THIS PAGE AND HOME PAGES OF THE ACQUIZITION.BIZ® WEB SITES, YOU
+                    ARE AGREEING TO BE BOUND BY THESE TERMS OF USE AND THAT SUCH AGREEMENT CONSTITUTES A BINDING CONTRACT
+                    BETWEEN YOU AND ACQUIZITION.BIZ®, INC. IF YOU DO NOT WISH TO BE BOUND BY THESE TERMS OF USE, PLEASE
+                    DO NOT VISIT OR USE ANY OF THE ACQUIZITION.BIZ® WEB SITES OR ANY PAGE OF THE ACQUIZITION.BIZ® FAMILY
+                    OF WEB SITES. FURTHERMORE, BY USING ANY OF THE ACQUIZITION.BIZ® FAMILY OF WEB SITES, YOU ACKNOWLEDGE
+                    THAT ACQUIZITION.BIZ® IS NOT A BUSINESS BROKER, LOAN BROKER OR LENDER. IT DOES NOT AID OR ASSIST BORROWERS
+                    IN OBTAINING, SOLICIT BORROWERS OR LENDERS FOR, NEGOTIATE OR MAKE LOANS SECURED BY LIENS ON BUSINESSES.
+                </p>
+            </div>
+
+            <p>
+            <header>INTRODUCTION</header>
+Acquizition.biz®, Inc. and/or its partners (together referred to as "Acquizition.biz®") operate this family of web sites and associated web pages. For the purposes of these Terms of Use, Acquizition.biz® refers to this family as the "Acquizition.biz® Web Sites."
+            </p><p>
+Acquizition.biz® offers you access to the Acquizition.biz® Web Sites in exchange for your agreement to accept and comply with the terms, conditions, and notices stated here and as may be modified by Acquizition.biz® from time-to-time. Acquizition.biz® refers to these terms, conditions, and notices, whether modified or unmodified, as the "Agreement" or as the "Terms of Use". Acquizition.biz® reserves the right to modify in its sole discretion this Agreement and/or the Acquizition.biz® Web Sites without providing notification. You are responsible for regularly reviewing this Agreement. You can review the most current version of the Agreement at any time at: http://www.acquizition.biz/prod/home-terms-en.html. BY VISITING OR USING ANY PART OF THE ACQUIZITION.BIZ® WEB SITES, EXCEPT FOR THE ACQUIZITION.BIZ® HOME PAGE AND THESE TERMS OF USE, YOU ARE AGREEING TO THESE TERMS OF USE, AND YOU ARE AGREEING THAT THIS IS A BINDING CONTRACT BETWEEN ACQUIZITION.BIZ® AND YOU. IF YOU DO NOT WISH TO BE BOUND BY THESE TERMS OF USE, PLEASE DO NOT VISIT OR USE ANY PART OF THE ACQUIZITION.BIZ® WEB SITES.
+<p>
+ADDITIONAL TERMS MAY GOVERN USE OF CERTAIN WEB SITES OR WEB PAGES WITHIN THE ACQUIZITION.BIZ® WEB SITES
+
+Your use of certain web sites and/or web pages within the Acquizition.biz® Web Sites may be subject to additional terms that are specific to such web sites and/or web pages (the "Specific Terms") as either contained (i) on this page below this Agreement and/or (ii) on such web sites and/or web pages (for example, terms that typically govern particular features or offers such as sweepstakes are typically found on the relevant web site or web pages).
+</p><p>
+To go directly to Specific Terms contained on this page, click on the appropriate link below:
+
+Please note that the links above may not directly access each and every Specific Term that governs the use of each and every web site and/or web page within the Acquizition.biz® Web Sites. Therefore, upon accessing any web site or web page within the Acquizition.biz® Web Sites, please review any and all relevant terms and conditions that may be displayed on or linked from such web site or web page. In the event that (i) a Specific Term contained on such web sites and/or web pages or (ii) any other term or guideline contained within the Acquizition.biz® Web Sites conflicts with this Agreement, this Agreement shall control.
+</p><p>
+OUTLINE OF TERMS OF USE
+
+For your convenience, Acquizition.biz® here provides a section-by-section outline of the Terms of Use. To go directly to a specific section contained in these Terms of Use, click on the appropriate link below. Please note that this functionality is provided solely for your convenience and in no way absolves you of your duty to comply with each and every section of these Terms of Use.
+
+GENERAL USE AND LIMITATIONS ON GENERAL USE OF THE ACQUIZITION.BIZ® WEB SITES
+</p><p>
+INFORMATION PROVIDED TO YOU THROUGH THE ACQUIZITION.BIZ® WEB SITES
+
+From Acquizition.biz®
+From Acquizition.biz® Affiliates
+From the Public
+Disclaimer
+INFORMATION PROVIDED BY YOU THROUGH THE ACQUIZITION.BIZ® WEB SITES
+
+To Acquizition.biz®
+To the Public
+Indemnification
+SERVICES PROVIDED THROUGH THE ACQUIZITION.BIZ® WEB SITES
+</p><p>
+Non-Commercial Services
+Third-Party Services
+GENERAL TERMS
+
+GENERAL USE AND LIMITATIONS ON GENERAL USE OF THE ACQUIZITION.BIZ® WEB SITES
+
+Except where we specify otherwise, Acquizition.biz® offers you access to the Acquizition.biz® Web Sites solely for your personal and non-commercial uses. You promise that you will not use the Acquizition.biz® Web Sites, in whole or in part, for any purpose that is unlawful or prohibited by these Terms of Use or for any purposes other than those that are personal and non-commercial. You agree that you will not modify, copy, distribute, transmit, display, perform, reproduce, publish, license, create derivative works from, frame in another Web page, use on any other web site, transfer or sell any information, software, lists of users, databases or other lists, products or services provided through or obtained from the Acquizition.biz® Web Sites. This means, among other activities, that agree not to engage in the practices of "screen scraping," "database scraping," or any other activity with the purpose of obtaining lists of users or other information. You agree that you will not use the Acquizition.biz® Web Sites in any manner that could damage, disable, overburden, or impair the Acquizition.biz® Web Sites or interfere with any other party's use and enjoyment of the Acquizition.biz® Web Sites. You may not obtain or attempt to obtain any materials or information through any means not intentionally made available or provided for through the Acquizition.biz® Web Sites.
+
+If and when requested by Acquizition.biz® you agree to provide true, accurate and complete user information and to refrain from impersonating or falsely representing your affiliation with any person or entity. Except with the written permission of Acquizition.biz®, you agree that you will not access or attempt to access password protected, secure or non-public areas of the Acquizition.biz® Web Sites. Unauthorized individuals attempting to access prohibited areas of the Acquizition.biz® Web Sites may be subject to prosecution.
+
+Except with the written permission of Acquizition.biz®, you agree that you will not create links from any web site or web page to any page within the Acquizition.biz® Web Sites with the exception of the Acquizition.biz® Web Sites homepages. The origin of any such link to the Acquizition.biz® Web Sites homepage must be accompanied by a clear and prominent attribution indicating that the link is connected to the Acquizition.biz® Web Sites homepage. For example, prominently positioning the "Acquizition.biz®" name and mark such that there is clear association between the name and mark and the destination of the link is acceptable. However, you agree that you will not juxtapose the "Acquizition.biz®" name and mark and the link with your name or any other material(s) in a manner which might give rise to any erroneous conclusion that there is any affiliation or association between Acquizition.biz®, on the one hand, and you or any other person or entity, on the other hand. You agree that if Acquizition.biz®, in its sole and unfettered discretion, requests in writing that you remove any link or links to the Acquizition.biz® Web Sites, you will promptly do so. You agree that if you create any link to the Acquizition.biz® Web Sites that you will not employ any technology that results in the placement of content from the Acquizition.biz® Web Sites in a frame and/or a reduced pop-up window and/or any other display mechanism which changes the Acquizition.biz® Web Sites from how they would appear if a user typed in their URL to a typical browser line.
+
+You agree that Acquizition.biz® may in its sole discretion and at any time terminate your access to and use of the Acquizition.biz® Web Sites, or any part thereof, with or without notice.
+
+From Acquizition.biz®
+
+The Acquizition.biz® Web Sites contain content and information originated by Acquizition.biz® (the "Acquizition.biz® Content"). Acquizition.biz® presents and makes available such content and information through the Acquizition.biz® Web Sites as a public service, for the sole purpose of aiding you. Acquizition.biz®, therefore, cannot guarantee the accuracy, sufficiency, correctness, veracity, completeness, or timeliness of such information. You are responsible for confirming the sufficiency and reliability of any such information.
+
+From Acquizition.biz® Affiliates
+
+For your convenience, the Acquizition.biz® Web Sites contain content and information from Acquizition.biz®'s affiliates and/or links to affiliate web sites ("Affiliate Content"). Such content is not under the control of Acquizition.biz® and Acquizition.biz® is not responsible for such content, including without limitation any link contained in such content, or any changes or updates to such content. Acquizition.biz® is providing such content to you only as a convenience, and the inclusion of such content does not imply endorsement by Acquizition.biz® of such content or the affiliate. You may be subject to additional and/or different terms, conditions, and privacy policies when you use affiliate services, content, software or sites.
+
+From the Public
+</p><p>
+The Acquizition.biz® Web Sites include a number of venues such as bulletin boards, chat areas, news groups, forums, communities, and/or other message or communication facilities designed to enable you to exchange information with other members of the public ("Public Content"). Since Acquizition.biz® firmly believes in the value of free and open exchanges, it makes no effort and is under no obligation to monitor, pre-screen, or otherwise censor such information. Therefore, Acquizition.biz® cannot guarantee the appropriateness, accuracy, sufficiency, correctness, veracity, completeness or timeliness of such thoughts and opinions. You are responsible for confirming the sufficiency and reliability of any such information you may use or rely upon.
+
+Disclaimer
+
+YOU EXPRESSLY UNDERSTAND AND AGREE THAT:
+
+YOUR USE OF AND RELIANCE UPON ANY AND ALL INFORMATION, INCLUDING BUT NOT LIMITED TO ACQUIZITION.BIZ® CONTENT, AFFILIATE CONTENT, AND PUBLIC CONTENT, PROVIDED BY ACQUIZITION.BIZ® THROUGH THE ACQUIZITION.BIZ® WEB SITES IS AT YOUR SOLE RISK. SUCH INFORMATION IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS. ACQUIZITION.BIZ® MAKES NO EXPRESS OR IMPLIED REPRESENTATIONS, WARRANTIES, OR GUARANTEES WITH REGARD TO THE APPROPRIATENESS, ACCURACY, SUFFICIENCY, CORRECTNESS, VERACITY, VALUE, COMPLETENESS, OR TIMELINESS OF SUCH INFORMATION. ACQUIZITION.BIZ® EXPRESSLY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. ACQUIZITION.BIZ® SHALL HAVE NO LIABILITY TO YOU OR ANY OTHER USER OF SUCH INFORMATION OR TO ANY THIRD PARTY FOR ANY LOSS, EXPENSE, OR DAMAGE, INCLUDING CONSEQUENTIAL, INCIDENTAL, SPECIAL OR PUNITIVE DAMAGES AND INCLUDING LOST PROFITS OR LOST REVENUE, CAUSED DIRECTLY OR INDIRECTLY BY THE USE OR RELIANCE UPON SUCH INFORMATION. ANY MATERIAL DOWNLOADED OR OTHERWISE OBTAINED THROUGH THE USE OF THE ACQUIZITION.BIZ® WEB SITES IS DONE AT YOUR OWN DISCRETION AND RISK AND YOU WILL BE SOLELY RESPONSIBLE FOR ANY DAMAGE TO YOUR COMPUTER SYSTEM OR LOSS OF DATA THAT RESULTS FROM THE DOWNLOAD OF ANY SUCH MATERIAL.
+
+INFORMATION PROVIDED BY YOU THROUGH THE ACQUIZITION.BIZ® WEB SITES
+
+To Acquizition.biz®
+
+In order for you to participate in certain services that Acquizition.biz® provides through the Acquizition.biz® Web Sites, Acquizition.biz® will require that you provide specific information about yourself (the "Acquizition.biz® Solicited Information"). If you choose to participate in such services, you agree to provide true, accurate and complete information and to refrain from impersonating or falsely representing your affiliation with any person or entity. Acquizition.biz® is committed to maintaining the privacy and security of any and all such information that you provide to Acquizition.biz® through the Acquizition.biz® Web Sites. To that end, Acquizition.biz® urges you to review the Acquizition.biz® Privacy Policy which may be accessed by clicking on the following link: Privacy Policy
+
+To the Public
+
+The Acquizition.biz® Web Sites include a number of venues such as bulletin boards, chat areas, news groups, forums, communities, and/or other message or communication facilities designed to enable you to share information with other members of the public ("Your Publicly Posted Information"). Since Acquizition.biz® firmly believes in the value of free and open exchanges, it makes no effort and is under no obligation to monitor, pre-screen, or otherwise censor your information. Therefore, Acquizition.biz® cannot be responsible for the appropriateness, accuracy, sufficiency, correctness, veracity, completeness, or timeliness of such information. Always use caution when posting any personally identifying information about yourself or your children on any of the Acquizition.biz® Web Sites.
+
+You promise that you will not use the Acquizition.biz® Web Sites to:
+
+(a) post, upload or otherwise transmit any content not related to appropriate subject matters;
+
+(b) post, upload or otherwise transmit any content which is misleading to others, including consumers;
+
+(c) post, upload or otherwise transmit any content that is unlawful, harmful, threatening, abusive, harassing, tortuous, defamatory, vulgar, obscene, libelous, invasive of another's privacy, hateful, or racially, ethnically or otherwise objectionable;
+
+(d) post, upload or otherwise transmit any content that you do not have a right to post and transmit under any law or under contractual relationships;
+
+(e) post, upload or otherwise transmit any content, such that such posting, uploading, or transmission constitutes the infringement of any patent, trademark, trade secret, copyright or other proprietary rights of any party;
+
+(f) post, upload or otherwise transmit any materials that contain software viruses or any other computer code, files or programs designed to interrupt, destroy or limit the functionality of any computer software or hardware or telecommunications equipment;
+
+(g) post, upload or otherwise transmit any content to all or some announcers of the Acquizition.biz® Web Sites for promotional or commercial purposes.
+
+By posting content to the Acquizition.biz® Web Sites, you grant Acquizition.biz® a non-exclusive license to (i) host, use, reproduce, modify, distribute, transmit, combine with information provided by third parties, and publicly display such content on and through web sites controlled by Acquizition.biz®, including but not limited to the Acquizition.biz® Web Sites, and co-branded or mirrored versions of such sites, and in Acquizition.biz®'s promotional or advertising materials, and (ii) sublicense to third parties such content to the extent necessary for the creation and maintenance of, in part or in whole, such sites.
+
+You acknowledge that while Acquizition.biz® does not pre-screen content posted by you to the Acquizition.biz® Web Sites, Acquizition.biz® and its designees shall have the right (but not the obligation) in their sole discretion to refuse or remove any content that is posted by you or any other party to the Acquizition.biz® Web Sites. Without limiting the foregoing, Acquizition.biz® and its designees shall have the right to remove any content that violates this Agreement or is otherwise objectionable, and to terminate your access to any or all of the Acquizition.biz® Web Sites at any time without notice for any reason whatsoever. You agree that you must evaluate, and bear all risks associated with, the use of any content you post to the Acquizition.biz® Web Sites, including any reliance on the accuracy, completeness, or usefulness of such content.
+
+Acquizition.biz® reserves the right at all times to disclose any information as necessary to satisfy any applicable law, regulation, legal process or governmental request.
+
+Indemnification
+
+YOU AGREE TO INDEMNIFY AND HOLD ACQUIZITION.BIZ® AND ITS, SUPPLIERS, AFFILIATES, SUBSIDIARIES, EMPLOYEES HARMLESS FROM ANY AND ALL CLAIMS AND DEMANDS, INCLUDING, BUT NOT LIMITED TO REASONABLE ATTORNEYS' FEES, MADE BY ANY THIRD PARTY DUE TO OR ARISING OUT OF ANY INFORMATION, INCLUDED BUT NOT LIMITED TO ACQUIZITION.BIZ® SOLICITED INFORMATION, AFFILIATE SOLICITED INFORMATION, AND YOUR PUBLICLY POSTED INFORMATION, SUBMITTED, POSTED, OR OTHERWISE PROVIDED BY YOU TO THE Acquizition.biz® WEB SITES AND/OR ACQUIZITION.BIZ® AND/OR ITS AFFILIATES.
+
+SERVICES PROVIDED THROUGH THE ACQUIZITION.BIZ® WEB SITES
+</p><p>
+Non-Commercial Services
+</p><p>
+Acquizition.biz® provides through the Acquizition.biz® Web Sites a number of venues in which interactive services ("Interactive Services"), such as on-line evaluation tools and checklists, are offered to you. Such services are offered by Acquizition.biz® for the sole purpose of disseminating information for the public's benefit. Acquizition.biz® cannot guarantee the accuracy, sufficiency, correctness, veracity, completeness, or timeliness of such services. You are responsible for confirming the sufficiency and reliability of any such service.
+
+THE INFORMATION CONTAINED IN AND PROVIDED THROUGH ACQUIZITION.BIZ®'S INTERACTIVE SERVICES ARE NOT INTENDED NOR IMPLIED TO BE A SUBSTITUTE FOR PROFESSIONAL ADVICE. ACQUIZITION.BIZ® MAKES NO EXPRESS OR IMPLIED REPRESENTATION, WARRANTY OR GUARANTEE IN CONNECTION WITH THE INFORMATION CONTAINED IN AND PROVIDED THROUGH SUCH SERVICES, INCLUDING THE APPROPRIATENESS, ACCURACY, CORRECTNESS, VERACTIY, VALUE, SUFFICIENCY, TIMELINESS, OR COMPLETENESS OF THE DATA, METHODS AND OTHER INFORMATION CONTAINED IN AND PROVIDED THROUGH SUCH SERVICES. ACQUIZITION.BIZ® EXPRESSLY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT WITH REGARD TO SUCH SERVICES. ACQUIZITION.BIZ® SHALL HAVE NO LIABILITY TO YOU OR ANY OTHER USER OF SUCH SERVICES OR TO ANY THIRD PARTY FOR ANY LOSS, EXPENSE, OR DAMAGE, INCLUDING CONSEQUENTIAL, INCIDENTAL, SPECIAL OR PUNITIVE DAMAGES AND INCLUDING LOST PROFITS OR LOST REVENUE, CAUSED DIRECTLY OR INDIRECTLY BY ANY ERROR OR OMISSION, OR ARISING OUT OF, OR IN CONNECTION WITH, THE INFORMATION CONTAINED IN OR PROVIDED THROUGH SUCH SERVICES. IN NO EVENT WILL ACQUIZITION.BIZ® BE LIABLE TO ANY USER OF SUCH SERVICES OR TO ANY THIRD PARTY FOR ANY DECISION MADE OR ACTION TAKEN BY ANY USER OF SUCH SERVICES OR ANY THIRD PARTY IN RELIANCE UPON THE INFORMATION CONTAINED IN OR PROVIDED THROUGH SUCH SERVICES. A USER'S SOLE AND EXCLUSIVE REMEDY FOR DISSATISFACTION WITH SUCH A SERVICE IS TO STOP USING THE SERVICE.
+</p><p>
+Third-Party Services
+</p><p>
+A number of commercial services, such as professional consulting services, are offered by third parties through the Acquizition.biz® Web Sites. You acknowledge that by permitting such services to be offered through the Acquizition.biz® Web Sites, Acquizition.biz® is acting as a passive conduit for the transmission to such third parties of any information related to such services that you submit to Acquizition.biz®. In order for Acquizition.biz® to distribute your information and facilitate contacts between you and such third parties, you hereby grant Acquizition.biz® permission to disclose any and all of the information that you provide to Acquizition.biz® to any such third party that Acquizition.biz®, in its sole discretion, deems relevant and appropriate.
+
+Any information that you provide to Acquizition.biz® must be true, complete, and accurate, must not represent you as someone else or falsely identify you, and must not violate any law, statute, ordinance or regulation. You are solely responsible for such information and for all of the terms and conditions of transactions between you and such third parties, including, without limitation, terms regarding warranties, insurance, fees, taxes, titles and licenses. You must not submit a request for a third party service through the Acquizition.biz® Web Sites unless you intend, in good faith, to contract with such third party for the use of such service.
+</p><p>
+Acquizition.biz® is not and will not be responsible for (i) the terms and conditions of any transaction between you and any third party, (ii) any insufficiency of or problems with any such third party's background, insurance, credit or licensing, or (iii) the quality of services performed by any such third party or any other legal liability arising out of or related to the performance of such services. In the event that you have a dispute with any such third party, you release Acquizition.biz® (and its affiliates, agents and employees) from any and all claims, demands and damages (actual and consequential) of every kind and nature, known and unknown, suspected and unsuspected, disclosed and undisclosed, arising out of or in any way connected with such disputes.
+
+GENERAL TERMS
+</p><p>
+This Agreement is governed by the laws of Quebec, Canada. You hereby consent to the exclusive jurisdiction and venue of courts sitting in Quebec, in all disputes arising out of or relating to the use of the Acquizition.biz® Web Sites. Use of the Acquizition.biz® Web Sites is unauthorized in any jurisdiction that does not give effect to all provisions of these terms and conditions, including without limitation this paragraph.
+</p><p>
+You agree that no joint venture, partnership, employment, or agency relationship exists between you and Acquizition.biz® as a result of this Agreement or use of the Acquizition.biz® Web Sites. Acquizition.biz®'s performance of this Agreement is subject to existing laws and legal process, and nothing contained in this Agreement is in derogation of Acquizition.biz®'s right to comply with governmental, court and law enforcement requests or requirements relating to your use of the Acquizition.biz® Web Sites or information provided to or gathered by Acquizition.biz® with respect to such use. If any part of this Agreement is determined to be invalid or unenforceable pursuant to applicable law including, but not limited to, the warranty disclaimers and liability limitations set forth above, then the invalid or unenforceable provision will be deemed superseded by a valid, enforceable provision that most closely matches the intent of the original provision and the remainder of the Agreement shall continue in effect. Unless otherwise specified herein, this Agreement constitutes the entire agreement between you and Acquizition.biz® with respect to the Acquizition.biz® Web Sites and it supersedes all prior or contemporaneous communications and proposals, whether electronic, oral or written, between you and Acquizition.biz® with respect to the Acquizition.biz® Web Sites. A printed version of this Agreement and of any notice given in electronic form shall be admissible in judicial or administrative proceedings based upon or relating to this Agreement to the same extent and subject to the same conditions as other business documents and records originally generated and maintained in printed form.
+
+THE INFORMATION, SOFTWARE, PRODUCTS, AND SERVICES PUBLISHED ON THIS SITE MAY INCLUDE INACCURACIES OR TYPOGRAPHICAL ERRORS. CHANGES ARE PERIODICALLY ADDED TO THE INFORMATION HEREIN. ACQUIZITION.BIZ®, ITS AFFILIATES AND/OR ITS RESPECTIVE SUPPLIERS MAY MAKE IMPROVEMENTS AND/OR CHANGES IN THIS SITE AT ANY TIME.
+</p><p>
+IN NO EVENT SHALL ACQUIZITION.BIZ® AND/OR ITS SUPPLIERS BE LIABLE FOR ANY DIRECT, INDIRECT, PUNITIVE, INCIDENTAL, SPECIAL, CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF USE, DATA OR PROFITS, ARISING OUT OF OR IN ANY WAY CONNECTED WITH THE USE OR PERFORMANCE OF THE ACQUIZITION.BIZ® WEB SITES, WITH THE DELAY OR INABILITY TO USE THE ACQUIZITION.BIZ® WEB SITES OR RELATED SERVICES, THE PROVISION OF OR FAILURE TO PROVIDE SERVICES, OR FOR ANY INFORMATION, SOFTWARE, PRODUCTS, SERVICES AND RELATED GRAPHICS OBTAINED THROUGH THE ACQUIZITION.BIZ® WEB SITES, OR OTHERWISE ARISING OUT OF THE USE OF THE ACQUIZITION.BIZ® WEB SITES, WHETHER BASED ON CONTRACT, TORT, NEGLIGENCE, STRICT LIABILITY OR OTHERWISE, EVEN IF ACQUIZITION.BIZ® OR ANY OF ITS SUPPLIERS HAS BEEN ADVISED OF THE POSSIBILITY OF DAMAGES. BECAUSE SOME STATES/JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES, THE ABOVE LIMITATION MAY NOT APPLY TO YOU. IF YOU ARE DISSATISFIED WITH ANY PORTION OF THE ACQUIZITION.BIZ® WEB SITES, OR WITH ANY OF THESE TERMS OF USE, YOUR SOLE AND EXCLUSIVE REMEDY IS TO DISCONTINUE USING THE ACQUIZITION.BIZ® WEB SITES.
+
+You agree to indemnify, defend and hold harmless Acquizition.biz®, its partners, affiliates, subsidiaries and suppliers from any liability, loss, claim and expense (including attorneys' reasonable fees) related to your violation of this Agreement.
+</p><p>
+All materials on the Acquizition.biz® Web Sites (as well as the organization and layout of the Acquizition.biz® Web Sites) are owned and copyrighted or licensed by Acquizition.biz®, its affiliates or its suppliers. Acquizition.biz® Strategies Inc. All rights reserved. No reproduction, distribution, or transmission of the copyrighted materials at the Acquizition.biz® Web Sites is permitted without the written permission of Acquizition.biz®. Any rights not expressly granted herein are reserved.
+</p><p>
+Trademarks referenced on the Acquizition.biz® Web Sites are either trademarks or registered trademarks of Acquizition.biz®.
+            </p></p>
+        </div>
+
+      </div>
+      <div class="actions">
+        <div class="ui button approve">OK</div>
+      </div>
+    </div>
 
 
 <!-- Form validation -->
@@ -37,4 +199,9 @@
         },
         inline: true,
     });
+</script>
+
+<!-- Modal -->
+<script>
+    $('.ui.modal').modal('attach events', '.agreement', 'show');
 </script>

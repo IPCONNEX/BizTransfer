@@ -1,21 +1,210 @@
+{% if current_profile.get('advanced') %}
+    {% set profile = current_profile.get('advanced') %}
+{% else %}
+    {% set profile = {} %}
+{% endif %}
 
-    <div class="ui container segment stretched">
-        <div class="ui field">
-            <p>You are now ready to send your offer, we will review every offer to ensure we offer the best service to
-            both buyers and sellers by putting all the information in the right format</p>
-            <p>In case any changes are needed, we will contact you with more information, otherwise, we will notify you
-            when your offer is approved and published online</p>
-        </div>
+    <div class="ui container segment stretched yellow">
+        <div class="ui header big">More information about your listing</div>
+        <p>The information provided in this section <strong>will not be public as it is</strong> we will use it only to <strong>classify</strong> your listing in order to target better audience</p>
         <div class="ui divider"></div>
-        <div class="field">
-            <label>User agreement - <a href="#" class="ui">Review user agreement</a></label>
+        <div class="two fields">
             <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" name="user_agreement" tabindex="0" class="hidden" value="{% if current_profile.get('user_agreement') %}{{ current_profile.get('user-agreement') }}{% endif %}">
-                    <label>I agree to the terms and conditions of BizTransfer</label>
+                <label>SCIAN code 1</label>
+                <input type="text" name="scian1" value="{% if profile.get('scian1') %}{{ profile.get('scian1') }}{% endif %}" id="scian1">
+            </div>
+            <div class="field">
+                <label>SCIAN code 2</label>
+                <input type="text" name="scian2" value="{% if profile.get('scian2') %}{{ profile.get('scian2') }}{% endif %}" id="scian2">
+            </div>
+        </div>
+        <div class="field">
+            <label>Tax balance</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="tax" id="tax" value="{% if profile.get('tax') %}{{ profile.get('tax') }}{% endif %}">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="two fields">
+            <div class="field">
+                <label>Average of 3 to 5 years Revenue</label>
+                <div class="ui right labeled input">
+                    <label for="amount" class="ui label">CA$</label>
+                    <input type="text" name="average_revenue" value="{% if profile.get('average_revenue') %}{{ profile.get('average_revenue') }}{% endif %}" id="amount">
+                    <div class="ui basic label">.00</div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Average of 3 to 5 years Profit</label>
+                <div class="ui right labeled input">
+                    <label for="amount" class="ui label">CA$</label>
+                    <input type="text" name="average_profit" value="{% if profile.get('average_profit') %}{{ profile.get('average_profit') }}{% endif %}" id="amount">
+                    <div class="ui basic label">.00</div>
                 </div>
             </div>
         </div>
+        <div class="two fields">
+            <div class="field">
+                <label>Average of Interest</label>
+                <div class="ui right labeled input">
+                    <label for="amount" class="ui label">CA$</label>
+                    <input type="text" name="average_interest" value="{% if profile.get('average_interest') %}{{ current_profile.get('average_interest') }}{% endif %}">
+                    <div class="ui basic label">.00</div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Average of Debt and Amortization</label>
+                <div class="ui right labeled input">
+                    <label for="amount" class="ui label">CA$</label>
+                    <input type="text" name="average_debt" value="{% if profile.get('average_debt') %}{{ profile.get('average_debt') }}{% endif %}">
+                    <div class="ui basic label">.00</div>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>CCA rate</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="cca" value="{% if profile.get('cca') %}{{ profile.get('cca') }}{% endif %}">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>UCC balance</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="ucc" value="{% if profile.get('ucc') %}{{ profile.get('ucc') }}{% endif %}">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>RDTOH</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="rdtoh" value="{% if profile.get('rdtoh') %}{{ profile.get('rdtoh') }}{% endif %}">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+        <div class="field">
+            <label>D/E ratio</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="de_ratio" value="{% if profile.get('de_ratio') %}{{ profile.get('de_ratio') }}{% endif %}">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
+
+
+
+
+
+{#        <div class="field">#}
+{#            <label>Gross Annual Profit</label>#}
+{#            <div class="ui right labeled input">#}
+{#                <label for="amount" class="ui label">CA$</label>#}
+{#                <input type="text" name="gross_profit" value="{% if current_profile.get('gross_profit') %}{{ current_profile.get('gross_profit') }}{% endif %}" id="amount">#}
+{#                <div class="ui basic label">.00</div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>Gross Annual Revenue</label>#}
+{#            <div class="ui right labeled input">#}
+{#                <label for="amount" class="ui label">CA$</label>#}
+{#                <input type="text" name="gross_revenue" value="{% if profile.get('gross_revenue') %}{{ profile.get('gross_revenue') }}{% endif %}" id="amount">#}
+{#                <div class="ui basic label">.00</div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="field">#}
+{#            <label>Gross Annual Profit</label>#}
+{#            <div class="ui right labeled input">#}
+{#                <label for="amount" class="ui label">CA$</label>#}
+{#                <input type="text" name="gross_profit" value="{% if profile.get('gross_profit') %}{{ profile.get('gross_profit') }}{% endif %}" id="amount">#}
+{#                <div class="ui basic label">.00</div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="field">#}
+{#            <label>Office furniture</label>#}
+{#            <div class="ui right labeled input">#}
+{#                <label for="amount" class="ui label">CA$</label>#}
+{#                <input type="text" name="office_furniture" value="{% if current_profile.get('office_furniture') %}{{ current_profile.get('office_furniture') }}{% endif %}" id="amount">#}
+{#                <div class="ui basic label">.00</div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>Long term dept</label>#}
+{#            <div class="ui right labeled input">#}
+{#                <label for="amount" class="ui label">CA$</label>#}
+{#                <input type="text" name="dept" value="{% if current_profile.get('dept') %}{{ current_profile.get('dept') }}{% endif %}" id="amount">#}
+{#                <div class="ui basic label">.00</div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{##}
+{#        <div class="field">#}
+{#            <label>Foundation year</label>#}
+{#            <select name="foundation_year" class="ui fluid dropdown">#}
+{#                <option value="{% if current_profile.get('foundation_year') %}{{ current_profile.get('foundation_year') }}{% endif %}"></option>#}
+{#                {% for year in range(2017,1900,-1) %}#}
+{#                    <option value="{{ year }}">{{ year }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>EBITDA</label>#}
+{#            <div class="ui right labeled input">#}
+{#                <label for="amount" class="ui label">CA$</label>#}
+{#                <input type="text" name="ebitda" value="{% if current_profile.get('ebitda') %}{{ current_profile.get('ebitda') }}{% endif %}" id="amount">#}
+{#                <div class="ui basic label">.00</div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>Total inventory value</label>#}
+{#            <div class="ui right labeled input">#}
+{#                <label for="amount" class="ui label">CA$</label>#}
+{#                <input type="text" name="inventory" value="{% if current_profile.get('inventory') %}{{ current_profile.get('inventory') }}{% endif %}" id="amount">#}
+{#                <div class="ui basic label">.00</div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{##}
+{#        <div class="field">#}
+{#            <label>Seller will be available after the sales?</label>#}
+{#            <select name="sell_involve" class="ui fluid dropdown">#}
+{#                <option value="{% if current_profile.get('sell_involve') %}{{ current_profile.get('sell_involve') }}{% endif %}"></option>#}
+{#                <option value="yes">Yes</option>#}
+{#                <option value="no">No</option>#}
+{#                <option value="later">To be discussed</option>#}
+{#            </select>#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>Customers target</label>#}
+{#            <div class="three fields">#}
+{#                <div class="field">#}
+{#                    <div class="ui checkbox">#}
+{#                        <input type="checkbox" name="market_business" tabindex="0" class="hidden" {% if current_profile.get('market_business') == 'on' %}checked{% endif %}>#}
+{#                        <label>Business</label>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="field">#}
+{#                    <div class="ui checkbox">#}
+{#                        <input type="checkbox" name="market_individuals" tabindex="0" class="hidden"  {% if current_profile.get('market_individuals') == 'on' %}checked{% endif %}>#}
+{#                        <label>Individuals</label>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="field">#}
+{#                    <div class="ui checkbox">#}
+{#                        <input type="checkbox" name="market_online" tabindex="0" class="hidden"  {% if current_profile.get('market_online') == 'on' %}checked{% endif %}>#}
+{#                        <label>Online</label>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+
+
+
     </div>
 
 
