@@ -1,76 +1,41 @@
+{% if current_profile.get('profile') %}
+    {% set profile = current_profile.get('profile') %}
+{% else %}
+    {% set profile = {} %}
+{% endif %}
 
-    <div class="ui container segment stretched">
+    <div class="ui container segment stretched green">
+        <div class="ui header big">Profile of the business</div>
+        <p>The information provided in this section will be <strong>public</strong> and <strong>all users</strong> will be able to see it online</p>
+        <div class="ui divider"></div>
+        <div class="field">
+            <label>Title of the listing</label>
+            <input type="text" name="title" id="title" value="{% if profile.get('title') %}{{ profile.get('title') }}{% endif %}">
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <textarea type="text" id="description" rows="3" name="description">{% if profile.get('description') %}{{ profile.get('description') }}{% endif %}</textarea>
+        </div>
+        <div class="field">
+            <label>Asking price</label>
+            <div class="ui right labeled input">
+                <label for="amount" class="ui label">CA$</label>
+                <input type="text" name="asking_price" value="{% if profile.get('asking_price') %}{{ profile.get('asking_price') }}{% endif %}">
+                <div class="ui basic label">.00</div>
+            </div>
+        </div>
         <div class="field">
             <label>Is your business a Franchise?</label>
             <select id="franchise" name="franchise" class="ui fluid dropdown">
-                <option value="{% if current_profile.get('franchise') %}{{ current_profile.get('franchise') }}{% endif %}"></option>
+                <option value="{% if profile.get('franchise') %}{{ profile.get('franchise') }}{% endif %}"></option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
             </select>
         </div>
-        <div class="field">
-            <label>Foundation year</label>
-            <select name="foundation_year" class="ui fluid dropdown">
-                <option value="{% if current_profile.get('foundation_year') %}{{ current_profile.get('foundation_year') }}{% endif %}"></option>
-                {% for year in range(2017,1900,-1) %}
-                    <option value="{{ year }}">{{ year }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="field">
-            <label>Gross profit for the latest fiscal year</label>
-            <div class="ui right labeled input">
-                <label for="amount" class="ui label">CA$</label>
-                <input type="text" name="gross_profit" value="{% if current_profile.get('gross_profit') %}{{ current_profile.get('gross_profit') }}{% endif %}" id="amount">
-                <div class="ui basic label">.00</div>
-            </div>
-        </div>
-        <div class="field">
-            <label>EBITDA</label>
-            <div class="ui right labeled input">
-                <label for="amount" class="ui label">CA$</label>
-                <input type="text" name="ebitda" value="{% if current_profile.get('ebitda') %}{{ current_profile.get('ebitda') }}{% endif %}" id="amount">
-                <div class="ui basic label">.00</div>
-            </div>
-        </div>
-        <div class="field">
-            <label>Total inventory value</label>
-            <div class="ui right labeled input">
-                <label for="amount" class="ui label">CA$</label>
-                <input type="text" name="inventory" value="{% if current_profile.get('inventory') %}{{ current_profile.get('inventory') }}{% endif %}" id="amount">
-                <div class="ui basic label">.00</div>
-            </div>
-        </div>
-        <div class="field">
-            <label>Office furniture</label>
-            <div class="ui right labeled input">
-                <label for="amount" class="ui label">CA$</label>
-                <input type="text" name="office_furniture" value="{% if current_profile.get('office_furniture') %}{{ current_profile.get('office_furniture') }}{% endif %}" id="amount">
-                <div class="ui basic label">.00</div>
-            </div>
-        </div>
-        <div class="field">
-            <label>Development stage of the enterprise</label>
-            <select name="dev_stage" class="ui fluid dropdown" id="dev_stage">
-                <option value="{% if current_profile.get('dev_stage') %}{{ current_profile.get('dev_stage') }}{% endif %}"></option>
-                <option value="startup">Startup</option>
-                <option value="expanding">Expanding</option>
-                <option value="established">Established</option>
-                <option value="bankrupt">Decline</option>
-            </select>
-        </div>
-        <div class="field">
-            <label>Seller is open to finance the buyer?</label>
-            <select name="finance" class="ui fluid dropdown">
-                <option value="{% if current_profile.get('finance') %}{{ current_profile.get('finance') }}{% endif %}"></option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-                <option value="later">To be discussed</option>
-            </select>
-        </div>
+
     </div>
 
-
+{#TODO complete the verification for all forms#}
 
 <!-- Form validation -->
 <script>

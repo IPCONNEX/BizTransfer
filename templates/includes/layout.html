@@ -52,6 +52,13 @@
         <div class="item" id="toggle">
             <i class="sidebar icon"></i>Menu
         </div>
+        <div class="item">
+            {% if session.get('statics')['language'] == 'en' %}
+                <a href="/lang/fr/">Français</a>
+            {% else %}
+                <a href="/lang/en/">English</a>
+            {% endif %}
+        </div>
 
         {% if session['logged'] %}
         <a href="/dashboard" class="ui right item"><i class="dashboard icon"></i>Dashboard</a>

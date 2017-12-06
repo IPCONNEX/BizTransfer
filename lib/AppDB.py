@@ -1,25 +1,22 @@
 from pymongo import MongoClient
 import os
 
+
 class AppDB:
-    def __init__(self):
-        #  TODO get the credential from a local file
-        uri = 'mongodb://ds243055.mlab.com:43055'
-        user = 'mac'
-        pwd = 'mac'
+    def __init__(self, uri, user, pwd):
         client = MongoClient(uri)
         DB = client.biztransfer
         DB.authenticate(user, pwd)
-        self.collection = DB
+        self.collections = DB
 
     def GetUsersDB(self):
-        return self.collection.users
+        return self.collections.users
 
     def GetEnterprisesDB(self):
-        return self.collection.enterprises
+        return self.collections.enterprises
 
     def GetLanguageStatics(self, language):
-        return self.collection.statics.find_one({'language': language}, {'_id': False})
+        return self.collections.statics.find_one({'language': language}, {'_id': False})
 
 
 #  TODO complete full profile data fields

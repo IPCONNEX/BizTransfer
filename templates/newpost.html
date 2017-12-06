@@ -79,7 +79,11 @@
             {% elif step == 6 %}
                 {% include "includes/newpost/_preview.html" %}
             {% endif %}
-            <input type="submit" class="ui button large primary green right floated" value="Next"></input>
+                <input type="submit" class="ui button large green right floated" value="Next">
+                <a class="ui button red large" href="/dashboard">Cancel</a>
+                {% if step > 1 %}
+                    <a class="ui button primary right floated large " href="/newpost/{{ current_profile.get('id') }}/{{ step - 1 }}/">Previous</a>
+                {% endif %}
             </form>
         </div>
     </div>

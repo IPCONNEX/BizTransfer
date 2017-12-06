@@ -1,41 +1,115 @@
+{% if current_profile.get('general') %}
+    {% set profile = current_profile.get('general') %}
+{% else %}
+    {% set profile = {'address':{}} %}
+{% endif %}
 
-    <div class="ui container segment stretched">
+    <div class="ui container segment stretched red">
+        <div class="ui header big">General Information</div>
+        <p>The information provided in this section will be <strong>private</strong> and <strong>not published</strong> to the public</p>
+        <div class="ui divider"></div>
         <div class="field">
-            <label>ID of the announcement</label>
+            <label>ID of the listing</label>
             <input type="text" name="id" readonly="" value="{{ current_profile.get('id') }}" placeholder="{{ current_profile.get('id') }}">
         </div>
-        <div class="field">
-            <label>Title of the announcement</label>
-            <input type="text" name="business_title" id="business_title" value="{% if current_profile.get('title') %}{{ current_profile.get('title') }}{% endif %}">
+        <div class="two fields">
+            <div class="field">
+                <label>Person to contact</label>
+                <input type="text" name="contact" id="contact" value="{% if profile.get('name') %}{{ profile.get('name') }}{% else %}{{ session.get('name') }}{% endif %}">
+            </div>
+            <div class="field">
+                <label>Position of the person to be contacted</label>
+                <select name="person_position" class="ui fluid dropdown">
+                    <option value="{% if profile.get('person_position') %}{{ profile.get('person_position') }}{% endif %}"></option>
+                    <option value="manager">General Manager</option>
+                    <option value="director">Board of Directors</option>
+                    <option value="broker">Business Broker</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
         </div>
-        <div class="field">
-            <label>Description</label>
-            <textarea type="text" id="description" rows="3" name="description">{% if current_profile.get('description') %}{{ current_profile.get('description') }}{% endif %}</textarea>
-        </div>
-        <div class="field">
-            <label>Location</label>
-            <input type="text" id="region" name="region" value="{% if current_profile.get('region') %}{{ current_profile.get('region') }}{% endif %}">
-        </div>
-        <div class="field">
-            <label>Asking price</label>
-            <div class="ui right labeled input">
-                <label for="amount" class="ui label">$</label>
-                <input name="ask_price" id="ask_price" type="text" value="{% if current_profile.get('ask_price') %}{{ current_profile.get('ask_price') }}{% endif %}" id="amount">
-                <div class="ui basic label">.00</div>
+        <div class="two fields">
+            <div class="field">
+                <label>Email</label>
+                <input type="text" name="email" id="email" value="{% if profile.get('email') %}{{ profile.get('email') }}{% else %}{{ session.get('email') }}{% endif %}">
+            </div>
+            <div class="field">
+                <label>Phone number</label>
+                <input type="text" name="phone" id="phone" value="{% if profile.get('phone') %}{{ profile.get('phone') }}{% else %}{{ session.get('phone') }}{% endif %}">
             </div>
         </div>
         <div class="field">
-            <label>Reason for the sale</label>
-            <textarea type="text" rows="3" name="reason" id="reason">{% if current_profile.get('reason') %}{{ current_profile.get('reason') }}{% endif %}</textarea>
+            <label>Address</label>
+            <input type="text" name="address" id="address" value="{% if profile.get('address').get('street') %}{{ profile.get('address').get('street') }}{% endif %}">
         </div>
-        <div class="field">
-            <label>Revenue</label>
-            <div class="ui right labeled input">
-                <label for="amount" class="ui label">$</label>
-                <input name="revenue" id="revenue" type="text" value="{% if current_profile.get('revenue') %}{{ current_profile.get('revenue') }}{% endif %}" id="amount">
-                <div class="ui basic label">.00</div>
+        <div class="three fields">
+            <div class="field">
+                <label>City</label>
+                <input type="text" name="city" id="city" value="{% if profile.get('address').get('city') %}{{ profile.get('address').get('city') }}{% endif %}">
+            </div>
+            <div class="field">
+                <label>Province</label>
+                <input type="text" name="province" id="province" value="{% if profile.get('address').get('province') %}{{ profile.get('address').get('province') }}{% endif %}">
+            </div>
+            <div class="field">
+                <label>Post code</label>
+                <input type="text" name="postcode" id="postcode" value="{% if profile.get('address').get('postcode') %}{{ profile.get('address').get('postcode') }}{% endif %}">
             </div>
         </div>
+
+
+
+{##}
+{#        <div class="field">#}
+{#            <label>Enterprise name</label>#}
+{#            <input type="text" name="enterprise_name" id="enterprise_name" value="{% if session.get('enterprise_name') %}{{ session.get('enterprise_name') }}{% endif %}">#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>Enterprise legal form</label>#}
+{#            <input type="text" name="legal_form" id="legal_form" value="{% if session.get('legal_form') %}{{ session.get('legal_form') }}{% endif %}">#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>Registration jurisdiction</label>#}
+{#            <input type="text" name="jurisdiction" id="jurisdiction" value="{% if session.get('jurisdiction') %}{{ session.get('jurisdiction') }}{% endif %}">#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>Registration number (Business number)</label>#}
+{#            <input type="text" name="enterprise_number" id="enterprise_number" value="{% if session.get('enterprise_number') %}{{ session.get('enterprise_number') }}{% endif %}">#}
+{#        </div>#}
+{##}
+{##}
+{#        <div class="field">#}
+{#            <label>Title of the announcement</label>#}
+{#            <input type="text" name="business_title" id="business_title" value="{% if current_profile.get('title') %}{{ current_profile.get('title') }}{% endif %}">#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>Description</label>#}
+{#            <textarea type="text" id="description" rows="3" name="description">{% if current_profile.get('description') %}{{ current_profile.get('description') }}{% endif %}</textarea>#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>Location</label>#}
+{#            <input type="text" id="region" name="region" value="{% if current_profile.get('region') %}{{ current_profile.get('region') }}{% endif %}">#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>Asking price</label>#}
+{#            <div class="ui right labeled input">#}
+{#                <label for="amount" class="ui label">$</label>#}
+{#                <input name="ask_price" id="ask_price" type="text" value="{% if current_profile.get('ask_price') %}{{ current_profile.get('ask_price') }}{% endif %}" id="amount">#}
+{#                <div class="ui basic label">.00</div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>Reason for the sale</label>#}
+{#            <textarea type="text" rows="3" name="reason" id="reason">{% if current_profile.get('reason') %}{{ current_profile.get('reason') }}{% endif %}</textarea>#}
+{#        </div>#}
+{#        <div class="field">#}
+{#            <label>Revenue</label>#}
+{#            <div class="ui right labeled input">#}
+{#                <label for="amount" class="ui label">$</label>#}
+{#                <input name="revenue" id="revenue" type="text" value="{% if current_profile.get('revenue') %}{{ current_profile.get('revenue') }}{% endif %}" id="amount">#}
+{#                <div class="ui basic label">.00</div>#}
+{#            </div>#}
+{#        </div>#}
     </div>
 
 
