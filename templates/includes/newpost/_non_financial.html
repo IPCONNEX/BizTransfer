@@ -102,11 +102,6 @@
                 <input type="text" name="end_date" value="{% if profile.get('end_date') %}{{ profile.get('title') }}{% endif %}">
             </div>
         </div>
-
-
-
-
-
     </div>
 
 
@@ -116,18 +111,11 @@
 <script>
     $( ".ui.form" ).form({
         fields: {
-            scian1: {
-                identifier: 'scian1',
+            dev_stage: {
+                identifier: 'dev_stage',
                 rules: [{
-                    type: 'number',
-                    prompt: 'Enter a valid number'
-                }]
-            },
-            scian2: {
-                identifier: 'scian2',
-                rules: [{
-                    type: 'number',
-                    prompt: 'Enter a valid number'
+                    type: 'empty',
+                    prompt: 'This field is required'
                 }]
             }
         },

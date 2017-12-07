@@ -62,20 +62,21 @@
                 </div>
             </div>
         </div>
-        <div class="field">
-            <label>CCA rate</label>
-            <div class="ui right labeled input">
-                <label for="amount" class="ui label">CA$</label>
-                <input type="text" name="cca" value="{% if profile.get('cca') %}{{ profile.get('cca') }}{% endif %}">
-                <div class="ui basic label">.00</div>
+        <div class="two fields">
+            <div class="field">
+                <label>CCA rate</label>
+                <div class="ui right labeled input">
+                    <input type="text" name="cca" value="{% if profile.get('cca') %}{{ profile.get('cca') }}{% endif %}">
+                    <div class="ui basic label">%</div>
+                </div>
             </div>
-        </div>
-        <div class="field">
-            <label>UCC balance</label>
-            <div class="ui right labeled input">
-                <label for="amount" class="ui label">CA$</label>
-                <input type="text" name="ucc" value="{% if profile.get('ucc') %}{{ profile.get('ucc') }}{% endif %}">
-                <div class="ui basic label">.00</div>
+            <div class="field">
+                <label>UCC balance</label>
+                <div class="ui right labeled input">
+                    <label for="amount" class="ui label">CA$</label>
+                    <input type="text" name="ucc" value="{% if profile.get('ucc') %}{{ profile.get('ucc') }}{% endif %}">
+                    <div class="ui basic label">.00</div>
+                </div>
             </div>
         </div>
         <div class="field">
@@ -89,14 +90,98 @@
         <div class="field">
             <label>D/E ratio</label>
             <div class="ui right labeled input">
-                <label for="amount" class="ui label">CA$</label>
                 <input type="text" name="de_ratio" value="{% if profile.get('de_ratio') %}{{ profile.get('de_ratio') }}{% endif %}">
-                <div class="ui basic label">.00</div>
+                <div class="ui basic label">%</div>
             </div>
         </div>
+    </div>
 
 
-
+<!-- Form validation -->
+<script>
+    $( ".ui.form" ).form({
+        fields: {
+            scian1: {
+                identifier: 'scian1',
+                rules: [{
+                    type: 'decimal',
+                    prompt: 'SCIAN code has to be only digits'
+                }]
+            },
+            scian2: {
+                identifier: 'scian2',
+                rules: [{
+                    type: 'decimal',
+                    prompt: 'SCIAN code has to be only digits'
+                }]
+            },
+            tax: {
+                identifier: 'tax',
+                rules: [{
+                    type: 'decimal',
+                    prompt: 'The amount has to be only digits'
+                }]
+            },
+            average_revenue: {
+                identifier: 'average_revenue',
+                rules: [{
+                    type: 'decimal',
+                    prompt: 'The amount has to be only digits'
+                }]
+            },
+            average_profit: {
+                identifier: 'average_profit',
+                rules: [{
+                    type: 'decimal',
+                    prompt: 'The amount has to be only digits'
+                }]
+            },
+            average_interest: {
+                identifier: 'average_interest',
+                rules: [{
+                    type: 'decimal',
+                    prompt: 'The amount has to be only digits'
+                }]
+            },
+            average_debt: {
+                identifier: 'average_debt',
+                rules: [{
+                    type: 'decimal',
+                    prompt: 'The amount has to be only digits'
+                }]
+            },
+            cca: {
+                identifier: 'cca',
+                rules: [{
+                    type: 'integer',
+                    prompt: 'The amount has to be a percentage value'
+                }]
+            },
+            ucc: {
+                identifier: 'ucc',
+                rules: [{
+                    type: 'decimal',
+                    prompt: 'The amount has to be only digits'
+                }]
+            },
+            rdtoh: {
+                identifier: 'rdtoh',
+                rules: [{
+                    type: 'decimal',
+                    prompt: 'The amount has to be only digits'
+                }]
+            },
+            de_ratio: {
+                identifier: 'de_ratio',
+                rules: [{
+                    type: 'integer',
+                    prompt: 'The amount has to be a percentage value'
+                }]
+            }
+        },
+        inline: true,
+    });
+</script>
 
 
 {#        <div class="field">#}
@@ -203,25 +288,3 @@
 {#            </div>#}
 {#        </div>#}
 
-
-
-    </div>
-
-
-
-
-<!-- Form validation -->
-<script>
-    $( ".ui.form" ).form({
-        fields: {
-            user_agreement: {
-                identifier: 'user_agreement',
-                rules: [{
-                    type: 'checked',
-                    prompt: 'You must agree to the terms and conditions'
-                }]
-            },
-        },
-        inline: true,
-    });
-</script>
