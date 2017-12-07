@@ -35,63 +35,33 @@
 
     </div>
 
-{#TODO complete the verification for all forms#}
 
 <!-- Form validation -->
 <script>
     $( ".ui.form" ).form({
         fields: {
-            franchise: {
-                identifier: 'franchise',
+            title: {
+                identifier: 'title',
                 rules: [{
                     type: 'empty',
-                    prompt: 'This is a required field'
+                    prompt: 'Title of your listing is required'
                 }]
             },
-            foundation_year: {
-                identifier: 'foundation_year',
+            description: {
+                identifier: 'description',
                 rules: [{
-                    type: 'number',
-                    prompt: 'Enter a valid year'
-                    // TODO use better validator for a year
+                    type: 'minLength[100]',
+                    prompt: 'The description should be at least 100 characters'
                 },{
                     type:'empty',
-                    prompt: 'This field is required'
+                    prompt: 'A description is required'
                 }]
             },
-            gross_profit: {
-                identifier: 'gross_profit',
+            asking_price: {
+                identifier: 'asking_price',
                 rules: [{
-                    type: 'number',
-                    prompt: 'Only numbers are allowed'
-                }]
-            },
-            dev_stage: {
-                identifier: 'dev_stage',
-                rules: [{
-                    type: 'empty',
-                    prompt: 'You have to indicate the development stage of the business'
-                }]
-            },
-            ebitda: {
-                identifier: 'ebitda',
-                rules: [{
-                    type: 'number',
-                    prompt: 'Only numbers are allowed'
-                }]
-            },
-            inventory: {
-                identifier: 'inventory',
-                rules: [{
-                    type: 'number',
-                    prompt: 'Only numbers are allowed'
-                }]
-            },
-            office_furniture: {
-                identifier: 'office_furniture',
-                rules: [{
-                    type: 'number',
-                    prompt: 'Only numbers are allowed'
+                    type: 'decimal',
+                    prompt: 'Please enter a valid only digits value'
                 }]
             }
         },

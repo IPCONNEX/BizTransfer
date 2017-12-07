@@ -1,0 +1,49 @@
+{% extends "includes/layout.html" %}
+
+{% block title %} - Admin Translation page{% endblock %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block body %}
+
+
+<div class="ui container segment grid">
+    <div class="ui column row">
+        <div class="ui sixteen wide column">
+            <form method="POST" class="ui form" action="">
+
+                {% for key in dict_en.keys() %}
+                    <div class="three fields">
+                        <div class="field">
+                            <p>{{ key }}</p>
+                        </div>
+                        <div class="field">
+                            <input name="{{ key }}_en" class="ui fluid dropdown" value="{{ dict_en.get(key, "") }}">
+                        </div>
+                        <div class="field">
+                            <input name="{{ key }}_fr" class="ui fluid dropdown" value="{{ dict_fr.get(key, "") }}">
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <input type="submit" class="ui button large primary right floated" value="Update">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Side bar menu -->
+<script>
+    $('#toggle').click(function(){
+        $('.ui.sidebar').sidebar('toggle');
+    });
+</script>
+
+{% endblock %}
+

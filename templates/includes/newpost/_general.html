@@ -56,7 +56,43 @@
                 <input type="text" name="postcode" id="postcode" value="{% if profile.get('address').get('postcode') %}{{ profile.get('address').get('postcode') }}{% endif %}">
             </div>
         </div>
+    </div>
 
+<!-- Form validation -->
+<script>
+    $( ".ui.form" ).form({
+        fields: {
+            title: {
+                identifier: 'contact',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'Contact name information is required'
+                }]
+            },
+            email: {
+                identifier: 'email',
+                rules: [{
+                    type: 'email',
+                    prompt: 'A valid email is required'
+                },{
+                    type: 'empty',
+                    prompt: 'email is required'
+                }]
+            },
+            phone: {
+                identifier: 'phone',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'A phone number is required'
+                },{
+                    type: 'empty',
+                    prompt: 'A phone number is required'
+                }]
+            }
+        },
+        inline: true,
+    });
+</script>
 
 
 {##}
@@ -110,58 +146,3 @@
 {#                <div class="ui basic label">.00</div>#}
 {#            </div>#}
 {#        </div>#}
-    </div>
-
-
-
-
-
-<!-- Form validation -->
-<script>
-    $( ".ui.form" ).form({
-        fields: {
-            title: {
-                identifier: 'business_title',
-                rules: [{
-                    type: 'empty',
-                    prompt: 'You have to enter a title for your announcement'
-                }]
-            },
-            description: {
-                identifier: 'description',
-                rules: [{
-                    type: 'minLength[100]',
-                    prompt: 'Please describe your business with at least 100 characters'
-                }]
-            },
-            region: {
-                identifier: 'region',
-                rules: [{
-                    type: 'empty',
-                    prompt: 'You have to enter a region where your business is located'
-                }]
-            },
-            ask_price: {
-                identifier: 'ask_price',
-                rules: [{
-                    type: 'number',
-                    prompt: 'Only numbers are allowed'
-                },{
-                    type:'empty',
-                    prompt: 'This field is required'
-                }]
-            },
-            revenue: {
-                identifier: 'revenue',
-                rules: [{
-                    type: 'number',
-                    prompt: 'Only numbers are allowed'
-                },{
-                    type:'empty',
-                    prompt: 'This field is required'
-                }]
-            }
-        },
-        inline: true,
-    });
-</script>

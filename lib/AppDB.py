@@ -18,6 +18,9 @@ class AppDB:
     def GetLanguageStatics(self, language):
         return self.collections.statics.find_one({'language': language}, {'_id': False})
 
+    def GetDictionaries(self):
+        return self.collections.statics
+
 
 #  TODO complete full profile data fields
 class Profile:

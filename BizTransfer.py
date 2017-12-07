@@ -25,6 +25,7 @@ mail = Mail(app)
 DB = AppDB(app.config['DB_URI'], app.config['DB_USER'], app.config['DB_PWD'])
 usersDB = DB.GetUsersDB()
 enterprisesDB = DB.GetEnterprisesDB()
+dictionaries = DB.GetDictionaries()
 serializer = URLSafeTimedSerializer('Sec3ret_key!')
 
 
@@ -267,7 +268,26 @@ def page_not_found(e):
     return "<h1 style='text-align: center'>APPLICATION ERROR</h1>"
 
 
-#  TODO attach the key and the BD key into a local environment file instead of hardcoded
+@app.route('/admin/translate/', methods=['GET', 'POST'])
+@is_logged_in
+def translate():
+    dict_fr = DB.GetLanguageStatics('fr')
+    dict_en = DB.GetLanguageStatics('en')
+    is_admin = usersDB.find_one({'email': session.get('email')}).get('admin')
+    #  Update the dictionary
+    if request.method == 'POST':
+        for key in dict_en.keys():
+            if key != 'language':
+                dictionaries.update_one({'language': 'en'}, {"$set": {key: request.form.get(key + '_en')}})
+                dictionaries.update_one({'language': 'fr'}, {"$set": {key: request.form.get(key + '_fr')}})
+        return redirect(url_for('translate'))
+
+    #  Only render the page if the user is Admin
+    if is_admin:
+        return render_template('admin/translate.html', dict_en=dict_en, dict_fr=dict_fr)
+    else:
+        return redirect('dashboard')
+
 
 
 # if __name__ == '__main__':

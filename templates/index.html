@@ -1,7 +1,7 @@
 
 {% extends "includes/layout.html" %}
 
-{% block title %} - Home page{% endblock %}
+{% block title %} - {{ session.get('statics')['home_page'] }}{% endblock %}
 
 {% block head %}
     {{ super() }}
@@ -18,8 +18,8 @@
 <!-- Content of the page -->
 <div class="ui container basic segment">
 
-<div class="ui huge header">BizTrasnfer.ca</div>
-<p class="ui small header">Where business deals are made. Choose bellow your interest:</p>
+<div class="ui huge header">CanadaBizTrasnfer.ca</div>
+<p class="ui small header">{{ session.get('statics')['home_page_intro'] }}</p>
 
     <div class="ui grid" id="full-screen">
         <div class="ui column row">
@@ -27,17 +27,17 @@
 
             <div class="ui six wide computer eight wide tablet sixteen wide phone column">
                 <div class="ui segment stretched">
-                    <p>Do you want to retire?</p>
-                    <p>You want to change business?</p>
-                    <p>Want an exit from your business?</p>
+                    <p>{{ session.get('statics')['intro_retire'] }}</p>
+                    <p>{{ session.get('statics')['intro_changebiz'] }}</p>
+                    <p>{{ session.get('statics')['intro_exitbiz'] }}</p>
                 </div>
-                <a href="/newpost/0/1"><button class="ui fluid green massive button"><i class="sign out icon"></i>Sell your business</button></a>
+                <a href="/newpost/0/1"><button class="ui fluid green massive button"><i class="sign out icon"></i>{{ session.get('statics')['index_sell_button'] }}</button></a>
             </div>
             <div class="ui six wide computer eight wide tablet sixteen wide phone column">
                 <div class="ui segment stretched">
-                    <p>You want to invest?</p>
-                    <p>Get a-ready-to operate business?</p>
-                    <p>Looking for business ideas?</p>
+                    <p>{{ session.get('statics')['intro_invest'] }}</p>
+                    <p>{{ session.get('statics')['intro_operate'] }}</p>
+                    <p>{{ session.get('statics')['intro_idea'] }}</p>
                 </div>
                 <a href="/listings/" class="ui fluid red massive button"><i class="sign in icon"></i>{{ session.get('statics')['index_buy_button'] }}</a>
             </div>

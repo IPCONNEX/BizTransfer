@@ -20,7 +20,7 @@
             <label>Gross Annual Profit</label>
             <div class="ui right labeled input">
                 <label for="amount" class="ui label">CA$</label>
-                <input type="text" name="gross_profit" value="{% if current_profile.get('gross_profit') %}{{ current_profile.get('gross_profit') }}{% endif %}" id="amount">
+                <input type="text" name="gross_profit" value="{% if profile.get('gross_profit') %}{{ profile.get('gross_profit') }}{% endif %}" id="amount">
                 <div class="ui basic label">.00</div>
             </div>
         </div>
@@ -61,49 +61,35 @@
                 identifier: 'gross_revenue',
                 rules: [{
                     type: 'number',
-                    prompt: 'Enter a valid number'
+                    prompt: 'Please enter a valid number'
                 }]
             },
             gross_profit: {
                 identifier: 'gross_profit',
                 rules: [{
                     type: 'number',
-                    prompt: 'Enter a valid number'
+                    prompt: 'Please enter a valid number'
                 }]
             },
             ebitda: {
                 identifier: 'ebitda',
                 rules: [{
                     type: 'number',
-                    prompt: 'Enter a valid number'
-                }]
-            },
-            tax: {
-                identifier: 'tax',
-                rules: [{
-                    type: 'number',
-                    prompt: 'Enter a valid number'
+                    prompt: 'Please enter a valid number'
                 }]
             },
             inventory: {
                 identifier: 'inventory',
                 rules: [{
                     type: 'number',
-                    prompt: 'Enter a valid number'
+                    prompt: 'Please enter a valid number'
                 }]
             },
             office_furniture: {
                 identifier: 'office_furniture',
                 rules: [{
                     type: 'number',
-                    prompt: 'Enter a valid number'
-                }]
-            },
-            dept: {
-                identifier: 'dept',
-                rules: [{
-                    type: 'number',
-                    prompt: 'Enter a valid number'
+                    prompt: 'Please enter a valid number'
                 }]
             }
         },
