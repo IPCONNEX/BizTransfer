@@ -19,7 +19,10 @@ import os
 # THE APP
 app = Flask(__name__)
 
-app.config.from_object(os.environ['APP_SETTINGS'])
+#  app.config.from_object(os.environ['APP_SETTINGS'])
+import config
+app.config.from_object(config.DevelopmentConfig)
+
 moment = Moment(app)
 mail = Mail(app)
 DB = AppDB(app.config['DB_URI'], app.config['DB_USER'], app.config['DB_PWD'])
@@ -43,8 +46,16 @@ def is_logged_in(f):
     return wrap
 
 
+#  At first set by default the language to EN
+@app.before_request
+def startup():
+    if not session.get('statics'):
+        session['statics'] = DB.GetLanguageStatics('en')
+
+
+#  Change language based of the browser's request language
 def define_language(private_request):
-    if session['statics']:
+    if session.get('statics'):
         return session['statics']
     else:
         language = private_request.environ.get('werkzeug.request').accept_languages[0][0][:2]
@@ -65,9 +76,11 @@ def language(lang):
 
 @app.route("/", methods=["GET"])
 def index():
+    #  Force the language
+    # define_language(request)
     # print("MAIL_SERVER = " + os.environ.get('MAIL_SERVER'))
-    if session.get('statics') is not None:
-        session['statics'] = define_language(request)
+    # if session.get('statics') is not None:
+    #     session['statics'] = define_language(request)
     return render_template('index.html')
 
 

@@ -1,6 +1,6 @@
 {% extends "includes/layout.html" %}
 
-{% block title %} - {{ profile.general.get('title') }}{% endblock %}
+{% block title %} - {{ profile.get('profile').get('title') }}{% endblock %}
 
 {% block head %}
     {{ super() }}
