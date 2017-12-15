@@ -18,10 +18,17 @@
 
 runtime: python
 env: flex
+#  TODO Try port 443 and see if it goes over HTTPS
 entrypoint: gunicorn -b :$PORT BizTransfer:app
 
 runtime_config:
   python_version: 3
+
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 10
+  cpu_utilization:
+    target_utilization: 0.5
 
 env_variables:
   APP_SETTINGS: 'config.ProductionConfig'

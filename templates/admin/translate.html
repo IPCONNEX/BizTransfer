@@ -19,12 +19,21 @@
                         <div class="field">
                             <p>{{ key }}</p>
                         </div>
-                        <div class="field">
-                            <input name="{{ key }}_en" class="ui fluid dropdown" value="{{ dict_en.get(key, "") }}">
-                        </div>
-                        <div class="field">
-                            <input name="{{ key }}_fr" class="ui fluid dropdown" value="{{ dict_fr.get(key, "") }}">
-                        </div>
+                        {% if dict_en.get(key)|string()|length < 50 %}
+                            <div class="field">
+                                <input name="{{ key }}_en" class="ui fluid dropdown" value="{{ dict_en.get(key, "") }}">
+                            </div>
+                            <div class="field">
+                                <input name="{{ key }}_fr" class="ui fluid dropdown" value="{{ dict_fr.get(key, "") }}">
+                            </div>
+                        {% else %}
+                            <div class="field">
+                                <textarea type="text" rows="3" name={{ key }}_en>{{ dict_en.get(key, "") }}</textarea>
+                            </div>
+                            <div class="field">
+                                <textarea type="text" rows="3" name={{ key }}_fr>{{ dict_fr.get(key, "") }}</textarea>
+                            </div>
+                        {% endif %}
                     </div>
                 {% endfor %}
 

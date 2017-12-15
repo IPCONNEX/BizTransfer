@@ -5,21 +5,21 @@
 {% endif %}
 
     <div class="ui container segment stretched yellow">
-        <div class="ui header big">More information about your listing</div>
-        <p>The information provided in this section <strong>will not be public as it is</strong> we will use it only to <strong>classify</strong> your listing in order to target better audience</p>
+        <div class="ui header big">{{ session.get('statics').get('adv_info_det') }}</div>
+        <p>{{ session.get('statics').get('adv_info_details')|safe }}</p>
         <div class="ui divider"></div>
         <div class="two fields">
             <div class="field">
-                <label>SCIAN code 1</label>
+                <label>{{ session.get('statics').get('scian1') }}</label>
                 <input type="text" name="scian1" value="{% if profile.get('scian1') %}{{ profile.get('scian1') }}{% endif %}" id="scian1">
             </div>
             <div class="field">
-                <label>SCIAN code 2</label>
+                <label>{{ session.get('statics').get('scian2') }}</label>
                 <input type="text" name="scian2" value="{% if profile.get('scian2') %}{{ profile.get('scian2') }}{% endif %}" id="scian2">
             </div>
         </div>
         <div class="field">
-            <label>Tax balance</label>
+            <label>{{ session.get('statics').get('tax_balance') }}</label>
             <div class="ui right labeled input">
                 <label for="amount" class="ui label">CA$</label>
                 <input type="text" name="tax" id="tax" value="{% if profile.get('tax') %}{{ profile.get('tax') }}{% endif %}">
@@ -28,7 +28,7 @@
         </div>
         <div class="two fields">
             <div class="field">
-                <label>Average of 3 to 5 years Revenue</label>
+                <label>{{ session.get('statics').get('average_revenue') }}</label>
                 <div class="ui right labeled input">
                     <label for="amount" class="ui label">CA$</label>
                     <input type="text" name="average_revenue" value="{% if profile.get('average_revenue') %}{{ profile.get('average_revenue') }}{% endif %}" id="amount">
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="field">
-                <label>Average of 3 to 5 years Profit</label>
+                <label>{{ session.get('statics').get('average_profit') }}</label>
                 <div class="ui right labeled input">
                     <label for="amount" class="ui label">CA$</label>
                     <input type="text" name="average_profit" value="{% if profile.get('average_profit') %}{{ profile.get('average_profit') }}{% endif %}" id="amount">
@@ -46,15 +46,15 @@
         </div>
         <div class="two fields">
             <div class="field">
-                <label>Average of Interest</label>
+                <label>{{ session.get('statics').get('average_interest') }}</label>
                 <div class="ui right labeled input">
                     <label for="amount" class="ui label">CA$</label>
-                    <input type="text" name="average_interest" value="{% if profile.get('average_interest') %}{{ current_profile.get('average_interest') }}{% endif %}">
+                    <input type="text" name="average_interest" value="{% if profile.get('average_interest') %}{{ profile.get('average_interest') }}{% endif %}">
                     <div class="ui basic label">.00</div>
                 </div>
             </div>
             <div class="field">
-                <label>Average of Debt and Amortization</label>
+                <label>{{ session.get('statics').get('average_da') }}</label>
                 <div class="ui right labeled input">
                     <label for="amount" class="ui label">CA$</label>
                     <input type="text" name="average_debt" value="{% if profile.get('average_debt') %}{{ profile.get('average_debt') }}{% endif %}">
@@ -64,14 +64,14 @@
         </div>
         <div class="two fields">
             <div class="field">
-                <label>CCA rate</label>
+                <label>{{ session.get('statics').get('cca_rate') }}</label>
                 <div class="ui right labeled input">
                     <input type="text" name="cca" value="{% if profile.get('cca') %}{{ profile.get('cca') }}{% endif %}">
                     <div class="ui basic label">%</div>
                 </div>
             </div>
             <div class="field">
-                <label>UCC balance</label>
+                <label>{{ session.get('statics').get('ucc_balance') }}</label>
                 <div class="ui right labeled input">
                     <label for="amount" class="ui label">CA$</label>
                     <input type="text" name="ucc" value="{% if profile.get('ucc') %}{{ profile.get('ucc') }}{% endif %}">
@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="field">
-            <label>RDTOH</label>
+            <label>{{ session.get('statics').get('rdtoh') }}</label>
             <div class="ui right labeled input">
                 <label for="amount" class="ui label">CA$</label>
                 <input type="text" name="rdtoh" value="{% if profile.get('rdtoh') %}{{ profile.get('rdtoh') }}{% endif %}">
@@ -88,7 +88,7 @@
             </div>
         </div>
         <div class="field">
-            <label>D/E ratio</label>
+            <label>{{ session.get('statics').get('de_ratio') }}</label>
             <div class="ui right labeled input">
                 <input type="text" name="de_ratio" value="{% if profile.get('de_ratio') %}{{ profile.get('de_ratio') }}{% endif %}">
                 <div class="ui basic label">%</div>

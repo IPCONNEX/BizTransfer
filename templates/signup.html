@@ -1,59 +1,64 @@
 
 {% extends "includes/layout.html" %}
 
+{% block title %} - {{ session.get('statics')['signup'] }}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+
+    </style>
+
+{% endblock %}
+
+
+
 {% block body %}
-
-
 
 
 <div class="container panel-default col-sm-12">
 
 
-<!-- Fields test
-
--->
-
-
 <div class="ui container basic segment">
-    <div class="ui huge header">Enter your personal information</div>
-    <p class="ui medium header">This information will be kept on our servers only to identify you and will be shared with other only when when you permit it</p>
+    <div class="ui huge header">{{ session.get('statics')['enter_personal_info'] }}</div>
+    <p class="ui medium header">{{ session.get('statics')['enter_personal_info2'] }}</p>
 
     <div class="ui grid">
         <div class="ui column row"></div>
         <div class="ui column row">
             <div class="ui three wide computer column computer only"></div>
-            <div class="ui ten wide computer eight wide tablet column">
+            <div class="ui ten wide computer sixteen wide tablet column">
                 <div class="ui segment stretched">
 
                     <form method="POST" class="ui form" action="">
                         <div class="field">
-                            <label>Email</label>
-                            <input type="text" name="email" placeholder="Email address">
+                            <label>{{ session.get('statics')['email'] }}</label>
+                            <input type="text" name="email" placeholder="" id="username">
                         </div>
                         <div class="two fields">
                             <div class="field">
-                                <label>First Name</label>
+                                <label>{{ session.get('statics')['first_name'] }}</label>
                                 <input type="text" name="firstname" placeholder="">
                             </div>
                             <div class="field">
-                                <label>Last Name</label>
+                                <label>{{ session.get('statics')['last_name'] }}</label>
                                 <input type="text" name="lastname" placeholder="">
                             </div>
                         </div>
                         <div class="field">
-                            <label>Phone number</label>
-                            <input type="text" name="phone" placeholder="All digits phone number">
+                            <label>{{ session.get('statics')['phone'] }}</label>
+                            <input type="text" name="phone" placeholder="">
                         </div>
                         <div class="field">
-                            <label>Password</label>
+                            <label>{{ session.get('statics')['password'] }}</label>
                             <input type="password" name="password" placeholder="">
                         </div>
                         <div class="field">
-                            <label>Confirm password</label>
+                            <label>{{ session.get('statics')['password2'] }}</label>
                             <input type="password" name="password2" placeholder="">
                         </div>
 
-                        <input type="submit" class="ui animated large button primary green fluid" value="Next"></input>
+                        <input type="submit" class="ui animated large button primary green fluid" value="{{ session.get('statics')['next'] }}">
                     </form>
 
                 </div>
@@ -121,99 +126,6 @@
         $('.ui.sidebar').sidebar('toggle');
     });
 </script>
-
-
-
-<!-- Fields test ends
-
-
-
-<div class="panel panel-default">
-    <div class="panel-heading"><h4>Enter data for an enterprise listing</h4></div>
-
-<table class="table" style="width:100%" height="51px">
-<form action="/add-biz" method="POST">
-<tr>
-<th width="50%">ID of the entreprise</th>
-<th width="50%">{{ newId }}</th>
-</tr>
-<tr>
-<td>Nom de l'entreprise</td>
-<td><div class="input-group">
-    <span class="input-group-addon" id="basic-addon1"> </span>
-    <input type="text" class="form-control" name="entreprise" placeholder="Enterprise name" aria-describedby="basic-addon1">
-  </div>
-</td>
-</tr>
-<tr>
-<td>NEQ</td>
-<td>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1"> </span>
-        <input type="text" class="form-control" placeholder="NEQ" aria-describedby="basic-addon1">
-  </div>
-</td>
-</tr>
-<tr>
-<td>Contact name</td>
-<td>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1"> </span>
-        <input type="text" class="form-control" placeholder="First name and Last name" aria-describedby="basic-addon1">
-  </div>
-</td>
-</tr>
-<tr>
-<td>Phone number</td>
-<td>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1"> </span>
-        <input type="text" class="form-control" placeholder="000" aria-describedby="basic-addon1">
-        <span class="input-group-addon" id="basic-addon1"> </span>
-        <input type="text" class="form-control" placeholder="000" aria-describedby="basic-addon1">
-        <span class="input-group-addon" id="basic-addon1"> </span>
-        <input type="text" class="form-control" placeholder="0000" aria-describedby="basic-addon1">
-    </div>
-</td>
-</tr>
-<tr>
-<td>Email</td>
-<td>
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon2">
-      <span class="input-group-addon" id="basic-addon2">@</span>
-      <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon2">
-    </div>
-</td>
-</tr>
-<tr>
-<td>EBITDA</td>
-<td>
-    <div class="input-group">
-      <span class="input-group-addon">$</span>
-      <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-      <span class="input-group-addon">.00</span>
-    </div>
-</td>
-</tr>
-<tr>
-<td></td>
-<td>
-    <div class="input-group">
-        <input type="submit" class="btn btn-primary">
-    </div>
-</td>
-</tr>
-</form>
-</table>
-</div>
-
-
-
--->
-
-
-
 
 </div>
 

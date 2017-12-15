@@ -5,11 +5,11 @@
 {% endif %}
 
     <div class="ui container segment stretched green">
-        <div class="ui header big">Non Financial information</div>
-        <p>The information provided in this section will be <strong>public</strong> and <strong>all users</strong> will be able to see it online</p>
+        <div class="ui header big">{{ session.get('statics').get('non_financial_info') }}</div>
+        <p>{{ session.get('statics').get('non_financial_info_details')|safe }}</p>
         <div class="ui divider"></div>
         <div class="field">
-            <label>Foundation year</label>
+            <label>{{ session.get('statics').get('foundation_year') }}</label>
             <select name="foundation_year" class="ui fluid dropdown">
                 <option value="{% if profile.get('foundation_year') %}{{ profile.get('foundation_year') }}{% endif %}"></option>
                 {% for year in range(2017,1900,-1) %}
@@ -18,54 +18,54 @@
             </select>
         </div>
         <div class="field">
-            <label>Reason for the sale</label>
+            <label>{{ session.get('statics').get('reason_sale') }}</label>
             <input type="text" name="reason" value="{% if profile.get('reason') %}{{ profile.get('reason') }}{% endif %}">
         </div>
         <div class="field">
-            <label>Target customers</label>
+            <label>{{ session.get('statics').get('target_cust') }}</label>
             <input type="text" name="target" value="{% if profile.get('target') %}{{ profile.get('target') }}{% endif %}">
         </div>
         <div class="field">
-            <label>Development stage of the enterprise</label>
+            <label>{{ session.get('statics').get('stage_develp') }}</label>
             <select name="dev_stage" class="ui fluid dropdown" id="dev_stage">
                 <option value="{% if profile.get('dev_stage') %}{{ profile.get('dev_stage') }}{% endif %}"></option>
-                <option value="startup">Startup</option>
-                <option value="expanding">Expanding</option>
-                <option value="established">Established</option>
-                <option value="bankrupt">Decline</option>
+                <option value="startup">{{ session.get('statics').get('start_up') }}</option>
+                <option value="expanding">{{ session.get('statics').get('expand') }}</option>
+                <option value="established">{{ session.get('statics').get('establish') }}</option>
+                <option value="bankrupt">{{ session.get('statics').get('decline') }}</option>
             </select>
         </div>
         <div class="two fields">
             <div class="field">
-                <label>Seller is open to finance the buyer?</label>
+                <label>{{ session.get('statics').get('can_finance') }}</label>
                 <select name="finance" class="ui fluid dropdown">
                     <option value="{% if profile.get('finance') %}{{ profile.get('finance') }}{% endif %}"></option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                    <option value="later">To be discussed</option>
+                    <option value="yes">{{ session.get('statics').get('yes') }}</option>
+                    <option value="no">{{ session.get('statics').get('no') }}</option>
+                    <option value="later">{{ session.get('statics').get('to_discuss') }}</option>
                 </select>
             </div>
             <div class="field">
-                <label>Seller can support after the sale?</label>
+                <label>{{ session.get('statics').get('can_support') }}</label>
                 <select name="after_sale" class="ui fluid dropdown">
                     <option value="{% if current_profile.get('after_sale') %}{{ current_profile.get('after_sale') }}{% endif %}"></option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                    <option value="later">To be discussed</option>
+                    <option value="Yes">{{ session.get('statics').get('yes') }}</option>
+                    <option value="No">{{ session.get('statics').get('no') }}</option>
+                    <option value="later">{{ session.get('statics').get('to_discuss') }}</option>
                 </select>
             </div>
         </div>
         <div class="field">
-            <label>Patent/License</label>
+            <label>{{ session.get('statics').get('license') }}</label>
             <select name="patent" class="ui fluid dropdown">
                 <option value="{% if profile.get('patent') %}{{ profile.get('patent') }}{% endif %}"></option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="yes">{{ session.get('statics').get('yes') }}</option>
+                <option value="no">{{ session.get('statics').get('no') }}</option>
             </select>
         </div>
         <div class="two fields">
             <div class="field">
-                <label>Number of full-time employees</label>
+                <label>{{ session.get('statics').get('ft_employees') }}</label>
                 <select name="fulltime" class="ui fluid dropdown">
                     <option value="{% if profile.get('fulltime') %}{{ profile.get('fulltime') }}{% endif %}"></option>
                     {% for emp in range(50) %}
@@ -78,7 +78,7 @@
                 </select>
             </div>
             <div class="field">
-                <label>Number of part-time employees</label>
+                <label>{{ session.get('statics').get('pt_employees') }}</label>
                 <select name="parttime" class="ui fluid dropdown">
                     <option value="{% if profile.get('parttime') %}{{ profile.get('parttime') }}{% endif %}"></option>
                     {% for emp in range(51) %}
@@ -90,15 +90,15 @@
         </div>
         <div class="two fields">
             <div class="field">
-                <label>The business has a lease/rent?</label>
+                <label>{{ session.get('statics').get('lease') }}</label>
                 <select name="rent" class="ui fluid dropdown">
                     <option value="{% if profile.get('rent') %}{{ profile.get('patent') }}{% endif %}"></option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes">{{ session.get('statics').get('yes') }}</option>
+                    <option value="no">{{ session.get('statics').get('no') }}</option>
                 </select>
             </div>
             <div class="field">
-                <label>If yes, End date</label>
+                <label>{{ session.get('statics').get('yes_date') }}</label>
                 <input type="text" name="end_date" value="{% if profile.get('end_date') %}{{ profile.get('title') }}{% endif %}">
             </div>
         </div>

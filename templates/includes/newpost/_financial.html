@@ -5,11 +5,11 @@
 {% endif %}
 
     <div class="ui container segment stretched green">
-        <div class="ui header big">Financial information</div>
-        <p>The information provided in this section will be <strong>public</strong> and <strong>all users</strong> will be able to see it online</p>
+        <div class="ui header big">{{ session.get('statics').get('financial_info') }}</div>
+        <p>{{ session.get('statics').get('financial_info_details')|safe }}</p>
         <div class="ui divider"></div>
         <div class="field">
-            <label>Gross Annual Revenue</label>
+            <label>{{ session.get('statics').get('gross_revenue') }}</label>
             <div class="ui right labeled input">
                 <label for="amount" class="ui label">CA$</label>
                 <input type="text" name="gross_revenue" value="{% if profile.get('gross_revenue') %}{{ profile.get('gross_revenue') }}{% endif %}" id="amount">
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="field">
-            <label>Gross Annual Profit</label>
+            <label>{{ session.get('statics').get('gross_profit') }}</label>
             <div class="ui right labeled input">
                 <label for="amount" class="ui label">CA$</label>
                 <input type="text" name="gross_profit" value="{% if profile.get('gross_profit') %}{{ profile.get('gross_profit') }}{% endif %}" id="amount">
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="field">
-            <label>EBITDA</label>
+            <label>{{ session.get('statics').get('ebitda') }}</label>
             <div class="ui right labeled input">
                 <label for="amount" class="ui label">CA$</label>
                 <input type="text" name="ebitda" value="{% if profile.get('ebitda') %}{{ profile.get('ebitda') }}{% endif %}" id="amount">
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="field">
-            <label>Total inventory value</label>
+            <label>{{ session.get('statics').get('total_inventory') }}</label>
             <div class="ui right labeled input">
                 <label for="amount" class="ui label">CA$</label>
                 <input type="text" name="inventory" value="{% if profile.get('inventory') %}{{ profile.get('inventory') }}{% endif %}" id="amount">
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="field">
-            <label>Office furniture</label>
+            <label>{{ session.get('statics').get('office_furniture') }}</label>
             <div class="ui right labeled input">
                 <label for="amount" class="ui label">CA$</label>
                 <input type="text" name="office_furniture" value="{% if profile.get('office_furniture') %}{{ profile.get('office_furniture') }}{% endif %}" id="amount">

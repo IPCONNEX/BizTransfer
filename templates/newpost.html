@@ -1,7 +1,7 @@
 
 {% extends "includes/layout.html" %}
 
-{% block title %} - List your business for sale{% endblock %}
+{% block title %} - {{ session.get('statics')['list_your_business'] }}{% endblock %}
 
 {% block head %}
     {{ super() }}
@@ -16,49 +16,48 @@
 <div class="ui container basic segment grid">
     <div class="ui column row">
 <!-- Progress -->
-    <!-- TODO add a link to move to different steps -->
         <div class="ui five wide column">
             <div class="ui vertical steps">
                 <a href="{% if step > 1 %}/newpost/{{ current_profile.get('id') }}/1{% endif %}" class="{% if step > 1 %} completed {% elif step == 1 %} active {% endif %} step">
                     <i class="newspaper icon"></i>
                     <div class="content">
-                    <div class="title">General Information</div>
-                    <div class="description">Introduce your business</div>
+                    <div class="title">{{ session.get('statics').get('general_info') }}</div>
+                    <div class="description">{{ session.get('statics').get('general_info_det') }}</div>
                 </div>
                 </a>
                 <a href="{% if step > 2 %}/newpost/{{ current_profile.get('id') }}/2{% endif %}" class="{% if step > 2 %} completed {% elif step == 2 %} active {% endif %} step">
                     <i class="users icon"></i>
                     <div class="content">
-                        <div class="title">Profile</div>
-                        <div class="description">Administrative, particularities</div>
+                        <div class="title">{{ session.get('statics').get('profile') }}</div>
+                        <div class="description">{{ session.get('statics').get('profile_det') }}</div>
                     </div>
                 </a>
                 <a href="{% if step > 3 %}/newpost/{{ current_profile.get('id') }}/3{% endif %}" class="{% if step > 3 %} completed {% elif step == 3 %} active {% endif %} step">
                     <i class="line chart icon"></i>
                     <div class="content">
-                        <div class="title">Financial Information</div>
-                        <div class="description">Revenue, Profit, Accounting</div>
+                        <div class="title">{{ session.get('statics').get('financial_info') }}</div>
+                        <div class="description">{{ session.get('statics').get('financial_info_det') }}</div>
                     </div>
                 </a>
                 <a href="{% if step > 4 %}/newpost/{{ current_profile.get('id') }}/4{% endif %}" class="{% if step > 4 %} completed {% elif step == 4 %} active {% endif %} step">
                     <i class="configure icon"></i>
                     <div class="content">
-                        <div class="title">Non Financial Info</div>
-                        <div class="description">Other info about the business</div>
+                        <div class="title">{{ session.get('statics').get('non_financial_info') }}</div>
+                        <div class="description">{{ session.get('statics').get('non_financial_info_det') }}</div>
                     </div>
                 </a>
                 <a href="{% if step > 5 %}/newpost/{{ current_profile.get('id') }}/5{% endif %}" class="{% if step > 5 %} completed {% elif step == 5 %} active {% endif %} step">
                     <i class="signal icon"></i>
                     <div class="content">
-                        <div class="title">Advanced Information</div>
-                        <div class="description">More about the business</div>
+                        <div class="title">{{ session.get('statics').get('adv_info') }}</div>
+                        <div class="description">{{ session.get('statics').get('adv_info_det') }}</div>
                     </div>
                 </a>
                 <a href="{% if step > 6 %}/newpost/{{ current_profile.get('id') }}/6{% endif %}" class="{% if step > 6 %} completed {% elif step == 6 %} active {% endif %} step">
                     <i class="sticky note icon"></i>
                     <div class="content">
-                        <div class="title">Ready for post</div>
-                        <div class="description">Ready to send for review</div>
+                        <div class="title">{{ session.get('statics').get('ready_post') }}</div>
+                        <div class="description">{{ session.get('statics').get('ready_post_det') }}</div>
                     </div>
                 </a>
             </div>
@@ -79,10 +78,10 @@
             {% elif step == 6 %}
                 {% include "includes/newpost/_preview.html" %}
             {% endif %}
-                <input type="submit" class="ui button large green right floated" value="Next">
-                <a class="ui button red large" href="/dashboard">Cancel</a>
+                <input type="submit" class="ui button large green right floated" value="{{ session.get('statics').get('next') }}">
+                <a class="ui button red large" href="/dashboard">{{ session.get('statics').get('cancel') }}</a>
                 {% if step > 1 %}
-                    <a class="ui button primary right floated large " href="/newpost/{{ current_profile.get('id') }}/{{ step - 1 }}/">Previous</a>
+                    <a class="ui button primary right floated large " href="/newpost/{{ current_profile.get('id') }}/{{ step - 1 }}/">{{ session.get('statics').get('previous') }}</a>
                 {% endif %}
             </form>
         </div>

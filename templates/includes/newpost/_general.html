@@ -5,54 +5,54 @@
 {% endif %}
 
     <div class="ui container segment stretched red">
-        <div class="ui header big">General Information</div>
-        <p>The information provided in this section will be <strong>private</strong> and <strong>not published</strong> to the public</p>
+        <div class="ui header big">{{ session.get('statics').get('general_info') }}</div>
+        <p>{{ session.get('statics').get('general_info_details')|safe }}</p>
         <div class="ui divider"></div>
         <div class="field">
-            <label>ID of the listing</label>
+            <label>{{ session.get('statics').get('id_of_listing') }}</label>
             <input type="text" name="id" readonly="" value="{{ current_profile.get('id') }}" placeholder="{{ current_profile.get('id') }}">
         </div>
         <div class="two fields">
             <div class="field">
-                <label>Person to contact</label>
+                <label>{{ session.get('statics').get('person_to_contact') }}</label>
                 <input type="text" name="contact" id="contact" value="{% if profile.get('name') %}{{ profile.get('name') }}{% else %}{{ session.get('name') }}{% endif %}">
             </div>
             <div class="field">
-                <label>Position of the person to be contacted</label>
+                <label>{{ session.get('statics').get('position_to_contact') }}</label>
                 <select name="person_position" class="ui fluid dropdown">
                     <option value="{% if profile.get('person_position') %}{{ profile.get('person_position') }}{% endif %}"></option>
-                    <option value="manager">General Manager</option>
-                    <option value="director">Board of Directors</option>
-                    <option value="broker">Business Broker</option>
-                    <option value="other">Other</option>
+                    <option value="manager">{{ session.get('statics').get('general_manager') }}</option>
+                    <option value="director">{{ session.get('statics').get('board_director') }}</option>
+                    <option value="broker">{{ session.get('statics').get('broker') }}</option>
+                    <option value="other">{{ session.get('statics').get('other') }}</option>
                 </select>
             </div>
         </div>
         <div class="two fields">
             <div class="field">
-                <label>Email</label>
+                <label>{{ session.get('statics').get('email') }}</label>
                 <input type="text" name="email" id="email" value="{% if profile.get('email') %}{{ profile.get('email') }}{% else %}{{ session.get('email') }}{% endif %}">
             </div>
             <div class="field">
-                <label>Phone number</label>
+                <label>{{ session.get('statics').get('phone') }}</label>
                 <input type="text" name="phone" id="phone" value="{% if profile.get('phone') %}{{ profile.get('phone') }}{% else %}{{ session.get('phone') }}{% endif %}">
             </div>
         </div>
         <div class="field">
-            <label>Address</label>
+            <label>{{ session.get('statics').get('address') }}</label>
             <input type="text" name="address" id="address" value="{% if profile.get('address').get('street') %}{{ profile.get('address').get('street') }}{% endif %}">
         </div>
         <div class="three fields">
             <div class="field">
-                <label>City</label>
+                <label>{{ session.get('statics').get('city') }}</label>
                 <input type="text" name="city" id="city" value="{% if profile.get('address').get('city') %}{{ profile.get('address').get('city') }}{% endif %}">
             </div>
             <div class="field">
-                <label>Province</label>
+                <label>{{ session.get('statics').get('province') }}</label>
                 <input type="text" name="province" id="province" value="{% if profile.get('address').get('province') %}{{ profile.get('address').get('province') }}{% endif %}">
             </div>
             <div class="field">
-                <label>Post code</label>
+                <label>{{ session.get('statics').get('post_code') }}</label>
                 <input type="text" name="postcode" id="postcode" value="{% if profile.get('address').get('postcode') %}{{ profile.get('address').get('postcode') }}{% endif %}">
             </div>
         </div>

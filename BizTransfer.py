@@ -10,7 +10,7 @@ from functools import wraps
 from passlib.hash import sha256_crypt
 from config import AppDB
 from datetime import datetime
-from lib.ToolBox import int_all
+from lib.ToolBox import int_all, send_simple_message
 import os
 
 #  TODO load all languages initially, send the right language based on the session
@@ -19,17 +19,21 @@ import os
 # THE APP
 app = Flask(__name__)
 
-#  app.config.from_object(os.environ['APP_SETTINGS'])
-import config
-app.config.from_object(config.DevelopmentConfig)
+app.config.from_object(os.environ['APP_SETTINGS'])
+# import config
+# app.config.from_object(config.DevelopmentConfig)
 
 moment = Moment(app)
 mail = Mail(app)
-DB = AppDB(app.config['DB_URI'], app.config['DB_USER'], app.config['DB_PWD'])
+DB = AppDB(app.config['DB_URI'], app.config['DB_USER'], app.config['DB_PWD'], app.config['DB_NAME'])
+LANG_DB = AppDB(app.config['LANG_DB_URI'], app.config['LANG_DB_USER'], app.config['LANG_DB_PWD'],
+                app.config['LANG_DB_NAME'])
 usersDB = DB.GetUsersDB()
 enterprisesDB = DB.GetEnterprisesDB()
-dictionaries = DB.GetDictionaries()
-serializer = URLSafeTimedSerializer('Sec3ret_key!')
+dictionaries = LANG_DB.GetDictionaries()
+serializer = app.config['SERIALIZER']
+MAIL_API_KEY = app.config['MAIL_API_KEY']
+WEB_PROTOCOL = app.config['WEB_PROTOCOL']
 
 
 def is_logged_in(f):
@@ -41,7 +45,7 @@ def is_logged_in(f):
         if session.get('logged'):
             return f(*args, **kwargs)
         else:
-            flash("You are not authorized, Please login", 'error')
+            flash(session.get('statics').get('msg_not_logged'), 'error')
             return redirect(url_for('login'))
     return wrap
 
@@ -50,7 +54,7 @@ def is_logged_in(f):
 @app.before_request
 def startup():
     if not session.get('statics'):
-        session['statics'] = DB.GetLanguageStatics('en')
+        session['statics'] = LANG_DB.GetLanguageStatics('en')
 
 
 #  Change language based of the browser's request language
@@ -59,16 +63,79 @@ def define_language(private_request):
         return session['statics']
     else:
         language = private_request.environ.get('werkzeug.request').accept_languages[0][0][:2]
-        return DB.GetLanguageStatics(language)
+        return LANG_DB.GetLanguageStatics(language)
 
 
 @app.route("/lang/<string:lang>/", methods=['GET'])
 def language(lang):
     origin_url = request.environ['werkzeug.request'].referrer
     if lang[:2] == 'fr':
-        session['statics'] = DB.GetLanguageStatics('fr')
+        session['statics'] = LANG_DB.GetLanguageStatics('fr')
     elif lang[:2] == 'en':
-        session['statics'] = DB.GetLanguageStatics('en')
+        session['statics'] = LANG_DB.GetLanguageStatics('en')
+    if not origin_url:
+        origin_url = '/'
+    return redirect(origin_url)
+
+
+#  TODO load all languages initially, send the right language based on the session
+#  TODO change the language to en <> english to be pushed in pages
+
+# THE APP
+app = Flask(__name__)
+
+app.config.from_object(os.environ['APP_SETTINGS'])
+# import config
+# app.config.from_object(config.DevelopmentConfig)
+
+moment = Moment(app)
+mail = Mail(app)
+DB = AppDB(app.config['DB_URI'], app.config['DB_USER'], app.config['DB_PWD'], app.config['DB_NAME'])
+LANG_DB = AppDB(app.config['LANG_DB_URI'], app.config['LANG_DB_USER'], app.config['LANG_DB_PWD'],
+                app.config['LANG_DB_NAME'])
+usersDB = DB.GetUsersDB()
+enterprisesDB = DB.GetEnterprisesDB()
+dictionaries = LANG_DB.GetDictionaries()
+serializer = app.config['SERIALIZER']
+
+
+def is_logged_in(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        #  TODO include the cookies checking, if present and session is saved, load session variables
+        origine_url = request.environ['werkzeug.request'].path
+        session['origin_url'] = origine_url
+        if session.get('logged'):
+            return f(*args, **kwargs)
+        else:
+            flash(session.get('statics').get('msg_not_logged'), 'error')
+            return redirect(url_for('login'))
+    return wrap
+
+
+#  At first set by default the language to EN
+@app.before_request
+def startup():
+    if not session.get('statics'):
+        session['statics'] = LANG_DB.GetLanguageStatics('en')
+
+
+#  Change language based of the browser's request language
+def define_language(private_request):
+    if session.get('statics'):
+        return session['statics']
+    else:
+        language = private_request.environ.get('werkzeug.request').accept_languages[0][0][:2]
+        return LANG_DB.GetLanguageStatics(language)
+
+
+@app.route("/lang/<string:lang>/", methods=['GET'])
+def language(lang):
+    origin_url = request.environ['werkzeug.request'].referrer
+    if lang[:2] == 'fr':
+        session['statics'] = LANG_DB.GetLanguageStatics('fr')
+    elif lang[:2] == 'en':
+        session['statics'] = LANG_DB.GetLanguageStatics('en')
     if not origin_url:
         origin_url = '/'
     return redirect(origin_url)
@@ -179,12 +246,12 @@ def newpost(newId='0', step=1):
                                      upsert=True)
             return redirect(url_for('newpost', newId=newId, step=6))
         elif step == 6:
-            enterprisesDB.update_one({'id': newId}, {"$set": {'user_agreement': request.form['user_agreement'],
-                                                              'submit_date': datetime.utcnow(),
+            #  TODO temp remove 'user_agreement': request.form['user_agreement']
+            enterprisesDB.update_one({'id': newId}, {"$set": {'submit_date': datetime.utcnow(),
                                                               'submitted': True, 'valid': False,
                                                               'market_online': request.form.get('market_online')}},
                                      upsert=True)
-            flash("You successfully sent your enterprise for review", "success")
+            flash(session.get('statics').get('msg_success_enter'), "success")
             return redirect(url_for('dashboard'))
 
     if request.method == 'GET':
@@ -200,50 +267,89 @@ def dashboard():
 
 @app.route("/login/", methods=['POST', 'GET'])
 def login():
-    #  TODO  find language using: request.environ
     if request.method == 'POST':
-        account = {}
         email = request.form['email']
         password = request.form['password']
         account = usersDB.find_one({'email': email}, {'_id': False})
         if account is not None:
             hashPass = account['password']
-            if sha256_crypt.verify(password, hashPass) and account['account']['email_confirmed']:
+            is_correctPW = sha256_crypt.verify(password, hashPass)
+            if is_correctPW and account.get('account', False).get('email_confirmed', False):
                 session['logged'] = True
                 session["name"] = ' '.join([account.get('firstname'), account.get('lastname')])
                 session['email'] = email
                 session['phone'] = account.get('phone')
                 #  TODO update last login data on the DB
                 usersDB.update_one({'email': email}, {"$set": {'account.last_login': datetime.utcnow()}})
-                flash("Login successful", "success")
+                flash(session.get('statics').get('msg_success_login'), "success")
                 try:
                     origin_url = session['origin_url']
                     del session['origin_url']
                     return redirect(origin_url)
                 except:
                     return redirect(url_for('dashboard'))
+            else:
+                flash(session.get('statics').get('msg_fail_login'), "error")
         else:
-            flash("Wrong combination username/password", "error")
+            flash(session.get('statics').get('msg_fail_login'), "error")
 
     return render_template('login.html')
+
+
+@app.route("/login/forgetpw/", methods=['POST', 'GET'])
+def forget_pw():
+    if request.method == 'POST':
+        email = request.form['email']
+        #  Check if the entered email exist in the database
+        if usersDB.find({'email': email}).count() == 0:
+            flash(session.get('statics').get('email_non_existant'), "error")
+            return redirect(url_for('forget_pw'))
+        session['email'] = email
+        #  send email
+        token = serializer.dumps(email, salt='reset_password')
+        link = url_for('reset_password', token=token, _external=True, _scheme=WEB_PROTOCOL)
+        reset_mail = "<h3>CanadaBizTransfer.ca</h3><br><b2>Click on the link to reset your account's password: " + link + "</h2><br>"
+        send_simple_message(request.form['email'], subject='Reset your password', html=reset_mail)
+        #  successful, send message and wait for the email
+        flash(session.get('statics').get('forget_link_sent'), "warning")
+        return redirect(url_for('forget_pw'))
+    return render_template('login_forgetpw.html')
+
+
+@app.route("/login/resetpw/<token>", methods=['GET', 'POST'])
+def reset_password(token):
+    try:
+        email = serializer.loads(token, salt='reset_password')
+        session['email'] = email
+    except BadTimeSignature:
+        flash(session.get('statics').get('msg_wrong_reset'), "error")
+        return redirect(url_for('forget_pw'))
+    if request.method == 'POST':
+        password = request.form.get('password')
+        hashPassword = sha256_crypt.encrypt(password).encode()
+        usersDB.update_one({'email': email}, {"$set": {'password': hashPassword}})
+        return redirect(url_for('login'))
+    return render_template('login_new_pw.html')
 
 
 @app.route("/signup/", methods=['POST', 'GET'])
 def signup():
     if request.method == 'POST':
         if usersDB.find({'email': request.form['email']}).count() > 0:
-            flash("Email already used by another account", "error")
+            flash(session.get('statics').get('msg_fail_email_used'), "error")
             return render_template('signup.html')
 
         hashPassword = sha256_crypt.encrypt(request.form['password']).encode()
         usersDB.insert({'firstname': request.form['firstname'], 'lastname': request.form['lastname'],
-                        'email': request.form['email'],'phone': request.form['phone'], 'password': hashPassword})
+                        'email': request.form['email'], 'phone': request.form['phone'], 'password': hashPassword,
+                        'account': {'email_confirmed': False}})
+        #  Send the confirmation link to validate the account
         token = serializer.dumps(request.form['email'], salt='confirm-email')
-        msg = Message('Confirm email', sender='oelmohri@gmail.com', recipients=[request.form['email']])
-        link = url_for('confirm_email', token=token, _external=True)
-        msg.body = '<h3>Your confirmation link is: ' + link
-        mail.send(msg)
-        flash("Your account has been created, Please check your email to validate your account", "warning")
+        link = url_for('confirm_email', token=token, _external=True, _scheme=WEB_PROTOCOL)
+        confirm_mail = '<h3>CanadaBizTransfer.ca</h3><br><b2>Click on the link to validate your account: ' + link + '</h2><br>'
+        send_simple_message(request.form['email'], subject='Your account needs validation', html=confirm_mail)
+        #  Account created successfully
+        flash(session.get('statics').get('msg_success_account'), "warning")
         return redirect(url_for('login'))
 
     return render_template('signup.html')
@@ -253,11 +359,11 @@ def signup():
 def confirm_email(token):
     try:
         email = serializer.loads(token, salt='confirm-email')
-        usersDB.update_one({'email': email}, {"$set": {'account.email_confirmed': True}}, upsert=True)
+        usersDB.update_one({'email': email}, {"$set": {'account.email_confirmed': True}})
         #  TODO update the account creation date
-        flash("Your email is successfully validated, you can login now", "success")
+        flash(session.get('statics').get('msg_success_activate'), "success")
     except BadTimeSignature:
-        flash("A wrong confirmation link has been provided, please click again on the confirmation link", "error")
+        flash(session.get('statics').get('msg_wrong_activation'), "error")
     return redirect(url_for('login'))
 
 
@@ -265,7 +371,7 @@ def confirm_email(token):
 def logout():
     session['logged'] = False
     usersDB.update_one({'email': session.get('email')}, {"$set": {'account.logout': datetime.utcnow()}})
-    flash('Successfully logged out of your session', "info")
+    flash(session.get('statics').get('msg_logout'), "info")
     return redirect(url_for('index'))
 
 
@@ -284,15 +390,23 @@ def page_not_found(e):
 @app.route('/admin/translate/', methods=['GET', 'POST'])
 @is_logged_in
 def translate():
-    dict_fr = DB.GetLanguageStatics('fr')
-    dict_en = DB.GetLanguageStatics('en')
+    dict_fr = LANG_DB.GetLanguageStatics('fr')
+    dict_en = LANG_DB.GetLanguageStatics('en')
     is_admin = usersDB.find_one({'email': session.get('email')}).get('admin')
     #  Update the dictionary
+    _dict_fr = {}
+    _dict_en = {}
     if request.method == 'POST':
         for key in dict_en.keys():
             if key != 'language':
-                dictionaries.update_one({'language': 'en'}, {"$set": {key: request.form.get(key + '_en')}})
-                dictionaries.update_one({'language': 'fr'}, {"$set": {key: request.form.get(key + '_fr')}})
+                if dict_en.get(key) != request.form.get(key + '_en'):
+                    _dict_en[key] = request.form.get(key + '_en')
+                if dict_fr.get(key) != request.form.get(key + '_fr'):
+                    _dict_fr[key] = request.form.get(key + '_fr')
+        if _dict_en:
+            dictionaries.update_one({'language': 'en'}, {"$set": _dict_en})
+        if _dict_fr:
+            dictionaries.update_one({'language': 'fr'}, {"$set": _dict_fr})
         return redirect(url_for('translate'))
 
     #  Only render the page if the user is Admin

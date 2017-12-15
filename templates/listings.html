@@ -1,7 +1,7 @@
 
 {% extends "includes/layout.html" %}
 
-{% block title %} - Dashboard{% endblock %}
+{% block title %} - {{ session.get('statics')['title_listing'] }}{% endblock %}
 
 {% block head %}
     {{ super() }}
@@ -19,29 +19,29 @@
 
 <div class="ui container segment stacked">
 
-    <a href="/ent/{{ post['id'] }}" class="ui header">{{ post['title'] }}</a>
+    <a href="/ent/{{ post['id'] }}" class="ui header">{{ post.get('profile').get('title') }}</a>
 
     <div class="ui segment grid">
         <div class="ui column row">
             <div class="ui four wide column">
-                Description
+                {{ session.get('statics')['description'] }}
             </div>
             <div class="ui twelve wide column">
-                {{ post.get('description') }}
+                {{ post.get('profile').get('description') }}
             </div>
         </div>
         <div class="ui column row">
             <div class="ui four wide column">
-                Visits: {{ post.get('visits') }}
+                {{ session.get('statics')['total_views'] }}: {{ post.get('visits') }}
             </div>
             <div class="ui four wide column">
-                Last modified: {{ moment(post.get('modified')).fromNow(refresh=True) }}
+                {{ session.get('statics')['last_modified'] }}: {{ moment(post.get('modified')).fromNow(refresh=True) }}
             </div>
             <div class="ui four wide column">
-                Asking price: CA$ {{ post.get('ask_price') }}
+                {{ session.get('statics')['asking_price'] }}: CA$ {{ post.get('profile').get('asking_price') }}
             </div>
             <div class="ui four wide column">
-                ABITDA: CA$ {{ post.get('ebitda') }}
+                ABITDA: CA$ {{ post.get('profile').get('ebitda') }}
             </div>
         </div>
 

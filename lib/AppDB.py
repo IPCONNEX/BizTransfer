@@ -3,9 +3,9 @@ import os
 
 
 class AppDB:
-    def __init__(self, uri, user, pwd):
+    def __init__(self, uri, user, pwd, name):
         client = MongoClient(uri)
-        DB = client.biztransfer
+        DB = client.get_database(name)
         DB.authenticate(user, pwd)
         self.collections = DB
 

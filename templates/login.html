@@ -1,11 +1,22 @@
 {% extends "includes/layout.html" %}
 
+{% block title %} - {{ session.get('statics')['login'] }}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+
+    </style>
+
+{% endblock %}
+
+
 {% block body %}
 
 
 <div class="ui container basic segment">
-    <div class="ui huge header">Login informations</div>
-    <p class="ui medium header">In order to make operations, please login into your account</p>
+    <div class="ui huge header">{{ session.get('statics')['login_info'] }}</div>
+    <p class="ui medium header">{{ session.get('statics')['login_info2'] }}</p>
 
     <div class="ui grid">
         <div class="ui column row"></div>
@@ -16,16 +27,16 @@
 
                     <form method="POST" class="ui form" action="">
                         <div class="field">
-                            <label>Email</label>
-                            <input type="text" name="email" placeholder="Email address">
+                            <label>{{ session.get('statics')['email'] }}</label>
+                            <input type="text" name="email" placeholder="">
                         </div>
                         <div class="field">
-                            <label>Password</label>
+                            <label>{{ session.get('statics')['password'] }}</label>
                             <input type="password" name="password" placeholder="">
                         </div>
-                        <input type="submit" class="ui animated large submit button primary fluid" value="Login">
+                        <input type="submit" class="ui animated large submit button primary fluid" value="{{ session.get('statics')['login'] }}">
                     </form>
-
+                    <a href="/login/forgetpw/">{{ session.get('statics')['forget_pw'] }}</a>
                 </div>
             </div>
             <div class="ui three wide computer two wide tablet column only"></div>
@@ -33,7 +44,7 @@
     </div>
 </div>
 
-<div class="ui horizontal divider">Or</div>
+<div class="ui horizontal divider">{{ session.get('statics')['or'] }}</div>
 
 <!-- Signup -->
 <div class="ui container basic segment">
@@ -43,8 +54,8 @@
             <div class="ui three wide computer two wide tablet column only"></div>
             <div class="ui ten wide computer twelve wide tablet sixteen wide phone column">
                 <div class="ui segment stretched">
-                    <p class="ui small header">Please sign up if you don't have an account</p>
-                    <a href="/signup/" class="ui button animated large green fluid">Sign up</a>
+                    <p class="ui small header">{{ session.get('statics')['or_signup'] }}</p>
+                    <a href="/signup/" class="ui button animated large green fluid">{{ session.get('statics')['signup'] }}</a>
                 </div>
             </div>
             <div class="ui three wide computer two wide tablet column only"></div>

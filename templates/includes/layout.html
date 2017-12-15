@@ -6,6 +6,7 @@
         <title>{{ session.get('statics')['site_name'] }}{% block title %}{% endblock %}</title>
     {% endblock %}
 
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <!-- Semantic UI and jQuery -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -35,38 +36,46 @@
 <!-- Hidden menu -->
     <div class="ui inverted labeled icon left inline vertical sidebar menu uncover ">
         <a href="/" class="item"><i class="home icon"></i> {{ session.get('statics')['home'] }}</a>
-            {% if session.get('statics')['language'] == 'en' %}
-        <a href="/lang/fr/" class="item">Français</a>
-            {% else %}
-        <a href="/lang/en/" class="item">English</a>
-            {% endif %}
-            {% if session['logged'] %}
-        <a href="/signout/" class="item">{{ session.get('statics')['signout'] }}</a>
-            {% else %}
-        <a href="/login/" class="item">{{ session.get('statics')['login'] }}</a>
-        <a href="/signup/" class="item">{{ session.get('statics')['signup'] }}</a>
-            {% endif %}
+        {% if session['logged'] %}
+            <a href="/signout/" class="item">{{ session.get('statics')['signout'] }}</a>
+        {% else %}
+            <a href="/login/" class="item">{{ session.get('statics')['login'] }}</a>
+            <a href="/signup/" class="item">{{ session.get('statics')['signup'] }}</a>
+        {% endif %}
     </div>
 <!-- Top menu -->
     <div class="ui basic labeled top fixed demo menu">
         <div class="item" id="toggle">
-            <i class="sidebar icon"></i>Menu
+            <i class="sidebar icon"></i>
         </div>
-        <div class="item">
-            {% if session.get('statics')['language'] == 'en' %}
-                <a href="/lang/fr/">Français</a>
+        <a href="/"><div class="item header">
+            {{ session.get('statics')['site_name'] }}
+        </div></a>
+        <div class="ui dropdown item">
+          {{ session.get('statics')['language_name'] }} <i class="dropdown icon"></i>
+          <div class="menu">
+            <a class="item" href="/lang/en/">English</a>
+            <a class="item" href="/lang/fr/">Français</a>
+          </div>
+        </div>
+{#        <div class="ui item">#}
+{#            {% if session.get('statics')['language'] == 'en' %}#}
+{#                <a href="/lang/fr/">Français</a>#}
+{#            {% else %}#}
+{#                <a href="/lang/en/">English</a>#}
+{#            {% endif %}#}
+{#        </div>#}
+
+        <div class="right menu">
+            <a href="mailto:info@canadabiztransfer.ca" class="ui right item"><i class="talk icon"></i>{{ session.get('statics')['contact_us'] }}</a>
+            {% if session['logged'] %}
+            <a href="/dashboard" class="ui item"><i class="dashboard icon"></i>{{ session.get('statics')['dashboard'] }}</a>
+            <a href="/signout/" class="ui item"><i class="sign out icon"></i>{{ session.get('statics')['signout'] }}</a>
             {% else %}
-                <a href="/lang/en/">English</a>
+            <a href="/login/" class="ui item"><i class="sign in icon"></i>{{ session.get('statics')['login'] }}</a>
+            <a href="/signup/" class="ui item"><i class="add user icon"></i>{{ session.get('statics')['signup'] }}</a>
             {% endif %}
         </div>
-
-        {% if session['logged'] %}
-        <a href="/dashboard" class="ui right item"><i class="dashboard icon"></i>{{ session.get('statics')['dashboard'] }}</a>
-        <a href="/signout/" class="ui item"><i class="sign out icon"></i>{{ session.get('statics')['signout'] }}</a>
-        {% else %}
-        <a href="/login/" class="ui right item"><i class="sign in icon"></i>{{ session.get('statics')['login'] }}</a>
-        <a href="/signup/" class="ui item"><i class="add user icon"></i>{{ session.get('statics')['signup'] }}</a>
-        {% endif %}
     </div>
 
 <!-- CONTENT -->
@@ -86,55 +95,60 @@
 </div>
 
 <!-- FOOTER -->
-<div class="ui inverted vertical footer segment">
-    <div class="ui center aligned container">
-        <div class="ui stackable inverted divided grid">
-            <div class="three wide column">
-                <h4 class="ui inverted header">For Sellers</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">Link One</a>
-                    <a href="#" class="item">Link Two</a>
-                    <a href="#" class="item">Link Two</a>
-                </div>
-            </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">For Buyers</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">Link One</a>
-                    <a href="#" class="item">Link Two</a>
-                    <a href="#" class="item">Link Two</a>
-                </div>
-            </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">For Pros</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">Link One</a>
-                    <a href="#" class="item">Link Two</a>
-                    <a href="#" class="item">Link Two</a>
-                </div>
-            </div>
-            <div class="seven wide column">
-                <h4 class="ui inverted header">BizTrasnfer.ca</h4>
-                <p>BizTrasnfer is a web application that build links between business owners
-                    who want to sell their businesses and investors.</p>
-                <a href="#" class="ui">Show me how this works</a>
-            </div>
-        </div>
-        <div class="ui inverted section divider"></div>
-        <!-- <img src="static/img/logo.png" class="ui centered mini image"> -->
-        <div class="ui horizontal inverted small divided link list">
-            <a class="item" href="#">Site Map</a>
-            <a class="item" href="#">Contact Us</a>
-            <a class="item" href="#">Terms and Conditions</a>
-            <a class="item" href="#">Privacy Policy</a>
-      </div>
-    </div>
-</div>
+{#<div class="ui inverted vertical footer segment">#}
+{#    <div class="ui center aligned container">#}
+{#        <div class="ui stackable inverted divided grid">#}
+{#            <div class="three wide column">#}
+{#                <h4 class="ui inverted header">For Sellers</h4>#}
+{#                <div class="ui inverted link list">#}
+{#                    <a href="#" class="item">Link One</a>#}
+{#                    <a href="#" class="item">Link Two</a>#}
+{#                    <a href="#" class="item">Link Two</a>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="three wide column">#}
+{#                <h4 class="ui inverted header">For Buyers</h4>#}
+{#                <div class="ui inverted link list">#}
+{#                    <a href="#" class="item">Link One</a>#}
+{#                    <a href="#" class="item">Link Two</a>#}
+{#                    <a href="#" class="item">Link Two</a>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="three wide column">#}
+{#                <h4 class="ui inverted header">For Pros</h4>#}
+{#                <div class="ui inverted link list">#}
+{#                    <a href="#" class="item">Link One</a>#}
+{#                    <a href="#" class="item">Link Two</a>#}
+{#                    <a href="#" class="item">Link Two</a>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="seven wide column">#}
+{#                <h4 class="ui inverted header">BizTrasnfer.ca</h4>#}
+{#                <p>BizTrasnfer is a web application that build links between business owners#}
+{#                    who want to sell their businesses and investors.</p>#}
+{#                <a href="#" class="ui">Show me how this works</a>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="ui inverted section divider"></div>#}
+{#        <!-- <img src="static/img/logo.png" class="ui centered mini image"> -->#}
+{#        <div class="ui horizontal inverted small divided link list">#}
+{#            <a class="item" href="#">Site Map</a>#}
+{#            <a class="item" href="#">Contact Us</a>#}
+{#            <a class="item" href="#">Terms and Conditions</a>#}
+{#            <a class="item" href="#">Privacy Policy</a>#}
+{#      </div>#}
+{#    </div>#}
+{#</div>#}
 
 <script>
     $('#toggle').click(function(){
         $('.ui.sidebar').sidebar('toggle');
     });
+</script>
+
+<script>
+    $('.ui.dropdown')
+  .dropdown();
 </script>
 
 </body>

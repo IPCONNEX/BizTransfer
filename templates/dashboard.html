@@ -1,7 +1,7 @@
 
 {% extends "includes/layout.html" %}
 
-{% block title %} - Dashboard{% endblock %}
+{% block title %} - {{ session.get('statics')['dashboard'] }}{% endblock %}
 
 {% block head %}
     {{ super() }}
@@ -14,27 +14,27 @@
 {% block body %}
 
 <!-- Content of the page -->
-<div class="ui container basic segment grid">  <!-- TODO can move this to layout if works fine -->
+<div class="ui container basic segment grid">
     <div class="ui column row">
         <div class="ui four wide computer column computer four wide tablet only">
             <div class="ui segments">
                 <div class="ui segment header medium">
-                    {{ session['username'] }}
+                    {{ session['name'] }}
                 </div>
                 <div class="ui segment">
-                    <p><a href="/newpost/0/1">Add new enterprise for sell</a></p>
-                    <p>para 2</p>
+                    <p><a href="/newpost/0/1">{{ session.get('statics')['add_new'] }}</a></p>
+{#                    <p>+</p>#}
                 </div>
-                <div class="ui segment">
-                    <p>My favorites</p>
-                    <p>My profile</p>
-                </div>
+{#                <div class="ui segment">#}
+{#                    <p>+My favorites</p>#}
+{#                    <p>+My profile</p>#}
+{#                </div>#}
             </div>
         </div>
         <div class="ui twelve wide computer twelve wide tablet sixteen wide phone column">
             <div class="ui segments">
                 <div class="ui segment header medium inverted">
-                    Your enterprises listed for sale
+                    {{ session.get('statics')['your_enter_list'] }}
                 </div>
                 <!-- Posts of the user -->
                 {% for enterprise in enterprises %}
@@ -44,55 +44,57 @@
                             <div class="ui ten wide column">
                                 <div class="ui header small">{{ enterprise.get('title') }}
                                     {% if enterprise.valid == True %}
-                                        <div class="ui circular label green">Online</div>
+                                        <div class="ui circular label green">{{ session.get('statics')['online'] }}</div>
                                     {% elif enterprise.submitted != Null %}
-                                        <div class="ui circular label blue">Under review</div>
+                                        <div class="ui circular label blue">{{ session.get('statics')['under_review'] }}</div>
                                         <!-- TODO validate the publish will change the value submitted -->
                                     {% else %}
-                                        <div class="ui circular label orange">Not submitted</div>
+                                        <div class="ui circular label orange">{{ session.get('statics')['not_submitted'] }}</div>
                                     {% endif %}
                                 </div>
 
                             </div>
                             <div class="ui six wide column">
-                                <a href="/newpost/{{ enterprise['id'] }}/1/"><button class="ui button tiny green right floated">Modify</button></a>
-                                <a href="/ent/{{  enterprise['id'] }}"><button class="ui button tiny primary right floated">Preview</button></a>
-                                <button class="ui button tiny red right floated">Delete</button>
+                                <a href="/newpost/{{ enterprise['id'] }}/1/"><button class="ui button tiny green right floated">{{ session.get('statics')['modify'] }}</button></a>
+                                <a href="/ent/{{  enterprise['id'] }}"><button class="ui button tiny primary right floated">{{ session.get('statics')['preview'] }}</button></a>
+                                <button class="ui button tiny red right floated">{{ session.get('statics')['delete'] }}</button>
                             </div>
                         </div>
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <p>Asking price: CA$ {{ enterprise['ask_price'] }}</p>
+                                <p>{{ session.get('statics')['asking_price'] }}: CA$ {{ enterprise['ask_price'] }}</p>
                             </div>
                             <div class="ui six wide column">
-                                <p>Revenue: CA$ {{ enterprise['revenue'] }}</p>
+                                <p>{{ session.get('statics')['revenue'] }}: CA$ {{ enterprise['revenue'] }}</p>
                             </div>
                             <div class="ui four wide colum">
                                 <div class="statistic">
                                     <div class="value">
-                                      <i class="plane icon"></i> {{ enterprise['visits'] }} Views
+                                      <i class="browser icon"></i> {{ enterprise['visits'] }} {{ session.get('statics')['total_views'] }}
                                     </div>
                                 </div>
-                                <p>Total views: {{ enterprise['visits'] }}</p>
+{#                                <p>{{ session.get('statics')['total_views'] }}: {{ enterprise['visits'] }}</p>#}
                             </div>
                         </div>
                     </div>
                     </div>
                 {% endfor %}
             </div>
-            <div class="ui segments">
-                <div class="ui segment header medium inverted">
-                    Your favorite enterprises OR Interesting on our site
-                </div>
-                <div class="ui segment">
-                    <p>First enterprise</p>
-                    <p>modify + delete + preview + ++</p>
-                </div>
-                <div class="ui segment">
-                    <p>Second interesting</p>
-                    <p>modify + delete + preview + ++</p>
-                </div>
-            </div>
+
+        <!-- Other segment -->
+{#            <div class="ui segments">#}
+{#                <div class="ui segment header medium inverted">#}
+{#                    +Your favorite enterprises OR Interesting on our site#}
+{#                </div>#}
+{#                <div class="ui segment">#}
+{#                    <p>+First enterprise</p>#}
+{#                    <p>+modify + delete + preview + ++</p>#}
+{#                </div>#}
+{#                <div class="ui segment">#}
+{#                    <p>+Second interesting</p>#}
+{#                    <p>+modify + delete + preview + ++</p>#}
+{#                </div>#}
+{#            </div>#}
         </div>
     </div>
 </div>

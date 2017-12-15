@@ -5,19 +5,19 @@
 {% endif %}
 
     <div class="ui container segment stretched green">
-        <div class="ui header big">Profile of the business</div>
-        <p>The information provided in this section will be <strong>public</strong> and <strong>all users</strong> will be able to see it online</p>
+        <div class="ui header big">{{ session.get('statics').get('profile_business') }}</div>
+        <p>{{ session.get('statics').get('profile_details')|safe }}</p>
         <div class="ui divider"></div>
         <div class="field">
-            <label>Title of the listing</label>
+            <label>{{ session.get('statics').get('title') }}</label>
             <input type="text" name="title" id="title" value="{% if profile.get('title') %}{{ profile.get('title') }}{% endif %}">
         </div>
         <div class="field">
-            <label>Description</label>
+            <label>{{ session.get('statics').get('description') }}</label>
             <textarea type="text" id="description" rows="3" name="description">{% if profile.get('description') %}{{ profile.get('description') }}{% endif %}</textarea>
         </div>
         <div class="field">
-            <label>Asking price</label>
+            <label>{{ session.get('statics').get('asking_price') }}</label>
             <div class="ui right labeled input">
                 <label for="amount" class="ui label">CA$</label>
                 <input type="text" name="asking_price" value="{% if profile.get('asking_price') %}{{ profile.get('asking_price') }}{% endif %}">
@@ -25,11 +25,11 @@
             </div>
         </div>
         <div class="field">
-            <label>Is your business a Franchise?</label>
+            <label>{{ session.get('statics').get('is_franchise') }}</label>
             <select id="franchise" name="franchise" class="ui fluid dropdown">
                 <option value="{% if profile.get('franchise') %}{{ profile.get('franchise') }}{% endif %}"></option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="yes">{{ session.get('statics').get('yes') }}</option>
+                <option value="no">{{ session.get('statics').get('no') }}</option>
             </select>
         </div>
 

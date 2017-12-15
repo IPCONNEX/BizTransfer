@@ -12,14 +12,14 @@
 
 <div class="ui container segment stacked">
 
-    <p class="ui huge header">{{ profile.get('profile').get('title') }}</p>
+    <p class="ui huge header">{{ session.get('statics').get('title') }}</p>
 
     <div class="ui grid">
         <div class="ui column row">
             <div class="ui five wide computer tablet sixteen wide phone column">
                 <div class="ui segment">
-                    <p>Enterprise posted: {{ moment(profile.get('submit_date')).fromNow(refresh=True)  }}</p>
-                    <p>Last modified: {{ moment(profile.get('modified')).fromNow(refresh=True) }}</p>
+                    <p>{{ session.get('statics').get('posted_since') }}: {{ moment(profile.get('submit_date')).fromNow(refresh=True)  }}</p>
+                    <p>{{ session.get('statics').get('last_modified') }}: {{ moment(profile.get('modified')).fromNow(refresh=True) }}</p>
                 </div>
             </div>
             <div class="ui eleven wide computer tablet sixteen wide phone  column">
@@ -52,88 +52,88 @@
 
                 <div class="ui segment">
                     <div class="ui grid column row">
-                        <div class="ui six wide column header tiny">Description</div>
+                        <div class="ui six wide column header tiny">{{ session.get('statics').get('description') }}</div>
                         <div class="ui ten wide column">{{ profile.get('profile').get('description') }}</div>
                     </div>
                     <div class="ui grid column row">
-                        <div class="ui six wide column header tiny">Asking price</div>
+                        <div class="ui six wide column header tiny">{{ session.get('statics').get('asking_price') }}</div>
                         <div class="ui ten wide column">CA$ {{ '{0:,.2f}'.format(profile.get('profile').get('asking_price')) }}</div>
                     </div>
                 </div>
 
                 <div class="ui segment grid">
                     <div class="ui column row">
-                        <div class="ui column header">Financial information</div>
+                        <div class="ui column header">{{ session.get('statics').get('financial_info') }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">Gross Revenue</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('gross_revenue') }}</div>
                         <div class="ui eight wide column">CA$ {{ '{0:,.2f}'.format(profile.get('financial').get('gross_revenue')) }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">Gross Profit</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('gross_profit') }}</div>
                         <div class="ui eight wide column">CA$ {{ '{0:,.2f}'.format(profile.get('financial').get('gross_profit')) }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">EBITDA</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('ebitda') }}</div>
                         <div class="ui eight wide column">CA$ {{ '{0:,.2f}'.format(profile.get('financial').get('ebitda')) }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">Inventory</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('inventory') }}</div>
                         <div class="ui eight wide column">CA$ {{ '{0:,.2f}'.format(profile.get('financial').get('inventory')) }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">Office furniture</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('office_furniture') }}</div>
                         <div class="ui eight wide column">CA$ {{ '{0:,.2f}'.format(profile.get('financial').get('office_furniture')) }}</div>
                     </div>
                 </div>
 
                 <div class="ui segment grid">
                     <div class="ui column row">
-                        <div class="ui column header">Non Financial information</div>
+                        <div class="ui column header">{{ session.get('statics').get('non_financial_info') }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">Foundation year</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('fondation_year') }}</div>
                         <div class="ui eight wide column">{{ profile.get('non_financial').get('foundation_year') }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">Reason for the sale</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('reason_sale') }}</div>
                         <div class="ui eight wide column">{{ profile.get('non_financial').get('reason') }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">Targeted customer</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('target_cust') }}</div>
                         <div class="ui eight wide column">{{ profile.get('non_financial').get('target') }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">Developpement stage of the business</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('stage_develp') }}</div>
                         <div class="ui eight wide column">{{ profile.get('non_financial').get('dev_stage') }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">The seller is willing to finance</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('can_finance') }}</div>
                         <div class="ui eight wide column">{{ profile.get('non_financial').get('finance') }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">The seller is willing to support after the sale</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('can_support') }}</div>
                         <div class="ui eight wide column">{{ profile.get('non_financial').get('after_sale') }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">The sale includes a patent or a license</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('license') }}</div>
                         <div class="ui eight wide column">{{ profile.get('non_financial').get('patent') }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">Full-time employees</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('ft_employees') }}</div>
                         <div class="ui eight wide column">{{ profile.get('non_financial').get('fulltime') }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">Part-time employees</div>
+                        <div class="ui eight wide column header tiny">{{ profile.get('profile').get('pt_employees') }}</div>
                         <div class="ui eight wide column">{{ profile.get('non_financial').get('parttime') }}</div>
                     </div>
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">The sale include a lease/rent</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('lease') }}</div>
                         <div class="ui eight wide column">{{ profile.get('non_financial').get('rent') }}</div>
                     </div>
                     {% if profile.get('non_financial').get('rent') == 'Yes' %}
                     <div class="ui column row">
-                        <div class="ui eight wide column header tiny">Lease/Rent end date</div>
+                        <div class="ui eight wide column header tiny">{{ session.get('statics').get('yes_date') }}</div>
                         <div class="ui eight wide column">{{ profile.get('non_financial').get('end_date') }}</div>
                     </div>
                     {% endif %}

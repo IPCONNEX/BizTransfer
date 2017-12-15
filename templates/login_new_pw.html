@@ -1,0 +1,79 @@
+{% extends "includes/layout.html" %}
+
+{% block title %} - {{ session.get('statics')['login'] }}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+
+    </style>
+
+{% endblock %}
+
+
+{% block body %}
+
+<!-- Forget password -->
+<div class="ui container basic segment">
+    <div class="ui huge header">{{ session.get('statics')['forget_password_page'] }}</div>
+    <p class="ui medium header">{{ session.get('statics')['forget_password_page_desc'] }}</p>
+
+    <div class="ui grid">
+        <div class="ui column row"></div>
+        <div class="ui column row">
+            <div class="ui three wide computer two wide tablet column only"></div>
+            <div class="ui ten wide computer twelve wide tablet sixteen wide phone column">
+                <div class="ui segment stretched">
+
+                    <form method="POST" class="ui form" action="">
+                        <div class="field">
+                            <label>{{ session.get('statics')['password'] }}</label>
+                            <input type="password" name="password" placeholder="">
+                        </div>
+                        <div class="field">
+                            <label>{{ session.get('statics')['password2'] }}</label>
+                            <input type="password" name="password2" placeholder="">
+                        </div>
+                        <input type="submit" class="ui animated large submit button primary fluid" value="{{ session.get('statics')['change_password'] }}">
+                    </form>
+                </div>
+            </div>
+            <div class="ui three wide computer two wide tablet column only"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Form validation -->
+<script>
+    $( ".ui.form" ).form({
+        fields: {
+            email: {
+                identifier: 'email',
+                rules: [{
+                    type: 'email',
+                    prompt: 'Please enter a valid email'
+                }]
+            },
+            password2: {
+                identifier: 'password2',
+                rules: [{
+                    type: 'match[password]',
+                    prompt: 'Your have to match your password'
+                }]
+            }
+        },
+        inline: true,
+    });
+</script>
+
+<!-- Sidebar script -->
+<script>
+    $('#toggle').click(function(){
+        $('.ui.sidebar').sidebar('toggle');
+    });
+</script>
+
+{% endblock %}
